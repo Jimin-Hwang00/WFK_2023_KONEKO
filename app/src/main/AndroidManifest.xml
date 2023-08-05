@@ -12,7 +12,94 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".admin.SelectTeacherActivity"
+            android:exported="false">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".admin.CreateClassActivity" />
+        </activity>
+        <activity
+            android:name=".admin.SelectStudentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.CreateClassActivity" />
+        </activity>
+        <activity
+            android:name=".admin.ClassListActivity"
+            android:exported="false" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.MainActivity" />
+        </activity>
+        <activity
+            android:name=".admin.CreateClassActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.ClassListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.AccountantListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.EditListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.EditAccountantActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.AccountantListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.TeacherListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.EditListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.StudentListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.EditListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.EditTeacherActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.TeacherListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.EditStudentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.StudentListActivity" />
+        </activity>
+        <activity
+            android:name=".admin.EditListActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.MainActivity" />
+        </activity>
+        <activity
+            android:name=".admin.CheckEventActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.CreateEventActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".admin.MainActivity" />
+        </activity>
+        <activity
+            android:name=".admin.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

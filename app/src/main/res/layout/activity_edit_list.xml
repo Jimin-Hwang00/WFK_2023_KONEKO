@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin.EditListActivity">
+
+    <Button
+        android:id="@+id/EtStnBt"
+        android:layout_width="184dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="100dp"
+        android:text="Student"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/EtTeacherBt"
+        android:layout_width="199dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="304dp"
+        android:text="Teacher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/EtAccountBt"
+        android:layout_width="211dp"
+        android:layout_height="102dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="508dp"
+        android:text="Accountant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
