@@ -52,11 +52,26 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.userCreateBt1.setOnClickListener{
+            val intent = Intent(this, EditListActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.createEventBt.setOnClickListener{
             val intent = Intent(this, CheckEventActivity::class.java)
             startActivity(intent)
         }
+
+        binding.createEventBt1.setOnClickListener{
+            val intent = Intent(this, CheckEventActivity::class.java)
+            startActivity(intent)
+        }
         binding.classCreateBt.setOnClickListener{
+            val intent = Intent(this, ClassListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.classCreateBt2.setOnClickListener{
             val intent = Intent(this, ClassListActivity::class.java)
             startActivity(intent)
         }
