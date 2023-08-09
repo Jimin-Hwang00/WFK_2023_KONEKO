@@ -12,7 +12,34 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".notice.TeacherSelectNoticeUploadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherSelectNoticeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherSelectNoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherEntireNoticeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherEntireNoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherCheckNoticeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherCheckNoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notice.ParentCheckNoticeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".notice.ParentCheckNoticeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".notice.TeacherNoticeMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
