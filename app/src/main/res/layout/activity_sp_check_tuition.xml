@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".accountant.SPCheckTuitionActivity">
+    tools:context=".accountant.SPCheckTuitionActivity"
+    android:background="#EDEBFC">
 
     <ImageView
         android:id="@+id/imageView7"
