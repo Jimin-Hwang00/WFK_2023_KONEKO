@@ -12,6 +12,12 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
+            android:name=".youtube.TeacherCheckYoutbeListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".youtube.TeacherPostYoutubeLinkActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
