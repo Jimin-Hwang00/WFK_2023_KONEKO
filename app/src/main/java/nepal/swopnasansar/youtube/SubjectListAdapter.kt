@@ -56,7 +56,7 @@ class SubjectListAdapter(var itemList: ArrayList<Subject>?): RecyclerView.Adapte
         if (position == selectedIdx) {
             holder.itemView.setBackgroundColor(Color.LTGRAY)
         } else {
-            holder.itemView.setBackgroundColor(Color.WHITE)
+            holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))
         }
     }
 

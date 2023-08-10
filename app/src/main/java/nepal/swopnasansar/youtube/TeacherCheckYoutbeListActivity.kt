@@ -1,5 +1,6 @@
 package nepal.swopnasansar.youtube
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -88,6 +89,11 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.ivPlusBtn.setOnClickListener {
+            val intent = Intent(this, TeacherPostYoutubeLinkActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
@@ -148,37 +154,6 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
                 }
             }
         }
-
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            withContext(Main) {
-//                binding.pbYoutubeCheck.visibility = View.VISIBLE
-//            }
-//            val results = withContext(Dispatchers.IO) {
-//                // @TODO key값 수정
-//                subjectDao.getSubjectsByTeacherKey("qxLHhh9StYOfogNqLN9G")
-//            }
-//
-//            withContext(Main) {
-//                subjects = results
-//                youtubeItems.clear()
-//
-//                if (subjects != null) {
-//                    for (subject in subjects!!) {
-//                        for (youtube in subject.youTube) {
-//                            val youtubeItem = YoutubeListItem(subject.subject_key, subject.subject_name, youtube.title, youtube.url)
-//                            youtubeItems.add(youtubeItem)
-//                        }
-//                    }
-//
-//                    youtubeLinkAdapter.youtubeItems = youtubeItems
-//                    youtubeLinkAdapter.notifyDataSetChanged()
-//
-//                    binding.pbYoutubeCheck.visibility = View.INVISIBLE
-//                } else {
-//                    Toast.makeText(this@TeacherCheckYoutbeListActivity, "Fail to get youtube links. Try again.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
     }
 
     // connect adapter with recycler view

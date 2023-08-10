@@ -16,6 +16,7 @@
             android:exported="false" />
         <activity
             android:name=".youtube.TeacherPostYoutubeLinkActivity"
+            android:parentActivityName=".youtube.TeacherCheckYoutbeListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
