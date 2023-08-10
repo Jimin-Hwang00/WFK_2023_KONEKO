@@ -59,6 +59,8 @@ class YoutubeLinkAdapter(private var itemList: ArrayList<YoutubeListItem>?): Rec
 
         if (selectedIdx == position) {
             holder.itemView.setBackgroundColor(Color.LTGRAY)
+        } else {
+            holder.itemView.setBackgroundColor(Color.WHITE)
         }
     }
 
