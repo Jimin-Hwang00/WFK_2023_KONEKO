@@ -1,11 +1,14 @@
 package nepal.swopnasansar.youtube.dao
 
 import android.util.Log
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.youtube.dto.Subject
+import nepal.swopnasansar.youtube.dto.Youtube
+import nepal.swopnasansar.youtube.dto.YoutubeListItem
 
 class SubjectDAO {
     private val TAG = "SubjectDAO"
@@ -38,21 +41,45 @@ class SubjectDAO {
         return subjects
     }
 
-    // update subject
-    suspend fun updateSubject(subject: Subject): Boolean {
+    // add youtube link and title
+    suspend fun addYoutube(subject: Subject,youtube: Youtube): Boolean {
         var result = false
 
         try {
-            subjectRef.document(subject.subject_key).set(subject)
+            subjectRef.document(subject.subject_key)
+                .update("youTube", FieldValue.arrayUnion(youtube))
                 .addOnSuccessListener {
                     result = true
                 }
                 .addOnFailureListener { e ->
-                    Log.e(TAG, "Fail to update subject.", e)
+                    Log.e(TAG, "Fail to add link.", e)
                 }
                 .await()
+
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to update subject.", e)
+            Log.e(TAG, "Fail to add link.", e)
+        }
+
+        return result
+    }
+
+    // remove youtube link and title
+    suspend fun removeYoutube(key: String, youtube: Youtube): Boolean {
+        var result = true
+
+        try {
+            subjectRef.document(key)
+                .update("youTube", FieldValue.arrayRemove(youtube))
+                .addOnSuccessListener {
+                    result = true
+                }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Fail to add link.", e)
+                }
+                .await()
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to add link.", e)
         }
 
         return result

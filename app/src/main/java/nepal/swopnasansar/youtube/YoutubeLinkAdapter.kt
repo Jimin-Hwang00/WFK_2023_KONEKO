@@ -1,5 +1,6 @@
 package nepal.swopnasansar.youtube
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ class YoutubeLinkAdapter(private var itemList: ArrayList<YoutubeListItem>?): Rec
     var youtubeItems = itemList
 
     private var clickListener: YoutubeLinkAdapter.OnItemClickListener? = null
+
+    var selectedIdx = -1
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val tvSubject = itemView.findViewById<TextView>(R.id.tv_check_youtube_item_subject)
@@ -52,6 +55,10 @@ class YoutubeLinkAdapter(private var itemList: ArrayList<YoutubeListItem>?): Rec
 
         holder.itemView.setOnClickListener { view ->
             clickListener?.onItemClick(position)
+        }
+
+        if (selectedIdx == position) {
+            holder.itemView.setBackgroundColor(Color.LTGRAY)
         }
     }
 

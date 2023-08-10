@@ -3,6 +3,7 @@ package nepal.swopnasansar.youtube
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -49,8 +50,6 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
         // set click listener that allow the users to post the youtube url and title
         binding.btnUploadYoutube.setOnClickListener {
-            var youtubes = selectedSubject.youTube
-
             val title = binding.evPostYoutubeTitle.text.toString()
             val url = binding.evPostYoutubeUrl.text.toString()
             val youtube = Youtube(url, title)
@@ -60,12 +59,9 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
             } else if (!url.startsWith("http")) {
                 Toast.makeText(this@TeacherPostYoutubeLinkActivity, "The format of the URL is incorrect.", Toast.LENGTH_SHORT).show()
             } else {
-                youtubes.add(youtube)
-                selectedSubject.youTube = youtubes
-
                 lifecycleScope.launch(Dispatchers.IO) {
                     val result = withContext(Dispatchers.IO) {
-                        subjectDao.updateSubject(selectedSubject)
+                        subjectDao.addYoutube(selectedSubject, youtube)
                     }
 
                     withContext(Main) {
@@ -104,6 +100,10 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
     // get all subjects and display them to the users
     override fun onResume() {
+        if (subjects != null) {
+            subjects!!.clear()
+        }
+
         binding.evPostYoutubeUrl.setText("")
         binding.evPostYoutubeTitle.setText("")
 
@@ -114,9 +114,9 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
                 subjectDao.getSubjectsByTeacherKey("qxLHhh9StYOfogNqLN9G")
             }
 
-            subjectListAdapter.subjects = subjects
-
             withContext(Main) {
+                subjectListAdapter.subjects = subjects
+
                 subjectListAdapter.notifyDataSetChanged()
                 binding.pbYoutubePost.visibility = View.INVISIBLE
             }
