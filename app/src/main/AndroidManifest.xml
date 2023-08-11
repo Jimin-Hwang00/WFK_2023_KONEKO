@@ -12,6 +12,24 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
+            android:name=".comment.SPCmntMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntToAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SentCmntListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.TeacherCmntMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.ReceivedCmntListAcitivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
