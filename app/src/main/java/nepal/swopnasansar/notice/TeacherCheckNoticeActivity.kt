@@ -16,6 +16,7 @@ import nepal.swopnasansar.notice.data.RvCheckNoticeDto
 class TeacherCheckNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherCheckNoticeBinding
     lateinit var adapter : TeacherCheckNoticeAdapter
+    var progressBarVisible = true
     val TAG = "TeacherCheckNoticeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,7 @@ class TeacherCheckNoticeActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val checkNoticeList = ArrayList<RvCheckNoticeDto>()
 
-        adapter = TeacherCheckNoticeAdapter(checkNoticeList)
+        adapter = TeacherCheckNoticeAdapter(checkNoticeList, this)
         binding.rvDeleteList.adapter = adapter
 
         binding.rvDeleteList.layoutManager = LinearLayoutManager(this).apply {
@@ -79,4 +80,12 @@ class TeacherCheckNoticeActivity : AppCompatActivity() {
 
         adapter.setOnClickListener(OnItemClickListener)
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

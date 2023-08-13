@@ -13,6 +13,7 @@ import nepal.swopnasansar.notice.data.RvParentNoticeDto
 class ParentCheckNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityParentCheckNoticeBinding
     lateinit var adapter : ParentCheckNoticeAdapter
+    var progressBarVisible = true
     val TAG = "ParentCheckNoticeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,7 @@ class ParentCheckNoticeActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val checkNoticeList = ArrayList<RvParentNoticeDto>()
 
-        adapter = ParentCheckNoticeAdapter(checkNoticeList)
+        adapter = ParentCheckNoticeAdapter(checkNoticeList, this)
         binding.rvParentNoticeList.adapter = adapter
 
         binding.rvParentNoticeList.layoutManager = LinearLayoutManager(this).apply {
@@ -45,4 +46,12 @@ class ParentCheckNoticeActivity : AppCompatActivity() {
         }
         adapter.setOnClickListener(OnItemClickListener)
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

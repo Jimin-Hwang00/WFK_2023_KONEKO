@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
@@ -18,6 +19,7 @@ import nepal.swopnasansar.notice.data.StudentDto
 class TeacherEntireNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherEntireNoticeBinding
     lateinit var adapter : TeacherEntireNoticeAdapter
+    var progressBarVisible = true
     val TAG = "TeacherEntireNoticeActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,7 @@ class TeacherEntireNoticeActivity : AppCompatActivity() {
         var checkedClass = RvEntireNoticeDto("", "", "", ArrayList(), ArrayList())
         var studentNameList : ArrayList<String> = ArrayList()
 
-        adapter = TeacherEntireNoticeAdapter(entireNoticeList)
+        adapter = TeacherEntireNoticeAdapter(entireNoticeList, this)
         binding.rvEntireNotice.adapter = adapter
 
         binding.rvEntireNotice.layoutManager = LinearLayoutManager(this).apply {
@@ -105,4 +107,12 @@ class TeacherEntireNoticeActivity : AppCompatActivity() {
             }
         }
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

@@ -19,7 +19,7 @@ import nepal.swopnasansar.notice.data.RvSelectNoticeDto
 import nepal.swopnasansar.notice.data.StudentDto
 import nepal.swopnasansar.notice.data.SubjectDto
 
-class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNoticeDto>)
+class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherSelectNoticeAdapter.TeacherViewHolder>() {
     val TAG = "TeacherSelectNoticeAdapter"
     var firestore : FirebaseFirestore? = null
@@ -80,7 +80,7 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
                 for(stn in rvSelectNoticeList){
                     Log.d(TAG, "${stn.class_name}, ${stn.subject_name}, ${stn.student_name}")
                 }
-
+                (activity as? TeacherSelectNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
@@ -138,7 +138,7 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
                 for(stn in rvSelectNoticeList){
                     Log.d(TAG, "${stn.class_name}, ${stn.subject_name}, ${stn.student_name}")
                 }
-
+                (activity as? TeacherSelectNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }

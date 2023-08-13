@@ -9,6 +9,7 @@ import nepal.swopnasansar.databinding.ActivityTeacherNoticeMainBinding
 class TeacherNoticeMainActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherNoticeMainBinding
     val TAG = "TeacheNoticeMainActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTeacherNoticeMainBinding.inflate(layoutInflater)
@@ -19,12 +20,27 @@ class TeacherNoticeMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.entireNoticeBt1.setOnClickListener{
+            val intent = Intent(this@TeacherNoticeMainActivity, TeacherEntireNoticeActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.selectNoticeBt.setOnClickListener{
             val intent = Intent(this@TeacherNoticeMainActivity, TeacherSelectNoticeActivity::class.java)
             startActivity(intent)
         }
 
+        binding.selectNoticeBt1.setOnClickListener{
+            val intent = Intent(this@TeacherNoticeMainActivity, TeacherSelectNoticeActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.checkNoticeBt.setOnClickListener{
+            val intent = Intent(this@TeacherNoticeMainActivity, TeacherCheckNoticeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.checkNoticeBt1.setOnClickListener{
             val intent = Intent(this@TeacherNoticeMainActivity, TeacherCheckNoticeActivity::class.java)
             startActivity(intent)
         }

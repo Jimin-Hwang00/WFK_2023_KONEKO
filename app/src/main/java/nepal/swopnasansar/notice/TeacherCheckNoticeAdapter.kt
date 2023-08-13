@@ -18,7 +18,7 @@ import nepal.swopnasansar.databinding.ListCheckNoticeBinding
 import nepal.swopnasansar.notice.data.NoticeDto
 import nepal.swopnasansar.notice.data.RvCheckNoticeDto
 
-class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNoticeDto>)
+class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherCheckNoticeAdapter.TeacherViewHolder>() {
     val TAG = "TeacherCheckNoticeAdapter"
     var firestore: FirebaseFirestore? = null
@@ -43,6 +43,7 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
                             noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
                     )
                 }
+                (activity as? TeacherCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
@@ -65,6 +66,7 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
                             noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
                     )
                 }
+                (activity as? TeacherCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
@@ -111,7 +113,7 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
 
         // 선택한 홀더의 백그라운드 색 변경
         if (isSelected) {
-            holder.itemView.setBackgroundColor(Color.GRAY)
+            holder.itemView.setBackgroundColor(Color.LTGRAY)
         } else {
             holder.itemView.setBackgroundColor(Color.WHITE)
         }

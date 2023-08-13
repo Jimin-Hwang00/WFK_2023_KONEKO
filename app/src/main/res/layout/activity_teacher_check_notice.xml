@@ -4,52 +4,121 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EDEBFC"
     tools:context=".notice.TeacherCheckNoticeActivity">
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="413dp"
+        android:layout_height="126dp"
+        android:layout_marginBottom="46dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/top_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/receiverListTv"
-        android:layout_width="387dp"
-        android:layout_height="123dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="540dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="content"
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Notice"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="310dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:text="Title"
+        android:textColor="#3F51B5"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
         android:id="@+id/contentEditText"
-        android:layout_width="337dp"
-        android:layout_height="306dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="228dp"
+        android:layout_width="340dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="344dp"
         android:ems="10"
         android:inputType="text"
         android:text="content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="556dp"
+        android:text="Name"
+        android:textColor="#3F51B5"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/receiverListTv"
+        android:layout_width="340dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="596dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDeleteList"
-        android:layout_width="338dp"
-        android:layout_height="169dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="390dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="172dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
+
     <Button
         android:id="@+id/noticeDeleteBt"
-        android:layout_width="102dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="664dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/button_2"
         android:text="delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ import nepal.swopnasansar.notice.data.ClassDto
 import nepal.swopnasansar.notice.data.RvEntireNoticeDto
 import nepal.swopnasansar.notice.data.SubjectDto
 
-class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNoticeDto>)
+class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherEntireNoticeAdapter.TeacherViewHolder>() {
     val TAG = "TeacherAdapter"
     var firestore : FirebaseFirestore? = null
@@ -66,6 +66,7 @@ class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNot
                 for(stn in rvEntireNoticeList){
                     Log.d(TAG, "rv : ${stn.class_name}, ${stn.subject_key}")
                 }
+                (activity as? TeacherEntireNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
@@ -110,6 +111,7 @@ class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNot
                 for(stn in rvEntireNoticeList){
                     Log.d(TAG, "rv : ${stn.class_name}, ${stn.subject_key}")
                 }
+                (activity as? TeacherEntireNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
