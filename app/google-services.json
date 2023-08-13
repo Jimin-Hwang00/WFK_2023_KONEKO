@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349394293593",
+    "project_id": "swopna-sansar-school",
+    "storage_bucket": "swopna-sansar-school.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349394293593:android:670acceafd32a8871bb248",
+        "android_client_info": {
+          "package_name": "nepal.swopnasansar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349394293593-cqg2m1q1a7919o85aavepde88h92l79g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSpjfF1rUEgCYGef9vhDpl0Dtd5FKsVlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349394293593-cqg2m1q1a7919o85aavepde88h92l79g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
