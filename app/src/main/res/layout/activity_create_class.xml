@@ -6,13 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".admin.CreateClassActivity">
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="413dp"
+        android:layout_height="126dp"
+        android:layout_marginBottom="46dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/top_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Create a Class"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
         android:id="@+id/classEt"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="148dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="180dp"
+        android:hint="ex) S1"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,114 +49,138 @@
 
     <TextView
         android:id="@+id/classText"
-        android:layout_width="136dp"
+        android:layout_width="70dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="148dp"
-        android:text="class"
+        android:layout_marginTop="180dp"
+        android:paddingTop="10dp"
+        android:text="Class"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/subjectEt"
-        android:layout_width="wrap_content"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="536dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="550dp"
         android:ems="10"
+        android:hint="ex) Math"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/subjectText"
-        android:layout_width="136dp"
+        android:layout_width="90dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="536dp"
-        android:text="subject"
+        android:layout_marginTop="550dp"
+        android:paddingTop="10dp"
+        android:text="Subject"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/studentText"
-        android:layout_width="136dp"
+        android:layout_width="90dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="324dp"
-        android:text="student"
+        android:layout_marginTop="350dp"
+        android:paddingTop="10dp"
+        android:text="Student"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/teacherText"
-        android:layout_width="136dp"
+        android:layout_width="90dp"
         android:layout_height="46dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="224dp"
-        android:text="teacher"
+        android:layout_marginTop="250dp"
+        android:paddingTop="10dp"
+        android:text="Teacher"
+        android:textColor="#3F51B5"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/teacherSelectBt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="224dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="250dp"
+        android:background="@drawable/button_2"
         android:text="select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/studentSelectBt"
-        android:layout_width="95dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="220dp"
-        android:layout_marginTop="324dp"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="350dp"
+        android:background="@drawable/button_2"
         android:text="select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/deleteClassBt"
-        android:layout_width="102dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="636dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_1"
         android:text="delete"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/addClassBt"
-        android:layout_width="102dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="636dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/button_3"
         android:text="add"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/selectedStudentListText"
-        android:layout_width="336dp"
+        android:layout_width="380dp"
         android:layout_height="121dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="392dp"
+        android:layout_marginTop="400dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/selectedTeacher"
-        android:layout_width="244dp"
+        android:layout_width="380dp"
         android:layout_height="40dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

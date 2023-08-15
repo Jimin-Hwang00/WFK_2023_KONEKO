@@ -25,6 +25,7 @@ class EditStudentActivity : AppCompatActivity() {
     lateinit var adapter: StudentAdapter
     lateinit var itemBinding: ListStudentBinding
     val TAG = "EditStudentActivity"
+    var progressBarVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,5 +151,13 @@ class EditStudentActivity : AppCompatActivity() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }
 

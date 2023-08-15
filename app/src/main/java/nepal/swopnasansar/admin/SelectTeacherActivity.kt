@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
@@ -13,6 +14,7 @@ import nepal.swopnasansar.databinding.ActivityTeacherListBinding
 
 class SelectTeacherActivity : AppCompatActivity() {
     lateinit var binding : ActivitySelectTeacherBinding
+    var progressBarVisible = true
     lateinit var adapter : SelectedTeacherAdapter
     val TAG = "SelectTeacherActivity"
 
@@ -60,4 +62,13 @@ class SelectTeacherActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

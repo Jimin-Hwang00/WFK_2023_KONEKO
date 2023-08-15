@@ -27,6 +27,12 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
             teacherList.clear()
             teacherList.addAll(tempList)
 
+            if(activity is TeacherListActivity){
+                (activity as? TeacherListActivity)?.hideProgressBar()
+            }
+            if(activity is EditTeacherActivity){
+                (activity as? EditTeacherActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }
@@ -42,6 +48,12 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
             teacherList.clear()
             teacherList.addAll(tempList)
 
+            if(activity is TeacherListActivity){
+                (activity as? TeacherListActivity)?.hideProgressBar()
+            }
+            if(activity is EditTeacherActivity){
+                (activity as? EditTeacherActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }

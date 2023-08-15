@@ -3,6 +3,7 @@ package nepal.swopnasansar.admin
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import nepal.swopnasansar.admin.data.AdminCalDto
@@ -10,7 +11,7 @@ import nepal.swopnasansar.databinding.ListItemBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AdminCalAdapter(val adminCalList : ArrayList<AdminCalDto>)
+class AdminCalAdapter(var adminCalList : ArrayList<AdminCalDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<AdminCalAdapter.AdminCalViewHolder>() {
     val TAG = "AdminCalAdapter"
     var firestore : FirebaseFirestore? = null
@@ -25,7 +26,7 @@ class AdminCalAdapter(val adminCalList : ArrayList<AdminCalDto>)
 
             // date 값을 비교하여 정렬
             tempList.sortWith(Comparator { o1, o2 ->
-                val format = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+                val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val date1 = format.parse(o1.date)
                 val date2 = format.parse(o2.date)
                 date1?.compareTo(date2) ?: 0
@@ -35,6 +36,12 @@ class AdminCalAdapter(val adminCalList : ArrayList<AdminCalDto>)
             adminCalList.clear()
             adminCalList.addAll(tempList)
 
+            if(activity is CheckEventActivity){
+                (activity as? CheckEventActivity)?.hideProgressBar()
+            }
+            if(activity is UserCheckEventActivity){
+                (activity as? UserCheckEventActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }
@@ -68,7 +75,7 @@ class AdminCalAdapter(val adminCalList : ArrayList<AdminCalDto>)
 
     override fun onBindViewHolder(holder: AdminCalViewHolder, position: Int) {
         holder.event.text = adminCalList[position].event
-        val spliteddateList = adminCalList[position].date.split("/")
+        val spliteddateList = adminCalList[position].date.split("-")
         holder.dayOfMonth.text = spliteddateList[2]
     }
 
@@ -81,5 +88,9 @@ class AdminCalAdapter(val adminCalList : ArrayList<AdminCalDto>)
 
     fun setOnItemLongClickListener(listener: OnItemLongClickListener?) {
         this.lcListener = listener
+    }
+    fun updateList(newList: ArrayList<AdminCalDto>) {
+        adminCalList = newList
+        notifyDataSetChanged()
     }
 }

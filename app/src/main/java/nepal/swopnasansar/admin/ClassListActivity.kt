@@ -21,6 +21,7 @@ import nepal.swopnasansar.databinding.ActivityClassListBinding
 class ClassListActivity : AppCompatActivity() {
     lateinit var binding : ActivityClassListBinding
     lateinit var adapter : ClassAdapter
+    var progressBarVisible = true
     val TAG = "ClassListActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,4 +89,13 @@ class ClassListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

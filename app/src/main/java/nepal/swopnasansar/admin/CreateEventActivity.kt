@@ -37,7 +37,7 @@ class CreateEventActivity : AppCompatActivity() {
             val dlg = DatePickerDialog(this, object : DatePickerDialog.OnDateSetListener {
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
 
-                    binding.dateTv.setText("${year}/${month+1}/${dayOfMonth}")
+                    binding.dateTv.setText("${year}-${month+1}-${dayOfMonth}")
                 }
             }, year, month, date)
             dlg.show()

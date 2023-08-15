@@ -3,6 +3,7 @@ package nepal.swopnasansar.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.admin.data.AccountantDto
 import nepal.swopnasansar.databinding.ActivityAccountantListBinding
@@ -10,6 +11,7 @@ import nepal.swopnasansar.databinding.ActivityAccountantListBinding
 class AccountantListActivity : AppCompatActivity() {
     lateinit var binding : ActivityAccountantListBinding
     lateinit var adapter : AccountantAdapter
+    var progressBarVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,4 +31,12 @@ class AccountantListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

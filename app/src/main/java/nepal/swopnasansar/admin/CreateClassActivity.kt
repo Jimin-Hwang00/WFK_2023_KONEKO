@@ -153,6 +153,7 @@ class CreateClassActivity : AppCompatActivity() {
             }
             REQ_STUDENT -> {
                 if (resultCode == RESULT_OK) {
+                    studentKeyList.clear()
                     binding.selectedStudentListText.setText("-Selected Student List- \n ${data?.getStringExtra("selected_studentList")}")
                     studentKeyList.addAll(data?.getStringArrayListExtra("selected_student_keys") as Collection<String>)
                     Log.d(TAG, studentKeyList.toString())

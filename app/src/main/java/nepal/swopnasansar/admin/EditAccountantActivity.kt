@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
@@ -23,6 +24,7 @@ class EditAccountantActivity : AppCompatActivity() {
     lateinit var adapter: AccountantAdapter
     lateinit var itemBinding: ListTeacherAndAccountBinding
     val TAG = "EditAccountantActivity"
+    var progressBarVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -158,4 +160,12 @@ class EditAccountantActivity : AppCompatActivity() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

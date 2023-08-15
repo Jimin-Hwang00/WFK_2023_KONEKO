@@ -3,6 +3,7 @@ package nepal.swopnasansar.admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
 import nepal.swopnasansar.admin.data.StudentDto
@@ -13,6 +14,7 @@ import nepal.swopnasansar.databinding.ActivityTeacherListBinding
 class TeacherListActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherListBinding
     lateinit var adapter : TeacherAdapter
+    var progressBarVisible = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,4 +35,12 @@ class TeacherListActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
+    fun hideProgressBar() {
+        if (progressBarVisible) {
+            progressBarVisible = false
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+
 }

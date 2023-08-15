@@ -31,6 +31,12 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
                 Log.d(TAG, "init ${i.accountant_key}, ${i.accountant_name}")
             }
 
+            if(activity is AccountantListActivity){
+                (activity as? AccountantListActivity)?.hideProgressBar()
+            }
+            if(activity is EditAccountantActivity){
+                (activity as? EditAccountantActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }
@@ -46,6 +52,12 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
             accountantList.clear()
             accountantList.addAll(tempList)
 
+            if(activity is AccountantListActivity){
+                (activity as? AccountantListActivity)?.hideProgressBar()
+            }
+            if(activity is EditAccountantActivity){
+                (activity as? EditAccountantActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }

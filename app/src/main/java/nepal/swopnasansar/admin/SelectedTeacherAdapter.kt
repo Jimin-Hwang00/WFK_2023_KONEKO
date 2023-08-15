@@ -28,6 +28,7 @@ class SelectedTeacherAdapter (private val activity: Activity, val teacherList : 
             teacherList.clear()
             teacherList.addAll(tempList)
 
+            (activity as? SelectTeacherActivity)?.hideProgressBar()
             notifyDataSetChanged()
         }
     }
@@ -43,6 +44,7 @@ class SelectedTeacherAdapter (private val activity: Activity, val teacherList : 
             teacherList.clear()
             teacherList.addAll(tempList)
 
+            (activity as? SelectTeacherActivity)?.hideProgressBar()
             notifyDataSetChanged()
         }
     }
@@ -126,4 +128,5 @@ class SelectedTeacherAdapter (private val activity: Activity, val teacherList : 
     fun setOnCheckBoxClickListener(listener: onCheckBoxClickListener) {
         this.cbListener = listener
     }
+
 }

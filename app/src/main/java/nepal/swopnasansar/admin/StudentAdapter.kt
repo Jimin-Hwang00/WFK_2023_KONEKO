@@ -28,6 +28,15 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
             studentList.clear()
             studentList.addAll(tempList)
 
+            if(activity is StudentListActivity){
+                (activity as? StudentListActivity)?.hideProgressBar()
+            }
+            if(activity is SelectStudentActivity){
+                (activity as? SelectStudentActivity)?.hideProgressBar()
+            }
+            if(activity is EditStudentActivity){
+                (activity as? EditStudentActivity)?.hideProgressBar()
+            }
             notifyDataSetChanged()
         }
     }
@@ -42,6 +51,16 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
             // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
             studentList.clear()
             studentList.addAll(tempList)
+
+            if(activity is StudentListActivity){
+                (activity as? StudentListActivity)?.hideProgressBar()
+            }
+            if(activity is SelectStudentActivity){
+                (activity as? SelectStudentActivity)?.hideProgressBar()
+            }
+            if(activity is EditStudentActivity){
+                (activity as? EditStudentActivity)?.hideProgressBar()
+            }
 
             notifyDataSetChanged()
         }

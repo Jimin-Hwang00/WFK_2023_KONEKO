@@ -41,20 +41,21 @@ import nepal.swopnasansar.admin.data.RvClassListDto
 import nepal.swopnasansar.admin.data.SubjectDto
 import nepal.swopnasansar.admin.data.TeacherDto
 import nepal.swopnasansar.databinding.ActivityCheckEventBinding
+import nepal.swopnasansar.databinding.ActivityUserCheckEventBinding
 import java.util.Collections
 import java.util.Date
 import java.util.GregorianCalendar
 import java.util.Locale
 
-class CheckEventActivity : AppCompatActivity() {
-    lateinit var binding :ActivityCheckEventBinding
+class UserCheckEventActivity : AppCompatActivity() {
+    lateinit var binding :ActivityUserCheckEventBinding
     lateinit var adapter : AdminCalAdapter
     var progressBarVisible = true
-    val TAG = "CheckEventActivity"
+    val TAG = "UserCheckEventActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCheckEventBinding.inflate(layoutInflater)
+        binding = ActivityUserCheckEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val db = Firebase.firestore
@@ -76,7 +77,7 @@ class CheckEventActivity : AppCompatActivity() {
                     adminCalList
                 )
 
-                binding.rvEvent.layoutManager = LinearLayoutManager(this@CheckEventActivity).apply {
+                binding.rvEvent.layoutManager = LinearLayoutManager(this@UserCheckEventActivity).apply {
                     orientation = LinearLayoutManager.VERTICAL
                 }
                 binding.rvEvent.adapter = adapter
@@ -87,51 +88,9 @@ class CheckEventActivity : AppCompatActivity() {
 
         binding.calendarView.setOnMonthChangedListener { widget, date ->
             val TempList = onMonthChanged(date.year.toString(), date.month.toString(), adminCalList)
-            Log.d(TAG, "setOn 연결 후 :${adminCalList.size}")
+
             adapter.updateList(TempList)
         }
-
-        binding.addBt.setOnClickListener {
-            val intent = Intent(this, CreateEventActivity::class.java)
-            startActivity(intent) //액티비티 띄우
-        }
-
-        val onLongClickListener = object : AdminCalAdapter.OnItemLongClickListener {
-            override fun onItemLongClick(view: View, position: Int) {
-
-                AlertDialog.Builder(this@CheckEventActivity).run {
-                    setTitle("Delete")
-                    setMessage("Delete it?")
-                    setNegativeButton("취소", null)
-                    setCancelable(false)
-                    setPositiveButton("확인", object : DialogInterface.OnClickListener {
-                        override fun onClick(p0: DialogInterface?, p1: Int) {
-                            db.collection("schedule").document(adminCalList[position].schedule_key)
-                                .delete()
-                                .addOnSuccessListener {
-                                    adminCalList.removeAt(position) // ArrayList에서 항목 삭제
-                                    adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
-                                    Toast.makeText(
-                                        this@CheckEventActivity,
-                                        "delete success!!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                .addOnFailureListener { e ->
-                                    // 삭제 중에 발생한 오류 처리
-                                    Toast.makeText(
-                                        this@CheckEventActivity,
-                                        "delete failed: ${e.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                        }
-                    })
-                    show()
-                }
-            }
-        }
-        adapter.setOnItemLongClickListener(onLongClickListener)
 
     }
     override fun onResume() {

@@ -57,6 +57,7 @@ class ClassAdapter(private val activity: Activity, val rvClassList : ArrayList<R
                     rvClassList.add(RvClassListDto(classTempList[i].class_name, teacherTempList[i].teacher_name,
                         subjectTempList[i].subject_name, subjectTempList[i].class_key, subjectTempList[i].subject_key))
                 }
+                (activity as? ClassListActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
         }
