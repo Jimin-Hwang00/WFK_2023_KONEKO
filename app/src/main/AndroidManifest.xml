@@ -84,6 +84,20 @@
             android:parentActivityName=".youtube.TeacherCheckYoutbeListActivity"
             android:exported="false" />
         <activity
+            android:name=".accountant.SPCheckTuitionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".accountant.AccountantTuitionInputActivity"
+            android:parentActivityName=".accountant.AccountantTuitionCheckActivity"
+            android:exported="false" />
+        <activity
+            android:name=".accountant.AccountantTuitionCheckActivity"
+            android:parentActivityName=".accountant.AccountantMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".accountant.AccountantMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
