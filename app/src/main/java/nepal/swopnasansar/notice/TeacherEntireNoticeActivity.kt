@@ -10,11 +10,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import nepal.swopnasansar.R
+import nepal.swopnasansar.data.NoticeDto
+import nepal.swopnasansar.data.RvEntireNoticeDto
+import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.databinding.ActivityTeacherEntireNoticeBinding
-import nepal.swopnasansar.notice.data.NoticeDto
-import nepal.swopnasansar.notice.data.RvEntireNoticeDto
-import nepal.swopnasansar.notice.data.StudentDto
 
 class TeacherEntireNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherEntireNoticeBinding

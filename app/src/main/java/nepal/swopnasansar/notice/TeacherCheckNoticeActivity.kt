@@ -9,9 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import nepal.swopnasansar.R
+import nepal.swopnasansar.data.RvCheckNoticeDto
 import nepal.swopnasansar.databinding.ActivityTeacherCheckNoticeBinding
-import nepal.swopnasansar.notice.data.RvCheckNoticeDto
 
 class TeacherCheckNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherCheckNoticeBinding

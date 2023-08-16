@@ -13,12 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.attendance.data.AttendanceDto
-import nepal.swopnasansar.attendance.data.RvTeacherAttDto
-import nepal.swopnasansar.attendance.data.StudentDto
-import nepal.swopnasansar.databinding.ActivityTeacherAttendanceBinding
+import nepal.swopnasansar.data.AttendanceDto
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvTeacherAttDto
+import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.databinding.ListTeacherAttBinding
-import nepal.swopnasansar.notice.data.ClassDto
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

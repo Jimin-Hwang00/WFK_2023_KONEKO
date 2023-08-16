@@ -1,26 +1,16 @@
 package nepal.swopnasansar.attendance
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.ColorStateList
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import nepal.swopnasansar.R
-import nepal.swopnasansar.attendance.data.AttendanceDto
-import nepal.swopnasansar.attendance.data.RvTeacherAttDto
-import nepal.swopnasansar.attendance.data.StnAttDto
+import nepal.swopnasansar.data.AttendanceDto
+import nepal.swopnasansar.data.RvTeacherAttDto
+import nepal.swopnasansar.data.StnAttDto
 import nepal.swopnasansar.databinding.ActivityTeacherAttendanceBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -77,9 +67,11 @@ class TeacherAttendanceActivity : AppCompatActivity() {
             if(pref.getString("date", null).equals(attCheckList[0].date)){
                 val attKey = pref.getString("attKey", null).toString()
                 // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                db.collection("attendance").document(attKey).set(AttendanceDto(attKey,
+                db.collection("attendance").document(attKey).set(
+                    AttendanceDto(attKey,
                     attCheckList[0].date, checkedList
-                ))
+                )
+                )
                     .addOnSuccessListener {
                         checkedList.clear()
                         Toast.makeText(this@TeacherAttendanceActivity, "Save Completed", Toast.LENGTH_LONG).show()
@@ -97,9 +89,11 @@ class TeacherAttendanceActivity : AppCompatActivity() {
                         editor.putString("date", attCheckList[0].date)
                         editor.commit()
                         // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                        db.collection("attendance").document(documentId).set(AttendanceDto(documentId,
+                        db.collection("attendance").document(documentId).set(
+                            AttendanceDto(documentId,
                             attCheckList[0].date, checkedList
-                        ))
+                        )
+                        )
                             .addOnSuccessListener {
                                 checkedList.clear()
                                 Toast.makeText(this@TeacherAttendanceActivity, "Save Completed", Toast.LENGTH_LONG).show()

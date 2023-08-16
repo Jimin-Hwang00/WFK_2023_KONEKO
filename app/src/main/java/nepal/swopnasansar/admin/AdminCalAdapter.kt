@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import nepal.swopnasansar.admin.data.AdminCalDto
+import nepal.swopnasansar.data.AdminCalDto
 import nepal.swopnasansar.databinding.ListItemBinding
 import java.text.SimpleDateFormat
 import java.util.Locale

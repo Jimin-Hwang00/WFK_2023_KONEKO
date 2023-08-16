@@ -110,7 +110,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
         binding.pbTCheckSubmittedHw.visibility = View.VISIBLE
 
         lifecycleScope.launch {
-            val classItem: Class = withContext(Dispatchers.IO){
+            val classItem: Class? = withContext(Dispatchers.IO){
                 classDao.getClassByClassKey(homework.class_key)
             }
 

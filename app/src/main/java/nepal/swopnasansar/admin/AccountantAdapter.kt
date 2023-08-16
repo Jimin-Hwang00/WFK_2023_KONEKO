@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import nepal.swopnasansar.admin.data.AccountantDto
-import nepal.swopnasansar.admin.data.TeacherDto
+import nepal.swopnasansar.data.AccountantDto
+import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ListTeacherAndAccountBinding
 
 class AccountantAdapter(private val activity: Activity, val accountantList : ArrayList<AccountantDto>)

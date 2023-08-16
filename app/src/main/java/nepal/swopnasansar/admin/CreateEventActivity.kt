@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import nepal.swopnasansar.admin.data.AdminCalDao
-import nepal.swopnasansar.admin.data.AdminCalDto
+import nepal.swopnasansar.data.AdminCalDao
+import nepal.swopnasansar.data.AdminCalDto
 import nepal.swopnasansar.databinding.ActivityCreateEventBinding
 import java.util.Calendar
 import java.util.GregorianCalendar

@@ -1,7 +1,6 @@
 package nepal.swopnasansar.notice
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,12 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.R
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvSelectNoticeDto
+import nepal.swopnasansar.data.StudentDto
+import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.databinding.ListSelectNoticeBinding
-import nepal.swopnasansar.notice.data.ClassDto
-import nepal.swopnasansar.notice.data.RvSelectNoticeDto
-import nepal.swopnasansar.notice.data.StudentDto
-import nepal.swopnasansar.notice.data.SubjectDto
 
 class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherSelectNoticeAdapter.TeacherViewHolder>() {

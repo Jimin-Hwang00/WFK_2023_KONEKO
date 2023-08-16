@@ -14,9 +14,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
+import nepal.swopnasansar.data.NoticeDto
+import nepal.swopnasansar.data.RvCheckNoticeDto
 import nepal.swopnasansar.databinding.ListCheckNoticeBinding
-import nepal.swopnasansar.notice.data.NoticeDto
-import nepal.swopnasansar.notice.data.RvCheckNoticeDto
 
 class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherCheckNoticeAdapter.TeacherViewHolder>() {

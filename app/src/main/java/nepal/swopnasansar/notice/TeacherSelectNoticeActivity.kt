@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
+import nepal.swopnasansar.data.RvSelectNoticeDto
 import nepal.swopnasansar.databinding.ActivityTeacherSelectNoticeBinding
-import nepal.swopnasansar.notice.data.RvSelectNoticeDto
-
 class TeacherSelectNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherSelectNoticeBinding
     lateinit var adapter : TeacherSelectNoticeAdapter

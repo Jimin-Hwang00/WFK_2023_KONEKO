@@ -8,7 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
-import nepal.swopnasansar.admin.data.TeacherDto
+import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ActivitySelectTeacherBinding
 import nepal.swopnasansar.databinding.ActivityTeacherListBinding
 

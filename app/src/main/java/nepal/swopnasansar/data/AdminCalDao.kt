@@ -1,4 +1,4 @@
-package nepal.swopnasansar.admin.data
+package nepal.swopnasansar.data
 
 class AdminCalDao {
     var AdminCalList = ArrayList<AdminCalDto>()

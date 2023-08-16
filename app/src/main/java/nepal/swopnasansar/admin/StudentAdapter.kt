@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import nepal.swopnasansar.admin.data.StudentDto
+import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.databinding.ListStudentBinding
 
 

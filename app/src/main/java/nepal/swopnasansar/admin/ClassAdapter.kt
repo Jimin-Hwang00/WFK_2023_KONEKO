@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.admin.data.ClassDto
-import nepal.swopnasansar.admin.data.RvClassListDto
-import nepal.swopnasansar.admin.data.SubjectDto
-import nepal.swopnasansar.admin.data.TeacherDto
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvClassListDto
+import nepal.swopnasansar.data.SubjectDto
+import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ListClassBinding
 import nepal.swopnasansar.databinding.ListTeacherAndAccountBinding
 
@@ -54,8 +54,10 @@ class ClassAdapter(private val activity: Activity, val rvClassList : ArrayList<R
                 val minSize = minOf(classTempList.size, teacherTempList.size, subjectTempList.size)
                 rvClassList.clear()
                 for (i in 0 until minSize) {
-                    rvClassList.add(RvClassListDto(classTempList[i].class_name, teacherTempList[i].teacher_name,
-                        subjectTempList[i].subject_name, subjectTempList[i].class_key, subjectTempList[i].subject_key))
+                    rvClassList.add(
+                        RvClassListDto(classTempList[i].class_name, teacherTempList[i].teacher_name,
+                        subjectTempList[i].subject_name, subjectTempList[i].class_key, subjectTempList[i].subject_key)
+                    )
                 }
                 (activity as? ClassListActivity)?.hideProgressBar()
                 notifyDataSetChanged()

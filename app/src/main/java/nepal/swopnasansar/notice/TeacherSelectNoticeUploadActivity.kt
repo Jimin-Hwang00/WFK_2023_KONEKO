@@ -9,8 +9,8 @@ import android.widget.Toast
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
+import nepal.swopnasansar.data.NoticeDto
 import nepal.swopnasansar.databinding.ActivityTeacherSelectNoticeUploadBinding
-import nepal.swopnasansar.notice.data.NoticeDto
 
 class TeacherSelectNoticeUploadActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherSelectNoticeUploadBinding

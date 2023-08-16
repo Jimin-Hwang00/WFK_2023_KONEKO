@@ -15,10 +15,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.data.NoticeDto
+import nepal.swopnasansar.data.RvParentNoticeDto
+import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.databinding.ListParentNoticeBinding
-import nepal.swopnasansar.notice.data.NoticeDto
-import nepal.swopnasansar.notice.data.RvParentNoticeDto
-import nepal.swopnasansar.notice.data.SubjectDto
 
 class ParentCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvParentNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<ParentCheckNoticeAdapter.ParentViewHolder>() {

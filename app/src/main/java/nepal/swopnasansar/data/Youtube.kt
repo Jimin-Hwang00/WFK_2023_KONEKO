@@ -1,4 +1,4 @@
-package nepal.swopnasansar.admin.data
+package nepal.swopnasansar.data
 
 import java.io.Serializable
 

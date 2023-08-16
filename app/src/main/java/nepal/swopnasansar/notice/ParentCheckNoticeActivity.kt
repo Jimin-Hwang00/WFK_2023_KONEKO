@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
+import nepal.swopnasansar.data.RvParentNoticeDto
 import nepal.swopnasansar.databinding.ActivityParentCheckNoticeBinding
-import nepal.swopnasansar.notice.data.RvParentNoticeDto
 
 class ParentCheckNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityParentCheckNoticeBinding

@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
-import nepal.swopnasansar.admin.data.StudentDto
-import nepal.swopnasansar.admin.data.TeacherDto
+import nepal.swopnasansar.data.StudentDto
+import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ActivityStudentListBinding
 import nepal.swopnasansar.databinding.ActivityTeacherListBinding
 

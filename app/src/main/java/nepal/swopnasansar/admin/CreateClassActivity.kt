@@ -10,11 +10,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import nepal.swopnasansar.admin.data.AdminCalDto
-import nepal.swopnasansar.admin.data.ClassDto
-import nepal.swopnasansar.admin.data.StudentDto
-import nepal.swopnasansar.admin.data.SubjectDto
-import nepal.swopnasansar.admin.data.TeacherDto
+import nepal.swopnasansar.data.AdminCalDto
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.StudentDto
+import nepal.swopnasansar.data.SubjectDto
+import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ActivityCreateClassBinding
 import java.io.Serializable
 import javax.security.auth.Subject
@@ -85,8 +85,10 @@ class CreateClassActivity : AppCompatActivity() {
                                     val documentId = documentReference.id
                                     classKey = documentId
                                     // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                    db.collection("class").document(documentId).set(ClassDto(documentId, className,
-                                        studentKeyList, teacherInfo.teacher_key))
+                                    db.collection("class").document(documentId).set(
+                                        ClassDto(documentId, className,
+                                        studentKeyList, teacherInfo.teacher_key)
+                                    )
                                         .addOnSuccessListener {
                                             Log.d(TAG, "save completed")
                                         }
@@ -103,8 +105,10 @@ class CreateClassActivity : AppCompatActivity() {
                                 .addOnSuccessListener { documentReference ->
                                     val documentId = documentReference.id
                                     // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                    db.collection("subject").document(documentId).set(SubjectDto(documentId,
-                                        subjectName, teacherInfo.teacher_key, classKey, ArrayList()))
+                                    db.collection("subject").document(documentId).set(
+                                        SubjectDto(documentId,
+                                        subjectName, teacherInfo.teacher_key, classKey, ArrayList())
+                                    )
                                         .addOnSuccessListener {
                                             Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
 

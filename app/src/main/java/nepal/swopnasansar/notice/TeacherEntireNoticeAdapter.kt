@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvEntireNoticeDto
+import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.databinding.ListEntireNoticeBinding
-import nepal.swopnasansar.notice.data.ClassDto
-import nepal.swopnasansar.notice.data.RvEntireNoticeDto
-import nepal.swopnasansar.notice.data.SubjectDto
 
 class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<TeacherEntireNoticeAdapter.TeacherViewHolder>() {

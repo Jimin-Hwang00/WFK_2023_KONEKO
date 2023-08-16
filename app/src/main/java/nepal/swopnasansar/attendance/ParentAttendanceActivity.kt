@@ -1,18 +1,11 @@
 package nepal.swopnasansar.attendance
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import nepal.swopnasansar.R
-import nepal.swopnasansar.attendance.data.RvParentAttDto
-import nepal.swopnasansar.attendance.data.RvTeacherAttDto
-import nepal.swopnasansar.attendance.data.StnAttDto
+import nepal.swopnasansar.data.RvParentAttDto
 import nepal.swopnasansar.databinding.ActivityParentAttendanceBinding
-import nepal.swopnasansar.databinding.ActivityTeacherAttendanceBinding
 
 class ParentAttendanceActivity : AppCompatActivity() {
     lateinit var binding : ActivityParentAttendanceBinding

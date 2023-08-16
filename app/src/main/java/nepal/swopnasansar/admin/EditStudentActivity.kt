@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
-import nepal.swopnasansar.admin.data.AdminCalDto
-import nepal.swopnasansar.admin.data.StudentDto
+import nepal.swopnasansar.data.AdminCalDto
+import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.databinding.ActivityEditListBinding
 import nepal.swopnasansar.databinding.ActivityEditStudentBinding
 import nepal.swopnasansar.databinding.ActivityStudentListBinding

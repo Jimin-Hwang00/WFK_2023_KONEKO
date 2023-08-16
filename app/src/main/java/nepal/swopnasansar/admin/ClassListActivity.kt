@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
-import nepal.swopnasansar.admin.data.AccountantDto
-import nepal.swopnasansar.admin.data.RvClassListDto
+import nepal.swopnasansar.data.AccountantDto
+import nepal.swopnasansar.data.RvClassListDto
 import nepal.swopnasansar.databinding.ActivityAccountantListBinding
 import nepal.swopnasansar.databinding.ActivityClassListBinding
 

@@ -9,10 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.attendance.data.AttendanceDto
-import nepal.swopnasansar.attendance.data.RvParentAttDto
-import nepal.swopnasansar.attendance.data.StnAttDto
-import nepal.swopnasansar.attendance.data.StudentDto
+import nepal.swopnasansar.data.AttendanceDto
+import nepal.swopnasansar.data.RvParentAttDto
+import nepal.swopnasansar.data.StnAttDto
 import nepal.swopnasansar.databinding.ListParentAttBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
