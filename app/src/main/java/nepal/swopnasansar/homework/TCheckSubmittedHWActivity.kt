@@ -19,7 +19,7 @@ import nepal.swopnasansar.databinding.ActivityTCheckSubmittedHwBinding
 import nepal.swopnasansar.dao.*
 import nepal.swopnasansar.dto.Homework
 import nepal.swopnasansar.dto.Class
-import nepal.swopnasansar.dto.TSubmitItem
+import nepal.swopnasansar.dto.THWSubmitItem
 
 class TCheckSubmittedHWActivity : AppCompatActivity() {
     private val TAG = "TCheckSubmittedHWActivity"
@@ -36,7 +36,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
     val uid = authDao.getUid()
 
     var homeworks: ArrayList<Homework>? = ArrayList()
-    var submittedStatusList: ArrayList<TSubmitItem> = ArrayList()
+    var submittedStatusList: ArrayList<THWSubmitItem> = ArrayList()
 
     private lateinit var hwAdapter: THWAdapter
     private lateinit var submittedHWAdapter: THWSubmittedStatusAdapter
@@ -123,7 +123,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
                     }
 
                     if (student != null) {
-                        val submittedStatus = TSubmitItem(homework.homework_key, homework.class_name, homework.subject_name, stnKey, student.stn_name, null)
+                        val submittedStatus = THWSubmitItem(homework.homework_key, homework.class_name, homework.subject_name, stnKey, student.stn_name, null)
 
                         homework.submitted_hw.forEachIndexed { idx, submittedHW ->
                             if (stnKey == submittedHW.stn_key) {

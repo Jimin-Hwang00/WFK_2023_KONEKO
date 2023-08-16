@@ -12,13 +12,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivityTCheckSubmittedHwDetailBinding
 import nepal.swopnasansar.dao.HomeworkDAO
-import nepal.swopnasansar.dto.TSubmitItem
+import nepal.swopnasansar.dto.THWSubmitItem
 
 class TCheckSubmittedHWDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTCheckSubmittedHwDetailBinding
 
     val homeworkDao = HomeworkDAO()
-    var submittedStatus: TSubmitItem? = null
+    var submittedStatus: THWSubmitItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +26,9 @@ class TCheckSubmittedHWDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            submittedStatus = intent.getSerializableExtra("submittedStatus", TSubmitItem::class.java)
+            submittedStatus = intent.getSerializableExtra("submittedStatus", THWSubmitItem::class.java)
         } else {
-            submittedStatus = intent.getSerializableExtra("submittedStatus") as TSubmitItem
+            submittedStatus = intent.getSerializableExtra("submittedStatus") as THWSubmitItem
         }
 
         if (submittedStatus != null) {

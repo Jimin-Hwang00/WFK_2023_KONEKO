@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivitySpSubmitHwBinding
 import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.HomeworkDAO
-import nepal.swopnasansar.dto.SPSubmitItem
+import nepal.swopnasansar.dto.SPHWSubmitItem
 import nepal.swopnasansar.dto.SubmittedHW
 
 class SPSubmitHWActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class SPSubmitHWActivity : AppCompatActivity() {
 
     val uid = authDao.getUid()
 
-    var submittedStatus: SPSubmitItem? = null
+    var submittedStatus: SPHWSubmitItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +40,9 @@ class SPSubmitHWActivity : AppCompatActivity() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            submittedStatus = intent.getSerializableExtra("submittedStatus", SPSubmitItem::class.java)
+            submittedStatus = intent.getSerializableExtra("submittedStatus", SPHWSubmitItem::class.java)
         } else {
-            submittedStatus = intent.getSerializableExtra("submittedStatus") as SPSubmitItem
+            submittedStatus = intent.getSerializableExtra("submittedStatus") as SPHWSubmitItem
         }
 
         if (submittedStatus == null) {

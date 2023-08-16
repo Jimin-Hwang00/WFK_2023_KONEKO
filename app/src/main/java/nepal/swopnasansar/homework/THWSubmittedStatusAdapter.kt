@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.dto.TSubmitItem
+import nepal.swopnasansar.dto.THWSubmitItem
 
-class THWSubmittedStatusAdapter(var itemList: ArrayList<TSubmitItem>): RecyclerView.Adapter<THWSubmittedStatusAdapter.ViewHolder>() {
+class THWSubmittedStatusAdapter(var itemList: ArrayList<THWSubmitItem>): RecyclerView.Adapter<THWSubmittedStatusAdapter.ViewHolder>() {
     private var clickListener: OnItemClickListener? = null
 
     var selectedIdx = -1
@@ -57,7 +57,7 @@ class THWSubmittedStatusAdapter(var itemList: ArrayList<TSubmitItem>): RecyclerV
         }
     }
 
-    fun updateData(newItems: ArrayList<TSubmitItem>) {
+    fun updateData(newItems: ArrayList<THWSubmitItem>) {
         itemList.clear()
         itemList.addAll(newItems)
         notifyDataSetChanged()

@@ -17,7 +17,7 @@ import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.ClassDAO
 import nepal.swopnasansar.dao.HomeworkDAO
 import nepal.swopnasansar.dto.Homework
-import nepal.swopnasansar.dto.SPSubmitItem
+import nepal.swopnasansar.dto.SPHWSubmitItem
 
 class SPCheckHWActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpCheckHwBinding
@@ -31,7 +31,7 @@ class SPCheckHWActivity : AppCompatActivity() {
     val uid = authDao.getUid()
 
     var homeworks: ArrayList<Homework>? = ArrayList()
-    var submittedStatusList = ArrayList<SPSubmitItem>()
+    var submittedStatusList = ArrayList<SPHWSubmitItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,7 +99,7 @@ class SPCheckHWActivity : AppCompatActivity() {
                     submittedStatusList.clear()
 
                     homeworks!!.forEach { homework ->
-                        val submittedStatus = SPSubmitItem(homework.homework_key, homework.subject_name, homework.title, homework.date, null)
+                        val submittedStatus = SPHWSubmitItem(homework.homework_key, homework.subject_name, homework.title, homework.date, null)
                         homework.submitted_hw.forEachIndexed { index, submittedHW ->
                             if (submittedHW.stn_key == uid) {
                                 submittedStatus.idx = index

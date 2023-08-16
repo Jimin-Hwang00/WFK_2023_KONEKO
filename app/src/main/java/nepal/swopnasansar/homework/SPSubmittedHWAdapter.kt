@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.dto.SPSubmitItem
+import nepal.swopnasansar.dto.SPHWSubmitItem
 
-class SPSubmittedHWAdapter(var itemList: ArrayList<SPSubmitItem>): RecyclerView.Adapter<SPSubmittedHWAdapter.ViewHolder>() {
+class SPSubmittedHWAdapter(var itemList: ArrayList<SPHWSubmitItem>): RecyclerView.Adapter<SPSubmittedHWAdapter.ViewHolder>() {
     var selectedIdx = -1
 
     private var clickListener: OnItemClickListener? = null
@@ -61,7 +61,7 @@ class SPSubmittedHWAdapter(var itemList: ArrayList<SPSubmitItem>): RecyclerView.
         }
     }
 
-    fun updateData(newItems: ArrayList<SPSubmitItem>) {
+    fun updateData(newItems: ArrayList<SPHWSubmitItem>) {
         itemList.clear()
         itemList.addAll(newItems)
         notifyDataSetChanged()
