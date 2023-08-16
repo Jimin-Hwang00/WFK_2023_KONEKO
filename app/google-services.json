@@ -41,6 +41,38 @@
           ]
         }
       }
+<<<<<<< HEAD
+=======
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349394293593:android:5367fccddfbfd3b31bb248",
+        "android_client_info": {
+          "package_name": "nepal.swopnasansar.notice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349394293593-cqg2m1q1a7919o85aavepde88h92l79g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSpjfF1rUEgCYGef9vhDpl0Dtd5FKsVlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349394293593-cqg2m1q1a7919o85aavepde88h92l79g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+>>>>>>> feature/homework
     }
   ],
   "configuration_version": "1"

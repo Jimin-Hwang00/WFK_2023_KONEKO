@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "nepal.swopnasansar"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -57,4 +57,10 @@ dependencies {
     // CalenderView
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
 
+    implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
+
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+
+    implementation "com.github.bumptech.glide:glide:4.14.1"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }

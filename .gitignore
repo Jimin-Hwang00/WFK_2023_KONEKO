@@ -155,9 +155,13 @@ obj/
 .idea/jarRepositories.xml
 .idea/navEditor.xml
 <<<<<<< HEAD
+<<<<<<< HEAD
 .idea/kotlinc.xml
 =======
 >>>>>>> feature/admin
+=======
+.idea/kotlinc.xml
+>>>>>>> feature/homework
 
 # Legacy Eclipse project files
 .classpath
@@ -196,8 +200,4 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-<<<<<<< HEAD
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,macos,windows
-=======
-# End of https://www.toptal.com/developers/gitignore/api/androidstudio,macos,windows
->>>>>>> feature/admin

@@ -4,6 +4,10 @@
     
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -45,6 +49,36 @@
             android:exported="false" />
         <activity
             android:name=".attendance.ParentAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.TCheckUploadedHWActivity"
+            android:parentActivityName=".homework.THWMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.SPCheckHWActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.SPSubmitHWActivity"
+            android:parentActivityName=".homework.SPCheckHWActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.TCheckSubmittedHWDetailActivity"
+            android:parentActivityName=".homework.TCheckSubmittedHWActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.TCheckSubmittedHWActivity"
+            android:parentActivityName=".homework.THWMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.TUploadHWActivity"
+            android:parentActivityName=".homework.THWMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".homework.THWMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+>>>>>>> feature/homework
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
