@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.comment.dao.CommentDAO
-import nepal.swopnasansar.comment.dto.ReceiverTarget
+import nepal.swopnasansar.dao.CommentDAO
+import nepal.swopnasansar.dto.CmntTargetItem
 
-class SendingCmntTargetsAdapter(var itemList: ArrayList<ReceiverTarget>, var context: Context): RecyclerView.Adapter<SendingCmntTargetsAdapter.ViewHolder>() {
+class SendingCmntTargetsAdapter(var itemList: ArrayList<CmntTargetItem>, var context: Context): RecyclerView.Adapter<SendingCmntTargetsAdapter.ViewHolder>() {
     val dao = CommentDAO()
 
     private var clickListener: OnItemClickListener? = null
@@ -56,7 +56,7 @@ class SendingCmntTargetsAdapter(var itemList: ArrayList<ReceiverTarget>, var con
         var name_text = itemView.findViewById<TextView>(R.id.tv_sending_cmnt_item_name)
     }
 
-    fun updateData(newItems: ArrayList<ReceiverTarget>) {
+    fun updateData(newItems: ArrayList<CmntTargetItem>) {
         itemList.clear()
         itemList.addAll(newItems)
         notifyDataSetChanged()

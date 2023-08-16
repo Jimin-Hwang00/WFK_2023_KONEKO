@@ -7,30 +7,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.dto.YoutubeListItem
+import nepal.swopnasansar.dto.Subject
 
-class YoutubeLinkAdapter(private var itemList: ArrayList<YoutubeListItem>?): RecyclerView.Adapter<YoutubeLinkAdapter.ViewHolder>() {
-    var youtubeItems = itemList
+class YoutubeSubjectListAdapter(var itemList: ArrayList<Subject>?): RecyclerView.Adapter<YoutubeSubjectListAdapter.ViewHolder>() {
+    var subjects = itemList
 
-    private var clickListener: YoutubeLinkAdapter.OnItemClickListener? = null
+    private var clickListener: OnItemClickListener? = null
 
     var selectedIdx = -1
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val tvSubject = itemView.findViewById<TextView>(R.id.tv_check_youtube_item_subject)
-        val tvTitle = itemView.findViewById<TextView>(R.id.tv_check_youtube_item_title)
+        var tvSubject = itemView.findViewById<TextView>(R.id.tv_post_youtube_item_subject)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.check_youtube_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YoutubeSubjectListAdapter.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.post_youtube_item, parent, false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        if (youtubeItems != null) {
-            return youtubeItems!!.size
+        if (subjects != null) {
+            return subjects!!.size
         } else {
-           return 0
+            return 0
         }
     }
 
@@ -43,21 +42,18 @@ class YoutubeLinkAdapter(private var itemList: ArrayList<YoutubeListItem>?): Rec
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (youtubeItems != null) {
-            val youtubeItem = youtubeItems!![position]
-
-            holder.tvSubject.text = youtubeItem.subject
-            holder.tvTitle.text = youtubeItem.title
+        if (subjects != null) {
+            holder.tvSubject.text = subjects!![position].subject_name
         } else {
             holder.tvSubject.text = ""
-            holder.tvTitle.text = ""
         }
 
         holder.itemView.setOnClickListener { view ->
             clickListener?.onItemClick(position)
         }
 
-        if (selectedIdx == position) {
+        // make the selected subject appear in gray
+        if (position == selectedIdx) {
             holder.itemView.setBackgroundColor(Color.LTGRAY)
         } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))

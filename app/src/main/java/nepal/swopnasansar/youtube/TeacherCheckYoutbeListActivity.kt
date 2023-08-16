@@ -15,10 +15,10 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivityTeacherCheckYoutbeListBinding
-import nepal.swopnasansar.youtube.dao.SubjectDAO
-import nepal.swopnasansar.youtube.dto.Subject
-import nepal.swopnasansar.youtube.dto.Youtube
-import nepal.swopnasansar.youtube.dto.YoutubeListItem
+import nepal.swopnasansar.dao.SubjectDAO
+import nepal.swopnasansar.dto.Youtube
+import nepal.swopnasansar.dto.Subject
+import nepal.swopnasansar.dto.YoutubeListItem
 
 class TeacherCheckYoutbeListActivity : AppCompatActivity() {
     private val TAG = "TeacherCheckYoutubeList"
@@ -129,9 +129,9 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
         youtubeItems.clear()
 
         lifecycleScope.launch(Dispatchers.IO) {
-            val subjects = withContext(Dispatchers.IO) {
+            val subjects: ArrayList<Subject>? = withContext(Dispatchers.IO) {
                 // @TODO key값 수정
-                subjectDao.getSubjectsByTeacherKey("qxLHhh9StYOfogNqLN9G")
+                subjectDao.getSubjectByTeacherKey("qxLHhh9StYOfogNqLN9G")
             }
 
             withContext(Main) {

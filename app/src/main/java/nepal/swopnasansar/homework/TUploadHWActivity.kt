@@ -19,12 +19,14 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivityTUploadHwBinding
-import nepal.swopnasansar.homework.dao.AuthDAO
-import nepal.swopnasansar.homework.dao.ClassDAO
-import nepal.swopnasansar.homework.dao.HomeworkDAO
-import nepal.swopnasansar.homework.dao.SubjectDAO
-import nepal.swopnasansar.homework.dto.HWTargetItem
-import nepal.swopnasansar.homework.dto.Homework
+import nepal.swopnasansar.dao.AuthDAO
+import nepal.swopnasansar.dao.ClassDAO
+import nepal.swopnasansar.dao.HomeworkDAO
+import nepal.swopnasansar.dao.SubjectDAO
+import nepal.swopnasansar.dto.HWTargetItem
+import nepal.swopnasansar.dto.Homework
+import nepal.swopnasansar.dto.Subject
+import nepal.swopnasansar.dto.Class
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -151,7 +153,6 @@ class TUploadHWActivity : AppCompatActivity() {
 
                 if (classItem != null) {
                     val target = HWTargetItem(classItem!!.class_key, classItem!!.class_name, subject.subject_key, subject.subject_name)
-                    Log.d(TAG, "received target : ${target.class_key}, ${target.subject_key}")
                     targets.add(target)
                 } else {
                     withContext(Main) {

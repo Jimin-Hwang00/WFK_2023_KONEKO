@@ -8,7 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.comment.dao.CommentDAO
+import nepal.swopnasansar.dao.CommentDAO
 import nepal.swopnasansar.databinding.ActivityTeacherCmntMainBinding
 
 class TeacherCmntMainActivity : AppCompatActivity() {

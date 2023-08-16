@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivityTCheckSubmittedHwDetailBinding
-import nepal.swopnasansar.homework.dao.HomeworkDAO
-import nepal.swopnasansar.homework.dto.TSubmitItem
+import nepal.swopnasansar.dao.HomeworkDAO
+import nepal.swopnasansar.dto.TSubmitItem
 
 class TCheckSubmittedHWDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTCheckSubmittedHwDetailBinding

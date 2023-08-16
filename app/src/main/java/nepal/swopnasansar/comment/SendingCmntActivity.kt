@@ -1,6 +1,5 @@
 package nepal.swopnasansar.comment
 
-import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,20 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.comment.dao.AdminDAO
-import nepal.swopnasansar.comment.dao.ClassDAO
-import nepal.swopnasansar.comment.dao.CommentDAO
-import nepal.swopnasansar.comment.dao.StudentDAO
-import nepal.swopnasansar.comment.dao.SubjectDAO
-import nepal.swopnasansar.comment.dao.TeacherDAO
-import nepal.swopnasansar.comment.dto.Administrator
-import nepal.swopnasansar.comment.dto.Class
-import nepal.swopnasansar.comment.dto.Comment
-import nepal.swopnasansar.comment.dto.ReceiverTarget
-import nepal.swopnasansar.comment.dto.Subject
-import nepal.swopnasansar.comment.dto.Teacher
+import nepal.swopnasansar.dao.ClassDAO
+import nepal.swopnasansar.dao.CommentDAO
+import nepal.swopnasansar.dao.StudentDAO
+import nepal.swopnasansar.dao.SubjectDAO
+import nepal.swopnasansar.dao.TeacherDAO
+import nepal.swopnasansar.dto.Class
+import nepal.swopnasansar.dto.Comment
+import nepal.swopnasansar.dto.CmntTargetItem
+import nepal.swopnasansar.dto.Subject
+import nepal.swopnasansar.dto.Teacher
 import nepal.swopnasansar.databinding.ActivitySendingCmntBinding
 import java.time.Instant
 import java.time.ZoneOffset
@@ -41,7 +37,7 @@ class SendingCmntActivity : AppCompatActivity() {
     val teacherDao = TeacherDAO()
     val subjectDao = SubjectDAO()
 
-    private var receiverTargets = ArrayList<ReceiverTarget>()
+    private var receiverTargets = ArrayList<CmntTargetItem>()
 
     private lateinit var sendingCommentReceiversAdapter: SendingCmntTargetsAdapter
 
@@ -109,7 +105,7 @@ class SendingCmntActivity : AppCompatActivity() {
         binding.pbSendingCmnt.visibility = View.VISIBLE
 
         if (targetRole.equals("student")) {
-            var targets: ArrayList<ReceiverTarget> = ArrayList()
+            var targets: ArrayList<CmntTargetItem> = ArrayList()
 
             lifecycleScope.launch {
                 var classes: ArrayList<Class>? = null
@@ -126,7 +122,7 @@ class SendingCmntActivity : AppCompatActivity() {
                         withContext(Dispatchers.IO) {
                             val stn = studentDao.getStudentByKey(studentKey)
                             if (stn != null) {
-                                val target = ReceiverTarget(classItem.class_name, stn.stn_name, stn.stn_key, false)
+                                val target = CmntTargetItem(classItem.class_name, stn.stn_name, stn.stn_key, false)
                                 targets.add(target)
                             }
                         }
@@ -139,7 +135,7 @@ class SendingCmntActivity : AppCompatActivity() {
                 }
             }
         } else if (targetRole.equals("teacher")) {
-            var targets: ArrayList<ReceiverTarget> = ArrayList()
+            var targets: ArrayList<CmntTargetItem> = ArrayList()
 
             binding.pbSendingCmnt.visibility = View.VISIBLE
             lifecycleScope.launch {
@@ -160,15 +156,15 @@ class SendingCmntActivity : AppCompatActivity() {
                                     subjectName.plus(", ${subject.subject_name}")
                                 }
 
-                                val target = ReceiverTarget(subjectName, teacher.teacher_name, teacher.teacher_key, false)
+                                val target = CmntTargetItem(subjectName, teacher.teacher_name, teacher.teacher_key, false)
                                 Log.d(TAG, target.toString())
                                 targets.add(target)
                             } else if (subjects.size == 1){
-                                val target = ReceiverTarget(subjects[0].subject_name, teacher.teacher_name, teacher.teacher_key, false)
+                                val target = CmntTargetItem(subjects[0].subject_name, teacher.teacher_name, teacher.teacher_key, false)
                                 Log.d(TAG, target.toString())
                                 targets.add(target)
                             } else {
-                                val target = ReceiverTarget("", teacher.teacher_name, teacher.teacher_key, false)
+                                val target = CmntTargetItem("", teacher.teacher_name, teacher.teacher_key, false)
                                 Log.d(TAG, target.toString())
                                 targets.add(target)
                             }
@@ -203,7 +199,7 @@ class SendingCmntActivity : AppCompatActivity() {
     }
 
 
-    private fun updateUI(targets: ArrayList<ReceiverTarget>?) {
+    private fun updateUI(targets: ArrayList<CmntTargetItem>?) {
         // Null 체크 및 데이터 업데이트
         receiverTargets = targets ?: ArrayList()
 

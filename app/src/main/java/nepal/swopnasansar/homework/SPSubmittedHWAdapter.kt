@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.homework.dto.SPSubmitItem
+import nepal.swopnasansar.dto.SPSubmitItem
 
 class SPSubmittedHWAdapter(var itemList: ArrayList<SPSubmitItem>): RecyclerView.Adapter<SPSubmittedHWAdapter.ViewHolder>() {
     var selectedIdx = -1

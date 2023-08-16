@@ -12,9 +12,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
+import nepal.swopnasansar.dao.HomeworkDAO
 import nepal.swopnasansar.databinding.ActivityTCheckUploadedHwBinding
-import nepal.swopnasansar.homework.dao.*
-import nepal.swopnasansar.homework.dto.Homework
+import nepal.swopnasansar.dto.Homework
 
 class TCheckUploadedHWActivity : AppCompatActivity() {
     private val tag = "TCheckUploadedHWActivity"

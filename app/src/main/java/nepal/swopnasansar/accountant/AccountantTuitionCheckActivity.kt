@@ -1,6 +1,5 @@
 package nepal.swopnasansar.accountant
 
-import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,14 +7,13 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
-import nepal.swopnasansar.accountant.dao.StudentDAO
-import nepal.swopnasansar.accountant.dto.Student
+import nepal.swopnasansar.dao.StudentDAO
+import nepal.swopnasansar.dto.Student
 import nepal.swopnasansar.databinding.ActivityAccountantTuitionCheckBinding
 
 class AccountantTuitionCheckActivity : AppCompatActivity() {

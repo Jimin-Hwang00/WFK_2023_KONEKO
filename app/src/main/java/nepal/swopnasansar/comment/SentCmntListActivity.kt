@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.comment.dao.CommentDAO
-import nepal.swopnasansar.comment.dto.Comment
+import nepal.swopnasansar.dao.CommentDAO
+import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.databinding.ActivityCmntListBinding
 
 class SentCmntListActivity : AppCompatActivity() {

@@ -12,7 +12,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import nepal.swopnasansar.R
-import nepal.swopnasansar.accountant.dto.Student
+import nepal.swopnasansar.dto.Student
 
 class InputTuitionListAdapter(private var itemList: ArrayList<Student>?): RecyclerView.Adapter<InputTuitionListAdapter.ViewHolder>() {
     private val TAG = "InputTuitionListAdapter"

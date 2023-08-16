@@ -3,7 +3,6 @@ package nepal.swopnasansar.youtube
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -13,9 +12,9 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivityTeacherPostYoutubeLinkBinding
-import nepal.swopnasansar.youtube.dao.SubjectDAO
-import nepal.swopnasansar.youtube.dto.Subject
-import nepal.swopnasansar.youtube.dto.Youtube
+import nepal.swopnasansar.dao.SubjectDAO
+import nepal.swopnasansar.dto.Subject
+import nepal.swopnasansar.dto.Youtube
 
 class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
     private val TAG = "TeacherPostYoutubeLinkActivity"
@@ -23,7 +22,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTeacherPostYoutubeLinkBinding
 
     private var subjects: ArrayList<Subject>? = ArrayList()
-    private var subjectListAdapter = SubjectListAdapter(subjects)
+    private var subjectListAdapter = YoutubeSubjectListAdapter(subjects)
 
     var selectedSubject = Subject()
 
@@ -37,7 +36,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
         initRecycler()
 
         // set click listener that allow the users to select a subject
-        subjectListAdapter.setOnItemClickListener(object: SubjectListAdapter.OnItemClickListener {
+        subjectListAdapter.setOnItemClickListener(object: YoutubeSubjectListAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 if (subjects != null) {
                     selectedSubject = subjects!![position]
@@ -87,9 +86,9 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
     // connect adapter with recycler view
     fun initRecycler() {
         if (subjects == null) {
-            subjectListAdapter = SubjectListAdapter(ArrayList())
+            subjectListAdapter = YoutubeSubjectListAdapter(ArrayList())
         } else {
-            subjectListAdapter = SubjectListAdapter(subjects)
+            subjectListAdapter = YoutubeSubjectListAdapter(subjects)
         }
 
         binding.rvPostYoutubeSubject.adapter = subjectListAdapter
@@ -111,7 +110,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             subjects = withContext(Dispatchers.IO) {
                 // @TODO key값 수정
-                subjectDao.getSubjectsByTeacherKey("qxLHhh9StYOfogNqLN9G")
+                subjectDao.getSubjectByTeacherKey("qxLHhh9StYOfogNqLN9G")
             }
 
             withContext(Main) {

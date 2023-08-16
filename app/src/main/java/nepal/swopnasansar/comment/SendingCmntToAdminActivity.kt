@@ -1,10 +1,8 @@
 package nepal.swopnasansar.comment
 
-import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -12,12 +10,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.R
-import nepal.swopnasansar.comment.dao.AdminDAO
-import nepal.swopnasansar.comment.dao.CommentDAO
-import nepal.swopnasansar.comment.dto.Administrator
-import nepal.swopnasansar.comment.dto.Comment
-import nepal.swopnasansar.comment.dto.ReceiverTarget
+import nepal.swopnasansar.dao.AdminDAO
+import nepal.swopnasansar.dao.CommentDAO
+import nepal.swopnasansar.dto.Administrator
+import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.databinding.ActivitySendingCmntToAdminBinding
 import java.time.Instant
 import java.time.ZoneOffset

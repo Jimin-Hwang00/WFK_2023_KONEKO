@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import nepal.swopnasansar.R
-import nepal.swopnasansar.accountant.dto.Student
+import nepal.swopnasansar.dto.Student
 
 class CheckTuitionAdapter(private var itemList: ArrayList<Student>?): RecyclerView.Adapter<CheckTuitionAdapter.ViewHolder>() {
     var students = itemList

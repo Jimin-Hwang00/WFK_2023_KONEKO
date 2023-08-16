@@ -12,10 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
+import nepal.swopnasansar.dao.HomeworkDAO
+import nepal.swopnasansar.dao.SubmittedHWDAO
 import nepal.swopnasansar.databinding.ActivityTCheckSubmittedHwBinding
-import nepal.swopnasansar.homework.dao.*
-import nepal.swopnasansar.homework.dto.Homework
-import nepal.swopnasansar.homework.dto.TSubmitItem
+import nepal.swopnasansar.dao.*
+import nepal.swopnasansar.dto.Homework
+import nepal.swopnasansar.dto.Class
+import nepal.swopnasansar.dto.TSubmitItem
 
 class TCheckSubmittedHWActivity : AppCompatActivity() {
     private val TAG = "TCheckSubmittedHWActivity"
@@ -106,7 +110,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
         binding.pbTCheckSubmittedHw.visibility = View.VISIBLE
 
         lifecycleScope.launch {
-            val classItem = withContext(Dispatchers.IO){
+            val classItem: Class = withContext(Dispatchers.IO){
                 classDao.getClassByClassKey(homework.class_key)
             }
 
@@ -115,7 +119,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
 
                 classItem.student_key.forEach { stnKey ->
                     var student = withContext(Dispatchers.IO){
-                        studentDao.getStudentByStnKey(stnKey)
+                        studentDao.getStudentByKey(stnKey)
                     }
 
                     if (student != null) {

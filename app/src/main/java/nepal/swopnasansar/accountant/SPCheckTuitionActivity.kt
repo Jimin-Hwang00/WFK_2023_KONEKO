@@ -8,8 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.accountant.dao.StudentDAO
-import nepal.swopnasansar.accountant.dto.Student
+import nepal.swopnasansar.dao.StudentDAO
+import nepal.swopnasansar.dto.Student
 import nepal.swopnasansar.databinding.ActivitySpCheckTuitionBinding
 
 class SPCheckTuitionActivity : AppCompatActivity() {

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.homework.dto.HWTargetItem
+import nepal.swopnasansar.dto.HWTargetItem
 
 class THWTargetAdapter(var itemList: ArrayList<HWTargetItem>): RecyclerView.Adapter<THWTargetAdapter.ViewHolder>() {
     var selectedIdx = -1

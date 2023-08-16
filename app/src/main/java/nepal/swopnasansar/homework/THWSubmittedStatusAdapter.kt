@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.homework.dto.TSubmitItem
+import nepal.swopnasansar.dto.TSubmitItem
 
 class THWSubmittedStatusAdapter(var itemList: ArrayList<TSubmitItem>): RecyclerView.Adapter<THWSubmittedStatusAdapter.ViewHolder>() {
     private var clickListener: OnItemClickListener? = null

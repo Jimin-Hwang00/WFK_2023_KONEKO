@@ -12,10 +12,10 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.databinding.ActivitySpSubmitHwBinding
-import nepal.swopnasansar.homework.dao.AuthDAO
-import nepal.swopnasansar.homework.dao.HomeworkDAO
-import nepal.swopnasansar.homework.dto.SPSubmitItem
-import nepal.swopnasansar.homework.dto.SubmittedHW
+import nepal.swopnasansar.dao.AuthDAO
+import nepal.swopnasansar.dao.HomeworkDAO
+import nepal.swopnasansar.dto.SPSubmitItem
+import nepal.swopnasansar.dto.SubmittedHW
 
 class SPSubmitHWActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpSubmitHwBinding

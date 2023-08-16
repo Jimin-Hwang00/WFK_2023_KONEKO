@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import nepal.swopnasansar.R
-import nepal.swopnasansar.comment.dto.Comment
+import nepal.swopnasansar.dto.Comment
 
 class CmntListAdapter(var itemList: ArrayList<Comment>, var context: Context): RecyclerView.Adapter<CmntListAdapter.ViewHolder>() {
     private val TAG = "CmntListAdapter"
