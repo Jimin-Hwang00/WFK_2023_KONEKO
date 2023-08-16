@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Swopna Sansar</string>
+    <string name="administrator">administrator</string>
+    <string name="student">student</string>
+    <string name="teacher">teacher</string>
+    <string name="accountant">accountant</string>
+    <string name="set_new_password_title">Security Warning</string>
+    <string name="set_new_password_message">Your password is insecure. Would you like to change your password?</string>
+    <string name="change_pw_email_sent">The email to change the password has been sent.</string>
 </resources>
