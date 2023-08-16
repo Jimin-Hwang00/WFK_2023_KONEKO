@@ -1,5 +1,6 @@
 package nepal.swopnasansar.homework
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.HomeworkDAO
 import nepal.swopnasansar.databinding.ActivityTCheckUploadedHwBinding
 import nepal.swopnasansar.dto.Homework
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TCheckUploadedHWActivity : AppCompatActivity() {
     private val tag = "TCheckUploadedHWActivity"
@@ -36,7 +38,10 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
         }
 
         initRecycler()

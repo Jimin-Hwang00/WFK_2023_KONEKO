@@ -33,7 +33,6 @@ class AccountantTuitionCheckActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnEditTuition.setOnClickListener {
-            Log.d(TAG, "btnEditTuition 클릭 리스너 구현")
             val intent = Intent(this, AccountantTuitionInputActivity::class.java)
             startActivity(intent)
         }

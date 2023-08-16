@@ -20,6 +20,10 @@ class AuthDAO {
         }
     }
 
+    fun logout() {
+        auth.signOut()
+    }
+
     suspend fun sendPasswordResetEmail(email: String): Boolean {
         val user = getUser()
 

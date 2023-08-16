@@ -20,6 +20,7 @@ import nepal.swopnasansar.dao.*
 import nepal.swopnasansar.dto.Homework
 import nepal.swopnasansar.dto.Class
 import nepal.swopnasansar.dto.THWSubmitItem
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TCheckSubmittedHWActivity : AppCompatActivity() {
     private val TAG = "TCheckSubmittedHWActivity"
@@ -27,11 +28,9 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTCheckSubmittedHwBinding
 
     val authDao = AuthDAO()
-    val subjectDao = SubjectDAO()
     val classDao = ClassDAO()
     val homeworkDao = HomeworkDAO()
     val studentDao = StudentDAO()
-    val submittedDao = SubmittedHWDAO()
 
     val uid = authDao.getUid()
 
@@ -47,7 +46,10 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
         }
 
         initHWRecycler()

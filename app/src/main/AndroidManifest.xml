@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    
-    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
+        <activity
+            android:name=".TeacherMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SPMainActivity"
+            android:exported="false" />
         <activity
             android:name=".admin.UserCheckEventActivity"
             android:exported="false" />
@@ -52,27 +57,27 @@
             android:exported="false" />
         <activity
             android:name=".homework.TCheckUploadedHWActivity"
-            android:parentActivityName=".homework.THWMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".homework.THWMainActivity" />
         <activity
             android:name=".homework.SPCheckHWActivity"
             android:exported="false" />
         <activity
             android:name=".homework.SPSubmitHWActivity"
-            android:parentActivityName=".homework.SPCheckHWActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".homework.SPCheckHWActivity" />
         <activity
             android:name=".homework.TCheckSubmittedHWDetailActivity"
-            android:parentActivityName=".homework.TCheckSubmittedHWActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".homework.TCheckSubmittedHWActivity" />
         <activity
             android:name=".homework.TCheckSubmittedHWActivity"
-            android:parentActivityName=".homework.THWMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".homework.THWMainActivity" />
         <activity
             android:name=".homework.TUploadHWActivity"
-            android:parentActivityName=".homework.THWMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".homework.THWMainActivity" />
         <activity
             android:name=".homework.THWMainActivity"
             android:exported="false" />
@@ -81,25 +86,25 @@
             android:exported="false" />
         <activity
             android:name=".youtube.TeacherPostYoutubeLinkActivity"
-            android:parentActivityName=".youtube.TeacherCheckYoutbeListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".youtube.TeacherCheckYoutbeListActivity" />
         <activity
             android:name=".accountant.SPCheckTuitionActivity"
             android:exported="false" />
         <activity
             android:name=".accountant.AccountantTuitionInputActivity"
-            android:parentActivityName=".accountant.AccountantTuitionCheckActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".accountant.AccountantTuitionCheckActivity" />
         <activity
             android:name=".accountant.AccountantTuitionCheckActivity"
-            android:parentActivityName=".accountant.AccountantMainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".AccountantMainActivity" />
         <activity
-            android:name=".accountant.AccountantMainActivity"
+            android:name=".AccountantMainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -143,7 +148,7 @@
             android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".admin.AdminMainActivity" />
+                android:value=".AdminMainActivity" />
         </activity>
         <activity
             android:name=".admin.CreateClassActivity"
@@ -199,14 +204,14 @@
             android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".admin.AdminMainActivity" />
+                android:value=".AdminMainActivity" />
         </activity>
         <activity
             android:name=".admin.CheckEventActivity"
             android:exported="false">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".admin.AdminMainActivity" />
+                android:value=".AdminMainActivity" />
         </activity>
         <activity
             android:name=".admin.CreateEventActivity"
@@ -216,7 +221,7 @@
                 android:value=".admin.CheckEventActivity" />
         </activity>
         <activity
-            android:name=".admin.AdminMainActivity"
+            android:name=".AdminMainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -226,12 +231,10 @@
         </activity>
         <activity
             android:name=".login.CheckRoleActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

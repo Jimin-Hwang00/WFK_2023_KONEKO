@@ -1,6 +1,7 @@
 package nepal.swopnasansar.login
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
@@ -11,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.R
+import nepal.swopnasansar.*
 import nepal.swopnasansar.dao.AccountantDAO
 import nepal.swopnasansar.databinding.ActivityLoginBinding
 import nepal.swopnasansar.dao.*
@@ -53,20 +54,12 @@ class LoginActivity: AppCompatActivity() {
                             withContext(Main) {
                                 askResetPWByDialog(email)
                             }
+                        } else {
+                            changePage()
                         }
 
                         withContext(Main) {
                             saveRoleForAutoLogin(role)
-
-                            if (role.equals(getString(R.string.administrator))) {
-                                // @TODO intent로 메인 페이지 이동
-                            } else if (role.equals(getString(R.string.teacher))) {
-                                // @TODO intent로 메인 페이지 이동
-                            } else if (role.equals(getString(R.string.accountant))) {
-                                // @TODO intent로 메인 페이지 이동
-                            } else if (role.equals(getString(R.string.student))) {
-                                // @TODO intent로 메인 페이지 이동
-                            }
                         }
                     } else {
                         Toast.makeText(this@LoginActivity, "Fail to login. Try again.", Toast.LENGTH_SHORT).show()
@@ -118,21 +111,40 @@ class LoginActivity: AppCompatActivity() {
 
                     if (sendEmailResult) {
                         withContext(Main) {
-                            Toast.makeText(this@LoginActivity, "Please check the email.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "An email has been sent to update your password. Please check the email.", Toast.LENGTH_LONG).show()
                         }
                     } else {
                         withContext(Main) {
-                            Toast.makeText(this@LoginActivity, "Fail to send email. Try again.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "Fail to send email. Try again.", Toast.LENGTH_LONG).show()
                         }
                     }
+
+                    changePage()
                 }
             }
             setNegativeButton("NO") { dialog, which ->
-                null
+                dialog.dismiss()
+                changePage()
             }
         }
 
         val alertDialog = alertDialogBuilder.create()
         alertDialog.show()
+    }
+
+    fun changePage() {
+        if (role.equals(getString(R.string.administrator))) {
+            val intent = Intent(this@LoginActivity, AdminMainActivity::class.java)
+            startActivity(intent)
+        } else if (role.equals(getString(R.string.teacher))) {
+            val intent = Intent(this@LoginActivity, TeacherMainActivity::class.java)
+            startActivity(intent)
+        } else if (role.equals(getString(R.string.accountant))) {
+            val intent = Intent(this@LoginActivity, AccountantMainActivity::class.java)
+            startActivity(intent)
+        } else if (role.equals(getString(R.string.student))) {
+            val intent = Intent(this@LoginActivity, SPMainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

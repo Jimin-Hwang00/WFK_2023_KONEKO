@@ -4,6 +4,8 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import nepal.swopnasansar.dto.Accountant
+import nepal.swopnasansar.dto.Class
 
 class AccountantDAO {
     private val TAG = "AccountantDAO"
@@ -24,5 +26,17 @@ class AccountantDAO {
         }
 
         return false
+    }
+
+    suspend fun getAccountantByKey(key: String): Accountant? {
+        val querySnapshot = accountantRef.document(key).get().await()
+
+        if (querySnapshot.exists()) {
+            val result = querySnapshot.toObject(Accountant::class.java)
+            return result
+        } else {
+            Log.d(TAG, "query doesn't exist")
+            return null
+        }
     }
 }

@@ -1,5 +1,6 @@
 package nepal.swopnasansar.accountant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -8,9 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.StudentDAO
 import nepal.swopnasansar.dto.Student
 import nepal.swopnasansar.databinding.ActivitySpCheckTuitionBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class SPCheckTuitionActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpCheckTuitionBinding
@@ -18,11 +21,21 @@ class SPCheckTuitionActivity : AppCompatActivity() {
     var student: Student? = Student()
 
     private val studentDao = StudentDAO()
+    private val authDao = AuthDAO()
+
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySpCheckTuitionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this@SPCheckTuitionActivity, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateUI(student: Student) {

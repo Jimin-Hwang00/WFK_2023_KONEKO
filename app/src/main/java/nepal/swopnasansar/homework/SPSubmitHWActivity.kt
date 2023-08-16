@@ -1,5 +1,6 @@
 package nepal.swopnasansar.homework
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,6 +17,7 @@ import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.HomeworkDAO
 import nepal.swopnasansar.dto.SPHWSubmitItem
 import nepal.swopnasansar.dto.SubmittedHW
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class SPSubmitHWActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpSubmitHwBinding
@@ -36,7 +38,9 @@ class SPSubmitHWActivity : AppCompatActivity() {
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-            // @TODO Login 화면으로 이동
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

@@ -38,24 +38,28 @@ class MainActivity : AppCompatActivity() {
         if (role != null) {
             when (role) {
                 getString(R.string.administrator) -> {
-                    // @TODO 자동 로그인 구현 - administrator 화면으로 이동
+                    val intent = Intent(this, AdminMainActivity::class.java)
+                    startActivity(intent)
                 }
                 getString(R.string.accountant) -> {
-                    // @TODO 자동 로그인 구현 - student 화면으로 이동
+                    val intent = Intent(this, AccountantMainActivity::class.java)
+                    startActivity(intent)
                 }
                 getString(R.string.teacher) -> {
-                    // @TODO 자동 로그인 구현 - teacher 화면으로 이동
+                    val intent = Intent(this, TeacherMainActivity::class.java)
+                    startActivity(intent)
                 }
                 getString(R.string.student) -> {
-                    // @TODO 자동 로그인 구현 - parent 화면으로 이동
+                    val intent = Intent(this, SPMainActivity::class.java)
+                    startActivity(intent)
                 }
                 else -> {
-                    val intent = Intent(this@MainActivity, CheckRoleActivity::class.java)
+                    val intent = Intent(this, CheckRoleActivity::class.java)
                     startActivity(intent)
                 }
             }
         } else {
-            val intent = Intent(this@MainActivity, CheckRoleActivity::class.java)
+            val intent = Intent(this, CheckRoleActivity::class.java)
             startActivity(intent)
         }
     }

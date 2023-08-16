@@ -4,34 +4,43 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.CommentDAO
 import nepal.swopnasansar.databinding.ActivityTeacherCmntMainBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TeacherCmntMainActivity : AppCompatActivity() {
-    val commentDao = CommentDAO()
-
     private lateinit var binding: ActivityTeacherCmntMainBinding
 
-    private lateinit var receivedKey: String
+    private val authDao = AuthDAO()
+    private val commentDao = CommentDAO()
+
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTeacherCmntMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvReceivedCmntFromSp.setOnClickListener {
             val intent  = Intent(this, ReceivedCmntListAcitivity::class.java)
-            intent.putExtra("key", receivedKey) //@TODO 실제 사용자 키를 입력해야 함.
             startActivity(intent)
         }
 
         binding.tvSentCmntTeacher.setOnClickListener {
             val intent = Intent(this, SentCmntListActivity::class.java)
-            intent.putExtra("key", receivedKey) // @TODO 실제 사용자 키를 입력해야 함.
             startActivity(intent)
         }
 
@@ -49,8 +58,7 @@ class TeacherCmntMainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             val cnt = withContext(Dispatchers.IO) {
-                // @TODO key 변경 (로그인 uid로)
-                commentDao.countUnReadComments("")
+                commentDao.countUnReadComments(uid!!)
             }
 
             binding.unreadCommentsSp.text = cnt.toString()

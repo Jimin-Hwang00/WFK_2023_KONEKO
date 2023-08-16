@@ -12,17 +12,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.dao.ClassDAO
-import nepal.swopnasansar.dao.CommentDAO
-import nepal.swopnasansar.dao.StudentDAO
-import nepal.swopnasansar.dao.SubjectDAO
-import nepal.swopnasansar.dao.TeacherDAO
+import nepal.swopnasansar.dao.*
 import nepal.swopnasansar.dto.Class
 import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.dto.CmntTargetItem
 import nepal.swopnasansar.dto.Subject
 import nepal.swopnasansar.dto.Teacher
 import nepal.swopnasansar.databinding.ActivitySendingCmntBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -32,10 +29,13 @@ class SendingCmntActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySendingCmntBinding
 
-    val classDao = ClassDAO()
-    val studentDao = StudentDAO()
-    val teacherDao = TeacherDAO()
-    val subjectDao = SubjectDAO()
+    private val authDao = AuthDAO()
+    private val classDao = ClassDAO()
+    private val studentDao = StudentDAO()
+    private val teacherDao = TeacherDAO()
+    private val subjectDao = SubjectDAO()
+
+    val uid = authDao.getUid()
 
     private var receiverTargets = ArrayList<CmntTargetItem>()
 
@@ -56,6 +56,13 @@ class SendingCmntActivity : AppCompatActivity() {
 
         initRecyclerView()
 
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
+
         sendingCommentReceiversAdapter.setOnItemClickListener(object: SendingCmntTargetsAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
                 if (selectedTargetIndex != -1) {
@@ -70,23 +77,28 @@ class SendingCmntActivity : AppCompatActivity() {
         })
 
         binding.sendingCmntBtn.setOnClickListener {
-            lifecycleScope.launch {
-                val result = withContext(Dispatchers.IO) {
-                    val comment = Comment("", binding.evSendingCmntTitle.text.toString(), binding.evSendingCmntContent.text.toString(), date, "test_key", "author_name", receiverTargets[selectedTargetIndex].key, receiverTargets[selectedTargetIndex].name, false)
-                    commentDAO.uploadComment(comment)
-                }
+            if (selectedTargetIndex == -1) {
+                Toast.makeText(this@SendingCmntActivity, "Please select the target for leaving a comment first.", Toast.LENGTH_SHORT).show()
+            } else {
+                lifecycleScope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        // @TODO
+                        val comment = Comment("", binding.evSendingCmntTitle.text.toString(), binding.evSendingCmntContent.text.toString(), date, uid!!, "author_name", receiverTargets[selectedTargetIndex].key, receiverTargets[selectedTargetIndex].name, false)
+                        commentDAO.uploadComment(comment)
+                    }
 
-                withContext(Main) {
-                    if (result) {
-                        val intent =
-                            Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this@SendingCmntActivity,
-                            "Fail to upload comment. Try again.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    withContext(Main) {
+                        if (result) {
+                            val intent =
+                                Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(
+                                this@SendingCmntActivity,
+                                "Fail to upload comment. Try again.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }

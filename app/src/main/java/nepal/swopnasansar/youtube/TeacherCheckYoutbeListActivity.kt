@@ -14,11 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.databinding.ActivityTeacherCheckYoutbeListBinding
 import nepal.swopnasansar.dao.SubjectDAO
 import nepal.swopnasansar.dto.Youtube
 import nepal.swopnasansar.dto.Subject
 import nepal.swopnasansar.dto.YoutubeListItem
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TeacherCheckYoutbeListActivity : AppCompatActivity() {
     private val TAG = "TeacherCheckYoutubeList"
@@ -30,7 +32,10 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
 
     private var youtubeLinkAdapter = YoutubeLinkAdapter(youtubeItems)
 
-    val subjectDao = SubjectDAO()
+    private val authDao = AuthDAO()
+    private val subjectDao = SubjectDAO()
+
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,13 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
         val detailViews = listOf(binding.youtubeTitleText, binding.youtubeUrlText, binding.tvYoutubeDetailTitle, binding.tvYoutubeDetailUrl, binding.wvYoutube, binding.btnYoutubeDelete)
 
         initRecycler()
+
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
 
         val webSettings: WebSettings = binding.wvYoutube.settings
         webSettings.javaScriptEnabled = true
@@ -130,8 +142,7 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
 
         lifecycleScope.launch(Dispatchers.IO) {
             val subjects: ArrayList<Subject>? = withContext(Dispatchers.IO) {
-                // @TODO key값 수정
-                subjectDao.getSubjectByTeacherKey("qxLHhh9StYOfogNqLN9G")
+                subjectDao.getSubjectByTeacherKey(uid!!)
             }
 
             withContext(Main) {

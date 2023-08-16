@@ -11,10 +11,12 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.dao.AdminDAO
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.CommentDAO
 import nepal.swopnasansar.dto.Administrator
 import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.databinding.ActivitySendingCmntToAdminBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -26,8 +28,11 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
 
     var admins: ArrayList<Administrator>? = ArrayList()
 
-    val adminDAO = AdminDAO()
-    val commentDAO = CommentDAO()
+    private val authDao = AuthDAO()
+    private val adminDAO = AdminDAO()
+    private val commentDAO = CommentDAO()
+
+    val uid = authDao.getUid()
 
     val date = Instant.ofEpochMilli(System.currentTimeMillis())
         .atOffset(ZoneOffset.ofHours(9))
@@ -38,14 +43,21 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
         binding = ActivitySendingCmntToAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnUploadCmntToAdmin.setOnClickListener {
             if (binding.evCmntToAdminTitle.text.isBlank()) {
                 Toast.makeText(this@SendingCmntToAdminActivity, "Please write down the title", Toast.LENGTH_SHORT).show()
             } else {
                 lifecycleScope.launch(Dispatchers.IO) {
                     var uploadResult =  withContext(Dispatchers.IO) {
-                        //@TODO author_key 확인 필요 !! - upload 부분 (로그인되어 있는 키로 변경)
-                        val comment = Comment("", binding.evCmntToAdminTitle.text.toString(), binding.evSendCmntToAdminContent.text.toString(), date, "test_key", "author_name", admins!![0].admin_key, admins!![0].admin_name, false)
+                        //@TODO author_name 어떻게 할지 고민
+                        val comment = Comment("", binding.evCmntToAdminTitle.text.toString(), binding.evSendCmntToAdminContent.text.toString(), date, uid!!, "author_name", admins!![0].admin_key, admins!![0].admin_name, false)
                         commentDAO.uploadComment(comment)
                     }
 
@@ -54,8 +66,6 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
                             Toast.makeText(this@SendingCmntToAdminActivity, "Failed to upload comment. Try Again", Toast.LENGTH_SHORT).show()
                         } else {
                             val intent = Intent(this@SendingCmntToAdminActivity, SentCmntListActivity::class.java)
-                            //@TODO author_key 확인 필요 !! -  보낸 코멘트 확인 (로그인되어 있는 키로 변경)
-                            intent.putExtra("author_key", "test_key")
                             startActivity(intent)
                         }
                     }

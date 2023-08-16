@@ -11,10 +11,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.databinding.ActivityTeacherPostYoutubeLinkBinding
 import nepal.swopnasansar.dao.SubjectDAO
 import nepal.swopnasansar.dto.Subject
 import nepal.swopnasansar.dto.Youtube
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
     private val TAG = "TeacherPostYoutubeLinkActivity"
@@ -26,7 +28,10 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
     var selectedSubject = Subject()
 
-    val subjectDao = SubjectDAO()
+    private val authDao = AuthDAO()
+    private val subjectDao = SubjectDAO()
+
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +39,13 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initRecycler()
+
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
+        }
 
         // set click listener that allow the users to select a subject
         subjectListAdapter.setOnItemClickListener(object: YoutubeSubjectListAdapter.OnItemClickListener {
@@ -109,8 +121,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
         binding.pbYoutubePost.visibility = View.VISIBLE
         lifecycleScope.launch(Dispatchers.IO) {
             subjects = withContext(Dispatchers.IO) {
-                // @TODO key값 수정
-                subjectDao.getSubjectByTeacherKey("qxLHhh9StYOfogNqLN9G")
+                subjectDao.getSubjectByTeacherKey(uid!!)
             }
 
             withContext(Main) {

@@ -27,6 +27,7 @@ import nepal.swopnasansar.dto.HWTargetItem
 import nepal.swopnasansar.dto.Homework
 import nepal.swopnasansar.dto.Subject
 import nepal.swopnasansar.dto.Class
+import nepal.swopnasansar.login.CheckRoleActivity
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -59,7 +60,9 @@ class TUploadHWActivity : AppCompatActivity() {
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-            // @TODO Login 화면으로 이동
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
         }
 
         initRecyclerView()

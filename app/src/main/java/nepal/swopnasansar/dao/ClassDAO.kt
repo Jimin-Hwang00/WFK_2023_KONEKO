@@ -61,11 +61,12 @@ class ClassDAO {
         return result
     }
 
-    suspend fun getClassByClassKey(key: String): nepal.swopnasansar.dto.Class? {
+
+    suspend fun getClassByClassKey(key: String): Class? {
         val querySnapshot = classRef.document(key).get().await()
 
         if (querySnapshot.exists()) {
-            val result = querySnapshot.toObject(nepal.swopnasansar.dto.Class::class.java)
+            val result = querySnapshot.toObject(Class::class.java)
             Log.d(TAG, "get class by class key result : ${result!!.class_key}")
             return result
         } else {

@@ -4,12 +4,25 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import nepal.swopnasansar.dto.Accountant
 import nepal.swopnasansar.dto.Administrator
 
 class AdminDAO {
     private val TAG = "AdminDAO"
     val db = Firebase.firestore
     val adminRef = db.collection("administrator")
+
+    suspend fun getAdminByKey(key: String): Administrator? {
+        val querySnapshot = adminRef.document(key).get().await()
+
+        if (querySnapshot.exists()) {
+            val result = querySnapshot.toObject(Administrator::class.java)
+            return result
+        } else {
+            Log.d(TAG, "query doesn't exist")
+            return null
+        }
+    }
 
     suspend fun getAllAdmin(): ArrayList<Administrator>? {
         var admins: ArrayList<Administrator>? = ArrayList()

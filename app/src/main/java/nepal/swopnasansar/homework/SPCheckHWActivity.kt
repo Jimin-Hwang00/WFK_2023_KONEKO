@@ -18,6 +18,7 @@ import nepal.swopnasansar.dao.ClassDAO
 import nepal.swopnasansar.dao.HomeworkDAO
 import nepal.swopnasansar.dto.Homework
 import nepal.swopnasansar.dto.SPHWSubmitItem
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class SPCheckHWActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySpCheckHwBinding
@@ -40,7 +41,9 @@ class SPCheckHWActivity : AppCompatActivity() {
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-            // @TODO Login 화면으로 이동
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            startActivity(intent)
         }
 
         initRecycler()
