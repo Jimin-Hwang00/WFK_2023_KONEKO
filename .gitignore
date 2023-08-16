@@ -156,12 +156,16 @@ obj/
 .idea/navEditor.xml
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 .idea/kotlinc.xml
 =======
 >>>>>>> feature/admin
 =======
 .idea/kotlinc.xml
 >>>>>>> feature/homework
+=======
+.idea/kotlinc.xml
+>>>>>>> feature/youtube
 
 # Legacy Eclipse project files
 .classpath

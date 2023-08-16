@@ -77,9 +77,15 @@
             android:name=".homework.THWMainActivity"
             android:exported="false" />
         <activity
+            android:name=".youtube.TeacherCheckYoutbeListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".youtube.TeacherPostYoutubeLinkActivity"
+            android:parentActivityName=".youtube.TeacherCheckYoutbeListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
->>>>>>> feature/homework
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
