@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -23,7 +24,11 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.AccountantDto
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.StudentDto
+import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.data.TeacherDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ActivityAccountantListBinding
 import nepal.swopnasansar.databinding.ActivityEditAccountantBinding
 import nepal.swopnasansar.databinding.ActivityEditTeacherBinding
@@ -36,6 +41,7 @@ class EditAccountantActivity : AppCompatActivity() {
     val TAG = "EditAccountantActivity"
     var progressBarVisible = true
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var firestore : FirebaseFirestore? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditAccountantBinding.inflate(layoutInflater)
@@ -56,8 +62,13 @@ class EditAccountantActivity : AppCompatActivity() {
 
 
         binding.addAccountantBt.setOnClickListener {
+            firestore = FirebaseFirestore.getInstance()
             val name = binding.nameEt.text.toString()
             val email = binding.emailEt.text.toString()
+            val tempList = ArrayList<TempDto>()
+            val teacherList = ArrayList<TeacherDto>()
+            val accountList = ArrayList<AccountantDto>()
+            val studentList = ArrayList<StudentDto>()
 
             AlertDialog.Builder(this@EditAccountantActivity).run {
                 val intent = Intent(this@EditAccountantActivity, EditAccountantActivity::class.java)
@@ -67,52 +78,67 @@ class EditAccountantActivity : AppCompatActivity() {
                 setCancelable(false)
                 setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
-                        CoroutineScope(Dispatchers.Main).launch {
+                        //이미 존재하는 이메일 확인
+                        CoroutineScope(Dispatchers.IO).launch {
                             try {
-                                val authResult = auth.createUserWithEmailAndPassword(email, email.substringBefore("@")).await()
-                                val user: FirebaseUser? = authResult.user
-                                var uid = user?.uid ?: ""
-                                println("User UID: $uid")
+                                tempList.clear()
 
-                                if(!uid.equals("")){
-                                    db.collection("accountant").document(uid)
-                                        .set(AccountantDto(uid, name, email))
-                                        .addOnSuccessListener {
-                                            Log.d(TAG, "add item: ${uid}, ${name}")
+                                val tempQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("email", email)?.get()?.await()
+                                tempList.addAll(tempQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+
+                                val teacherQuerySnapshot = firestore?.collection("teacher")?.whereEqualTo("email", email)?.get()?.await()
+                                teacherList.addAll(teacherQuerySnapshot?.toObjects(TeacherDto::class.java) ?: emptyList())
+
+                                val studentQuerySnapshot = firestore?.collection("student")?.whereEqualTo("email", email)?.get()?.await()
+                                studentList.addAll(studentQuerySnapshot?.toObjects(StudentDto::class.java) ?: emptyList())
+
+                                val accountantQuerySnapshot = firestore?.collection("accountant")?.whereEqualTo("email", email)?.get()?.await()
+                                accountList.addAll(accountantQuerySnapshot?.toObjects(AccountantDto::class.java) ?: emptyList())
+
+                                //겹치는 이메일이 없을 경우 사용
+                                if(tempList.size == 0 && teacherList.size == 0 && accountList.size == 0 && studentList.size == 0){
+                                    // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
+                                    if(isEmailValid(email)){
+                                        db.collection("temp").document(email)
+                                            .set(TempDto(email, name, "accountant"))
+                                            .addOnSuccessListener {
+                                                Toast.makeText(
+                                                    this@EditAccountantActivity,
+                                                    "Save completed",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                    .show()
+                                                startActivity(intent)
+                                            }
+                                            .addOnFailureListener { exception ->
+                                                println("Error creating document: $exception")
+                                            }
+                                        binding.nameEt.setText("")
+                                        binding.emailEt.setText("")
+                                        adapter.onUpdateList()
+                                        adapter.notifyDataSetChanged()
+                                    }else{
+                                        runOnUiThread {
                                             Toast.makeText(
                                                 this@EditAccountantActivity,
-                                                "Save completed",
-                                                Toast.LENGTH_SHORT
-                                            )
-                                                .show()
-
-                                            startActivity(intent)
+                                                "Invalid email format",
+                                                Toast.LENGTH_LONG
+                                            ).show()
                                         }
-                                        .addOnFailureListener { exception ->
-                                            println("Error creating document: $exception")
-                                        }
-
-                                    binding.nameEt.setText("")
-                                    binding.emailEt.setText("")
-                                    adapter.onUpdateList()
-                                    adapter.notifyDataSetChanged()
+                                    }
+                                }else{
+                                    runOnUiThread {
+                                        Toast.makeText(
+                                            this@EditAccountantActivity,
+                                            "This email already exists",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
                                 }
 
-                            } catch (e: FirebaseAuthUserCollisionException) {
-                                // 이미 등록된 사용자인 경우 처리
-                                Toast.makeText(this@EditAccountantActivity,
-                                    "The email address is already registered.", Toast.LENGTH_LONG).show()
-                                println("Registration Error: ${e.message}")
-                            } catch (e: FirebaseAuthInvalidCredentialsException) {
-                                // 유효하지 않은 이메일 값인 경우 처리
-                                Toast.makeText(this@EditAccountantActivity,
-                                    "The email address is invalid.", Toast.LENGTH_LONG).show()
-                                println("Registration Error: ${e.message}")
                             } catch (e: Exception) {
-                                // 기타 등록 오류 처리
-                                Toast.makeText(this@EditAccountantActivity,
-                                    "Please try again.", Toast.LENGTH_LONG).show()
-                                println("Registration Error: ${e.message}")
+                                // 오류 처리
+                                println("Error: ${e.message}")
                             }
                         }
                     }
@@ -183,6 +209,10 @@ class EditAccountantActivity : AppCompatActivity() {
                 show()
             }
         }
+    }
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = "^[A-Za-z0-9+_.-]+@(.+)\$".toRegex()
+        return email.matches(emailRegex)
     }
     override fun onResume() {
         super.onResume()
