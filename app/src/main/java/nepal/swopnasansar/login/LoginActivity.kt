@@ -50,16 +50,16 @@ class LoginActivity: AppCompatActivity() {
                     }
 
                     if (loginResult) {
+                        withContext(Main) {
+                            saveRoleForAutoLogin(role)
+                        }
+
                         if (checkIsItFirstPW(email, pw)) {
                             withContext(Main) {
                                 askResetPWByDialog(email)
                             }
                         } else {
                             changePage()
-                        }
-
-                        withContext(Main) {
-                            saveRoleForAutoLogin(role)
                         }
                     } else {
                         Toast.makeText(this@LoginActivity, "Fail to login. Try again.", Toast.LENGTH_SHORT).show()

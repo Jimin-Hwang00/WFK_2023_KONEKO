@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.R
 import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.CommentDAO
 import nepal.swopnasansar.databinding.ActivityTeacherCmntMainBinding
@@ -31,6 +32,7 @@ class TeacherCmntMainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -46,7 +48,7 @@ class TeacherCmntMainActivity : AppCompatActivity() {
 
         binding.tvSendCmntToSp.setOnClickListener {
             val intent = Intent(this, SendingCmntActivity::class.java)
-            intent.putExtra("targetRole", "student")
+            intent.putExtra("targetRole", getString(R.string.student))
             startActivity(intent)
         }
     }

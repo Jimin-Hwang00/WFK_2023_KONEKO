@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.dto.Comment
+import nepal.swopnasansar.dto.Homework
 
 class CommentDAO {
     val TAG = "CommentDAO"
@@ -100,5 +101,14 @@ class CommentDAO {
         val querySnapshot = query.get().await()
 
         return querySnapshot.size()
+    }
+    suspend fun removeCommentByKey(key: String): Boolean {
+        return try {
+            commentRef.document(key).delete().await()
+            true
+        } catch (e: Exception) {
+            Log.d(TAG, "fail to remove comment: ${key}")
+            false
+        }
     }
 }

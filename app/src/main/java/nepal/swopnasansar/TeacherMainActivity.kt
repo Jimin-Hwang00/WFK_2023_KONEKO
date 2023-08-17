@@ -35,26 +35,25 @@ class TeacherMainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
-            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
-        }
+        } else {
+            lifecycleScope.launch {
+                binding.pbTeacherMain.visibility = View.VISIBLE
 
-        lifecycleScope.launch {
-            binding.pbTeacherMain.visibility = View.VISIBLE
+                val teacher = withContext(Dispatchers.IO) {
+                    teacherDao.getTeacherByKey(uid!!)
+                }
 
-            val teacher = withContext(Dispatchers.IO) {
-                teacherDao.getTeacherByKey(uid!!)
+                if (teacher != null) {
+                    binding.tvTeacherName.text = teacher.teacher_name
+                } else {
+                    binding.tvTeacherName.text = ""
+                }
+
+                binding.pbTeacherMain.visibility = View.INVISIBLE
             }
-
-            if (teacher != null) {
-                binding.tvTeacherName.text = teacher.teacher_name
-            } else {
-                binding.tvTeacherName.text = ""
-            }
-
-            binding.pbTeacherMain.visibility = View.INVISIBLE
         }
 
         binding.tvTHW.setOnClickListener {
@@ -121,6 +120,7 @@ class TeacherMainActivity : AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }

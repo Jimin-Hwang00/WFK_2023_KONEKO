@@ -1,9 +1,11 @@
 package nepal.swopnasansar.youtube
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +46,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -71,6 +74,11 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
                 Toast.makeText(this@TeacherPostYoutubeLinkActivity, "The format of the URL is incorrect.", Toast.LENGTH_SHORT).show()
             } else {
                 lifecycleScope.launch(Dispatchers.IO) {
+                    withContext(Main) {
+                        binding.pbYoutubePost.visibility = View.VISIBLE
+                        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                    }
                     val result = withContext(Dispatchers.IO) {
                         subjectDao.addYoutube(selectedSubject, youtube)
                     }
@@ -83,6 +91,8 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
                             )
                             startActivity(intent)
                         } else {
+                            binding.pbYoutubePost.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             Toast.makeText(
                                 this@TeacherPostYoutubeLinkActivity,
                                 "Fail to upload youtube link. Try again.",

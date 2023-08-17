@@ -43,6 +43,7 @@ class SPCheckHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -54,11 +55,7 @@ class SPCheckHWActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
 
                 // change button text depending on submit status
-                if (submittedStatusList[position].idx != null) {
-                    binding.btnSubmitHw.text = "edit"
-                } else {
-                    binding.btnSubmitHw.text = "submit"
-                }
+                changeSubmitBtnText()
 
                 val homeworkIdx =
                     homeworks!!.indexOfFirst { it.homework_key == submittedStatusList[position].homeworkKey }
@@ -116,6 +113,8 @@ class SPCheckHWActivity : AppCompatActivity() {
                         submittedStatusList.sortByDescending { it.date }
                         adapter.notifyDataSetChanged()
                         binding.pbActivitySpCheckHw.visibility = View.INVISIBLE
+
+                        changeSubmitBtnText()
                     }
                 } else {
                     withContext(Main) {
@@ -143,5 +142,15 @@ class SPCheckHWActivity : AppCompatActivity() {
 
         binding.rvSubmitHwList.adapter = adapter
         binding.rvSubmitHwList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    }
+
+    fun changeSubmitBtnText() {
+        if (adapter.selectedIdx != -1) {
+            if (submittedStatusList[adapter.selectedIdx].idx != null) {
+                binding.btnSubmitHw.text = "edit"
+            } else {
+                binding.btnSubmitHw.text = "submit"
+            }
+        }
     }
 }

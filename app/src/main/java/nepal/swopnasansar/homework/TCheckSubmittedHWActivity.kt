@@ -49,6 +49,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 

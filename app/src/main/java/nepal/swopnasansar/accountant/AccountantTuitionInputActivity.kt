@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,10 +35,12 @@ class AccountantTuitionInputActivity : AppCompatActivity() {
 
         initRecycler()
 
-        binding.progressBar.visibility = View.INVISIBLE
-
         binding.btnTuitionSubmit.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
+                binding.pbAccountantTuitionInput.visibility = View.VISIBLE
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
                 for (idx in inputTuitionListAdapter.changedIdx) {
                     val result = withContext(Dispatchers.IO) {
                         studentDao.updateStudentByKey(students!![idx])
@@ -46,7 +49,9 @@ class AccountantTuitionInputActivity : AppCompatActivity() {
                     withContext(Main) {
                         Log.d(TAG, "idx: ${idx}, result : ${result}")
                         if (!result) {
-                            Toast.makeText(this@AccountantTuitionInputActivity, "Failed to submit changes. Try again", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@AccountantTuitionInputActivity, "Fail to submit changes. Try again", Toast.LENGTH_SHORT).show()
+                            binding.pbAccountantTuitionInput.visibility = View.VISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         }
                     }
                 }
@@ -60,14 +65,15 @@ class AccountantTuitionInputActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        lifecycleScope.launch() {
+            binding.pbAccountantTuitionInput.visibility = View.VISIBLE
+
             students = withContext(Dispatchers.IO) {
-                studentDao.getAllStudent()
+                studentDao.getAllStudents()
             }
 
-
             withContext(Main) {
-                binding.progressBar.visibility = View.INVISIBLE
+                binding.pbAccountantTuitionInput.visibility = View.INVISIBLE
 
                 inputTuitionListAdapter.students = students
                 inputTuitionListAdapter.notifyDataSetChanged()

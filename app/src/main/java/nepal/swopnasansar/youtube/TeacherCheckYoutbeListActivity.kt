@@ -50,6 +50,7 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -90,6 +91,11 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
 
                 if (result) {
                     getYoutubeItem()
+                    youtubeLinkAdapter.selectedIdx = -1
+
+                    lifecycleScope.launch(Main) {
+                        youtubeLinkAdapter.notifyDataSetChanged()
+                    }
                 } else {
                     lifecycleScope.launch(Main) {
                         Toast.makeText(

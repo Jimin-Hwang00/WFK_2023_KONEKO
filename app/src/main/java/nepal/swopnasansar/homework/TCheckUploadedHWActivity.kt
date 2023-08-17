@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +42,7 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -69,6 +71,9 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
 
         binding.btnDeleteUploadedHw.setOnClickListener {
             binding.pbTCheckUploadedHw.visibility = View.VISIBLE
+            getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
             lifecycleScope.launch {
                 Log.d(tag, "delete : ${homeworks!![uploadedHWAdapter.selectedIdx]}")
@@ -80,6 +85,7 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
                         withContext(Main) {
                             binding.svUploadedHw.visibility = View.INVISIBLE
                             binding.btnDeleteUploadedHw.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
                             uploadedHWAdapter.selectedIdx = -1
 
@@ -89,6 +95,7 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
                         withContext(Main) {
                             Toast.makeText(this@TCheckUploadedHWActivity, "Fail to delete homework. Try again.", Toast.LENGTH_SHORT).show()
                             binding.pbTCheckUploadedHw.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         }
                     }
                 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -62,6 +63,7 @@ class TUploadHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
 
@@ -220,6 +222,8 @@ class TUploadHWActivity : AppCompatActivity() {
 
     fun uploadHomework() {
         binding.pbTUploadHw.visibility = View.VISIBLE
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
         lifecycleScope.launch {
             val key: String? = withContext(Dispatchers.IO) {
@@ -255,12 +259,14 @@ class TUploadHWActivity : AppCompatActivity() {
                         withContext(Main) {
                             Toast.makeText(this@TUploadHWActivity, "Fail to upload homework. Try again.", Toast.LENGTH_SHORT).show()
                             binding.pbTUploadHw.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         }
                     }
                 } else {
                     withContext(Main) {
                         Toast.makeText(this@TUploadHWActivity, "Fail to upload image. Try again.", Toast.LENGTH_SHORT).show()
                         binding.pbTUploadHw.visibility = View.INVISIBLE
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
                 }
             } else if(key != null && (imageUri == Uri.EMPTY || imageUri == null)) {
@@ -278,11 +284,13 @@ class TUploadHWActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@TUploadHWActivity, "Fail to upload homework. Try again.", Toast.LENGTH_SHORT).show()
                     binding.pbTUploadHw.visibility = View.INVISIBLE
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             } else if (key == null) {
                 withContext(Main) {
                     Toast.makeText(this@TUploadHWActivity, "Fail to upload homework. Try again.", Toast.LENGTH_SHORT).show()
                     binding.pbTUploadHw.visibility = View.INVISIBLE
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             }
         }

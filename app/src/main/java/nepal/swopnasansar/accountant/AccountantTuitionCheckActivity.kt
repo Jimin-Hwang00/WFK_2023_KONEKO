@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.Dispatchers
@@ -38,21 +39,32 @@ class AccountantTuitionCheckActivity : AppCompatActivity() {
         }
 
         initRecycler()
-
-        binding.progressBar.visibility = View.VISIBLE
     }
 
     override fun onResume() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            students = withContext(Dispatchers.IO) {
-                studentDao.getAllStudent()
+        lifecycleScope.launch() {
+            binding.pbAccountantTuitionCheck.visibility = View.VISIBLE
+
+            val result = withContext(Dispatchers.IO) {
+                studentDao.getAllStudents()
             }
 
             withContext(Main) {
-                binding.progressBar.visibility = View.INVISIBLE
+                if (students == null) {
+                    Toast.makeText(this@AccountantTuitionCheckActivity, "Fail to get students info. Try again.", Toast.LENGTH_SHORT).show()
+                } else {
+                    students!!.forEach {
+                        Log.d(TAG, "student ; ${it}")
+                    }
 
-                inputTuitionListAdapter.students = students
-                inputTuitionListAdapter.notifyDataSetChanged()
+                    Log.d(TAG, students!!.size.toString())
+
+                    students = result
+                    inputTuitionListAdapter.students = students
+                    inputTuitionListAdapter.notifyDataSetChanged()
+                }
+
+                binding.pbAccountantTuitionCheck.visibility = View.INVISIBLE
             }
         }
 

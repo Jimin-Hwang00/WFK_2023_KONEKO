@@ -26,19 +26,21 @@ class StudentDAO {
         return false
     }
 
-    fun getAllStudent(): ArrayList<Student>? {
-        var studentList: ArrayList<Student>? = ArrayList<Student>()
-        studentRef.get()
-            .addOnSuccessListener { querySnapshot ->
-                for (doc in querySnapshot) {
-                    val student: Student = doc.toObject(Student::class.java)
-                    studentList?.add(student)
-                }
+    suspend fun getAllStudents(): ArrayList<Student>? {
+        var studentList: ArrayList<Student>? = null
+
+        try {
+            val querySnapshot = studentRef.get().await()
+            studentList = ArrayList()
+
+            for (doc in querySnapshot) {
+                val student: Student = doc.toObject(Student::class.java)
+                studentList!!.add(student)
             }
-            .addOnFailureListener {
-                studentList = null
-                Log.d(TAG, it.toString())
-            }
+        } catch (e: Exception) {
+            Log.d(TAG, e.toString())
+        }
+
         return studentList
     }
 

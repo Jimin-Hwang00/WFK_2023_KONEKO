@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".accountant.AccountantTuitionInputActivity"
-    android:background="#EDEBFC">
+    android:background="#EDEBFC"
+    tools:context=".accountant.AccountantTuitionInputActivity">
 
     <ImageView
         android:id="@+id/imageView7"
@@ -98,7 +98,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/pb_accountant_tuition_input"
         style="?android:attr/progressBarStyle"
         android:layout_width="110dp"
         android:layout_height="110dp"

@@ -34,26 +34,25 @@ class AdminMainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
-            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
-        }
+        } else {
+            lifecycleScope.launch {
+                binding.pbAdminMain.visibility = View.VISIBLE
 
-        lifecycleScope.launch {
-            binding.pbAdminMain.visibility = View.VISIBLE
+                val admin: Administrator? = withContext(Dispatchers.IO) {
+                    adminDao.getAdminByKey(uid!!)
+                }
 
-            val admin: Administrator? = withContext(Dispatchers.IO) {
-                adminDao.getAdminByKey(uid!!)
+                if (admin != null) {
+                    binding.tvAdminName.text = admin.admin_name
+                } else {
+                    binding.tvAdminName.text = ""
+                }
+
+                binding.pbAdminMain.visibility = View.INVISIBLE
             }
-
-            if (admin != null) {
-                binding.tvAdminName.text = admin.admin_name
-            } else {
-                binding.tvAdminName.text = ""
-            }
-
-            binding.pbAdminMain.visibility = View.INVISIBLE
         }
 
         binding.tvAdminEditList.setOnClickListener{
@@ -100,6 +99,7 @@ class AdminMainActivity : AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }

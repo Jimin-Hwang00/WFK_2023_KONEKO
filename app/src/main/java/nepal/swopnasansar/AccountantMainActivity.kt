@@ -30,26 +30,25 @@ class AccountantMainActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
-            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
-        }
+        } else {
+            lifecycleScope.launch {
+                binding.pbAccountantMain.visibility = View.VISIBLE
 
-        lifecycleScope.launch {
-            binding.pbAccountantMain.visibility = View.VISIBLE
+                val accountant: Accountant? = withContext(Dispatchers.IO) {
+                    accountantDao.getAccountantByKey(uid!!)
+                }
 
-            val accountant: Accountant? = withContext(Dispatchers.IO) {
-                accountantDao.getAccountantByKey(uid!!)
+                if (accountant != null) {
+                    binding.tvAccountantName.text = accountant.accountant_name
+                } else {
+                    binding.tvAccountantName.text = ""
+                }
+
+                binding.pbAccountantMain.visibility = View.INVISIBLE
             }
-
-            if (accountant != null) {
-                binding.tvAccountantName.text = accountant.accountant_name
-            } else {
-                binding.tvAccountantName.text = ""
-            }
-
-            binding.pbAccountantMain.visibility = View.INVISIBLE
         }
 
         binding.tvTuitionCheck.setOnClickListener {
@@ -66,6 +65,7 @@ class AccountantMainActivity: AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }

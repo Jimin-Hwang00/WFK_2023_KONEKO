@@ -35,26 +35,25 @@ class SPMainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (uid == null) {
-            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
-
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
-        }
+        } else {
+            lifecycleScope.launch {
+                binding.pbSpMain.visibility = View.VISIBLE
 
-        lifecycleScope.launch {
-            binding.pbSpMain.visibility = View.VISIBLE
+                val student = withContext(Dispatchers.IO) {
+                    studentDao.getStudentByKey(uid!!)
+                }
 
-            val student = withContext(Dispatchers.IO) {
-                studentDao.getStudentByKey(uid!!)
+                if (student != null) {
+                    binding.tvSpName.text = student.stn_name
+                } else {
+                    binding.tvSpName.text = ""
+                }
+
+                binding.pbSpMain.visibility = View.INVISIBLE
             }
-
-            if (student != null) {
-                binding.tvSpName.text = student.stn_name
-            } else {
-                binding.tvSpName.text = ""
-            }
-
-            binding.pbSpMain.visibility = View.INVISIBLE
         }
 
 
@@ -122,6 +121,7 @@ class SPMainActivity : AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }

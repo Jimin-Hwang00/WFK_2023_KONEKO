@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.R
 import nepal.swopnasansar.dao.*
 import nepal.swopnasansar.dto.Class
 import nepal.swopnasansar.dto.Comment
@@ -25,7 +27,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 class SendingCmntActivity : AppCompatActivity() {
-    private val TAG = "SendingCommentActivity"
+    private val TAG = "SendingCmntActivity"
 
     private lateinit var binding: ActivitySendingCmntBinding
 
@@ -49,6 +51,8 @@ class SendingCmntActivity : AppCompatActivity() {
 
     val commentDAO = CommentDAO()
 
+    lateinit var targetRole: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySendingCmntBinding.inflate(layoutInflater)
@@ -60,8 +64,11 @@ class SendingCmntActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
+
+        targetRole = intent.getStringExtra("targetRole").toString()
 
         sendingCommentReceiversAdapter.setOnItemClickListener(object: SendingCmntTargetsAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
@@ -80,24 +87,36 @@ class SendingCmntActivity : AppCompatActivity() {
             if (selectedTargetIndex == -1) {
                 Toast.makeText(this@SendingCmntActivity, "Please select the target for leaving a comment first.", Toast.LENGTH_SHORT).show()
             } else {
-                lifecycleScope.launch {
-                    val result = withContext(Dispatchers.IO) {
-                        // @TODO
-                        val comment = Comment("", binding.evSendingCmntTitle.text.toString(), binding.evSendingCmntContent.text.toString(), date, uid!!, "author_name", receiverTargets[selectedTargetIndex].key, receiverTargets[selectedTargetIndex].name, false)
-                        commentDAO.uploadComment(comment)
-                    }
+                binding.pbSendingCmnt.visibility = View.VISIBLE
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
-                    withContext(Main) {
-                        if (result) {
-                            val intent =
-                                Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
-                            startActivity(intent)
+                lifecycleScope.launch {
+                    lateinit var userName: String
+                    Log.d(TAG, "targetRole: ${targetRole}")
+                    if (targetRole.equals(getString(R.string.teacher))) {
+                        val student = withContext(Dispatchers.IO) {
+                            studentDao.getStudentByKey(uid!!)
+                        }
+                        if (student != null) {
+                            userName = student.stn_name
+                            uploadingComment(userName)
                         } else {
-                            Toast.makeText(
-                                this@SendingCmntActivity,
-                                "Fail to upload comment. Try again.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this@SendingCmntActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
+                            binding.pbSendingCmnt.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                        }
+                    } else {
+                        val teacher = withContext(Dispatchers.IO) {
+                            teacherDao.getTeacherByKey(uid!!)
+                        }
+                        if (teacher != null) {
+                            userName = teacher.teacher_name
+                            uploadingComment(userName)
+                        } else {
+                            Toast.makeText(this@SendingCmntActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
+                            binding.pbSendingCmnt.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         }
                     }
                 }
@@ -106,9 +125,6 @@ class SendingCmntActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        val targetRole = intent.getStringExtra("targetRole").toString()
-
-        // @TODO 통합 작업할 때 role 체크!
         retrieveCommentTarget(targetRole)
         super.onResume()
     }
@@ -116,37 +132,51 @@ class SendingCmntActivity : AppCompatActivity() {
     fun retrieveCommentTarget(targetRole: String) {
         binding.pbSendingCmnt.visibility = View.VISIBLE
 
-        if (targetRole.equals("student")) {
+        if (targetRole.equals(getString(R.string.student))) {
             var targets: ArrayList<CmntTargetItem> = ArrayList()
 
             lifecycleScope.launch {
-                var classes: ArrayList<Class>? = null
-
-                // 비동기로 클래스 데이터 가져오기
-                withContext(Dispatchers.IO) {
-                    classes = classDao.getAllClasses() as ArrayList<Class>
+                val subjects = withContext(Dispatchers.IO) {
+                    subjectDao.getSubjectByTeacherKey(uid!!)
                 }
 
-                // 각 클래스에 속한 학생들의 이름을 비동기로 가져오기
-                classes?.forEach { classItem ->
-                    // 해당 클래스에 속한 학생들의 이름을 가져오기
-                    classItem.student_key.forEach { studentKey ->
-                        withContext(Dispatchers.IO) {
-                            val stn = studentDao.getStudentByKey(studentKey)
-                            if (stn != null) {
-                                val target = CmntTargetItem(classItem.class_name, stn.stn_name, stn.stn_key, false)
-                                targets.add(target)
+                subjects?.forEach { subject ->
+                    val classItem = withContext(Dispatchers.IO) {
+                        classDao.getClassByClassKey(subject.class_key)
+                    }
+
+                    classItem?.student_key?.forEach { stnKey ->
+                        val student = withContext(Dispatchers.IO) {
+                            studentDao.getStudentByKey(stnKey)
+                        }
+
+                        if (student != null) {
+                            val target = CmntTargetItem(
+                                subject.subject_name,
+                                student.stn_name,
+                                student.stn_key,
+                                false
+                            )
+                            Log.d(TAG, "target : ${target}")
+                            targets.add(target)
+                        } else {
+                            withContext(Main) {
+                                Toast.makeText(
+                                    this@SendingCmntActivity,
+                                    "Fail to get student info. Try again.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
-                }
 
-                withContext(Dispatchers.Main) {
-                    binding.pbSendingCmnt.visibility = View.INVISIBLE
-                    updateUI(targets)
+                    withContext(Dispatchers.Main) {
+                        binding.pbSendingCmnt.visibility = View.INVISIBLE
+                        updateUI(targets)
+                    }
                 }
             }
-        } else if (targetRole.equals("teacher")) {
+        } else if (targetRole.equals(getString(R.string.teacher))) {
             var targets: ArrayList<CmntTargetItem> = ArrayList()
 
             binding.pbSendingCmnt.visibility = View.VISIBLE
@@ -229,6 +259,32 @@ class SendingCmntActivity : AppCompatActivity() {
                 LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         } else {
             sendingCommentReceiversAdapter?.updateData(receiverTargets!!)
+        }
+    }
+
+    private fun uploadingComment(userName: String) {
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                // @TODO
+                val comment = Comment("", binding.evSendingCmntTitle.text.toString(), binding.evSendingCmntContent.text.toString(), date, uid!!, userName, receiverTargets[selectedTargetIndex].key, receiverTargets[selectedTargetIndex].name, false)
+                commentDAO.uploadComment(comment)
+            }
+
+            withContext(Main) {
+                if (result) {
+                    val intent =
+                        Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        this@SendingCmntActivity,
+                        "Fail to upload comment. Try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.pbSendingCmnt.visibility = View.INVISIBLE
+                }
+            }
         }
     }
 }

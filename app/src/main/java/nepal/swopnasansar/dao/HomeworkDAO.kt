@@ -10,6 +10,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.dto.Homework
 import nepal.swopnasansar.dto.SubmittedHW
+import java.util.UUID
 
 class HomeworkDAO {
     private val tag = "HomeworkDAO"
@@ -52,7 +53,9 @@ class HomeworkDAO {
 
     suspend fun uploadHWImageAndGetLink(uri: Uri): String? {
         return try {
-            val uploadTask = hwStorage.putFile(uri)
+            val uniqueFileName = "${UUID.randomUUID()}"
+
+            val uploadTask = hwStorage.child(uniqueFileName).putFile(uri)
             val result = Tasks.await(uploadTask)
             val downloadUrl = result?.storage?.downloadUrl?.await()
             downloadUrl.toString()
