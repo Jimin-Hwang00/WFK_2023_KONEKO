@@ -56,23 +56,6 @@ class AdminMainActivity : AppCompatActivity() {
             binding.pbAdminMain.visibility = View.INVISIBLE
         }
 
-        //admin이름값 가져오기
-//        var firestore : FirebaseFirestore? = null
-//
-//        firestore = FirebaseFirestore.getInstance()
-//        firestore?.collection("admin")?.get()?.addOnSuccessListener { result ->
-//            val tempList = ArrayList<StudentDto>() // 새로운 리스트를 만듦
-//            for (snapshot in result) {
-//                tempList.add(snapshot.toObject(StudentDto::class.java))
-//            }
-//            // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
-//            studentList.clear()
-//            studentList.addAll(tempList)
-//
-//            notifyDataSetChanged()
-//        }
-
-
         binding.tvAdminEditList.setOnClickListener{
             val intent = Intent(this, EditListActivity::class.java)
             startActivity(intent)

@@ -9,8 +9,16 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.data.TeacherDto
@@ -24,6 +32,7 @@ class EditTeacherActivity : AppCompatActivity() {
     lateinit var itemBinding: ListTeacherAndAccountBinding
     val TAG = "EditTeacherActivity"
     var progressBarVisible = true
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,34 +65,51 @@ class EditTeacherActivity : AppCompatActivity() {
                 setCancelable(false)
                 setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
-                        // 문서를 추가하고 자동으로 생성된 키 값을 받아옵니다.
-                        db.collection("teacher").add(TeacherDto("", name, email))
-                            .addOnSuccessListener { documentReference ->
-                                val documentId = documentReference.id
-                                // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                db.collection("teacher").document(documentId)
-                                    .set(TeacherDto(documentId, name, email))
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            this@EditTeacherActivity,
-                                            "Save completed",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
-                                        startActivity(intent)
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        println("Error creating document: $exception")
-                                    }
-                            }
-                            .addOnFailureListener { exception ->
-                                println("Error creating document: $exception")
-                            }
+                        CoroutineScope(Dispatchers.Main).launch {
+                            try {
+                                val authResult = auth.createUserWithEmailAndPassword(email, email.substringBefore("@")).await()
+                                val user: FirebaseUser? = authResult.user
+                                var uid = user?.uid ?: ""
+                                println("User UID: $uid")
+                                if(!uid.equals("")){
+                                    // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
+                                    db.collection("teacher").document(uid)
+                                        .set(TeacherDto(uid, name, email))
+                                        .addOnSuccessListener {
+                                            Toast.makeText(
+                                                this@EditTeacherActivity,
+                                                "Save completed",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                            startActivity(intent)
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            println("Error creating document: $exception")
+                                        }
+                                    binding.nameEt.setText("")
+                                    binding.emailEt.setText("")
+                                    adapter.onUpdateList()
+                                    adapter.notifyDataSetChanged()
+                                }
 
-                        binding.nameEt.setText("")
-                        binding.emailEt.setText("")
-                        adapter.onUpdateList()
-                        adapter.notifyDataSetChanged()
+                            } catch (e: FirebaseAuthUserCollisionException) {
+                                // 이미 등록된 사용자인 경우 처리
+                                Toast.makeText(this@EditTeacherActivity,
+                                    "The email address is already registered.", Toast.LENGTH_LONG).show()
+                                println("Registration Error: ${e.message}")
+                            } catch (e: FirebaseAuthInvalidCredentialsException) {
+                                // 유효하지 않은 이메일 값인 경우 처리
+                                Toast.makeText(this@EditTeacherActivity,
+                                    "The email address is invalid.", Toast.LENGTH_LONG).show()
+                                println("Registration Error: ${e.message}")
+                            } catch (e: Exception) {
+                                // 기타 등록 오류 처리
+                                Toast.makeText(this@EditTeacherActivity,
+                                    "Please try again.", Toast.LENGTH_LONG).show()
+                                println("Registration Error: ${e.message}")
+                            }
+                        }
                     }
                 })
                 show()
