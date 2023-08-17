@@ -57,6 +57,11 @@ class AccountantMainActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowAccountantEditTuiton.setOnClickListener {
+            val intent = Intent(this, AccountantTuitionCheckActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvAccountantLogout.setOnClickListener {
             authDao.logout()
 

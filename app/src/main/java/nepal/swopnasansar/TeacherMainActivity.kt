@@ -3,6 +3,7 @@ package nepal.swopnasansar
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -61,7 +62,17 @@ class TeacherMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowTHw.setOnClickListener {
+            val intent = Intent(this, THWMainActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvTAttendance.setOnClickListener {
+            val intent = Intent(this, TeacherAttendanceActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowTAttendance.setOnClickListener {
             val intent = Intent(this, TeacherAttendanceActivity::class.java)
             startActivity(intent)
         }
@@ -71,7 +82,17 @@ class TeacherMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowTNotice.setOnClickListener {
+            val intent = Intent(this, TeacherNoticeMainActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvTCalendar.setOnClickListener {
+            val intent = Intent(this, CheckEventActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowTCalendar.setOnClickListener {
             val intent = Intent(this, CheckEventActivity::class.java)
             startActivity(intent)
         }
@@ -81,7 +102,17 @@ class TeacherMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowTYoutube.setOnClickListener {
+            val intent = Intent(this, TeacherCheckYoutbeListActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvTCmnt.setOnClickListener {
+            val intent = Intent(this, TeacherCmntMainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowTCmnt.setOnClickListener {
             val intent = Intent(this, TeacherCmntMainActivity::class.java)
             startActivity(intent)
         }

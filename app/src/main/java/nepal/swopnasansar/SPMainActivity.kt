@@ -3,6 +3,7 @@ package nepal.swopnasansar
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +31,8 @@ class SPMainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sp_main)
+        binding = ActivitySpMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
@@ -46,7 +48,7 @@ class SPMainActivity : AppCompatActivity() {
                 studentDao.getStudentByKey(uid!!)
             }
 
-            if(student != null) {
+            if (student != null) {
                 binding.tvSpName.text = student.stn_name
             } else {
                 binding.tvSpName.text = ""
@@ -55,7 +57,13 @@ class SPMainActivity : AppCompatActivity() {
             binding.pbSpMain.visibility = View.INVISIBLE
         }
 
+
         binding.tvSPHW.setOnClickListener {
+            val intent = Intent(this, SPCheckHWActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowSpHw.setOnClickListener {
             val intent = Intent(this, SPCheckHWActivity::class.java)
             startActivity(intent)
         }
@@ -65,7 +73,17 @@ class SPMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowSpAttendance.setOnClickListener {
+            val intent = Intent(this, ParentAttendanceActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvSPNotice.setOnClickListener {
+            val intent = Intent(this, ParentCheckNoticeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowSpNotice.setOnClickListener {
             val intent = Intent(this, ParentCheckNoticeActivity::class.java)
             startActivity(intent)
         }
@@ -75,12 +93,27 @@ class SPMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowSpCalendar.setOnClickListener {
+            val intent = Intent(this, CheckEventActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvSPTuition.setOnClickListener {
             val intent = Intent(this, SPCheckTuitionActivity::class.java)
             startActivity(intent)
         }
 
+        binding.arrowSpTuiton.setOnClickListener {
+            val intent = Intent(this, SPCheckTuitionActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvSPCmnt.setOnClickListener {
+            val intent = Intent(this, SPCmntMainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowSpCmnt.setOnClickListener {
             val intent = Intent(this, SPCmntMainActivity::class.java)
             startActivity(intent)
         }

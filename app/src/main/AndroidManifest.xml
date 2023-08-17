@@ -235,6 +235,24 @@
         <activity
             android:name=".login.LoginActivity"
             android:exported="true" />
+        <activity
+            android:name=".comment.ReceivedCmntListAcitivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntToAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SentCmntListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SPCmntMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.TeacherCmntMainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

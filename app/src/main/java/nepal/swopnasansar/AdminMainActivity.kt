@@ -10,10 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.admin.AdminCalAdapter
-import nepal.swopnasansar.admin.CheckEventActivity
-import nepal.swopnasansar.admin.ClassListActivity
-import nepal.swopnasansar.admin.EditListActivity
+import nepal.swopnasansar.admin.*
+import nepal.swopnasansar.comment.ReceivedCmntListAcitivity
 import nepal.swopnasansar.dao.AdminDAO
 import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.databinding.ActivityAdminMainBinding
@@ -75,32 +73,43 @@ class AdminMainActivity : AppCompatActivity() {
 //        }
 
 
-        binding.userCreateBt.setOnClickListener{
+        binding.tvAdminEditList.setOnClickListener{
             val intent = Intent(this, EditListActivity::class.java)
             startActivity(intent)
         }
 
-        binding.userCreateBt1.setOnClickListener{
+        binding.arrowAdminEditList.setOnClickListener {
             val intent = Intent(this, EditListActivity::class.java)
             startActivity(intent)
         }
 
-        binding.createEventBt.setOnClickListener{
+        binding.tvAdminCreateClasses.setOnClickListener{
+            val intent = Intent(this, CreateClassActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowAdminCreateClasses.setOnClickListener {
+            val intent = Intent(this, CreateClassActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvAdminCmnt.setOnClickListener{
+            val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowAdminCmnt.setOnClickListener {
+            val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvAdminEditCalendar.setOnClickListener{
             val intent = Intent(this, CheckEventActivity::class.java)
             startActivity(intent)
         }
 
-        binding.createEventBt1.setOnClickListener{
+        binding.arrowAdminEditCalendar.setOnClickListener {
             val intent = Intent(this, CheckEventActivity::class.java)
-            startActivity(intent)
-        }
-        binding.classCreateBt.setOnClickListener{
-            val intent = Intent(this, ClassListActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.classCreateBt2.setOnClickListener{
-            val intent = Intent(this, ClassListActivity::class.java)
             startActivity(intent)
         }
 

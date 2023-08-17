@@ -8,13 +8,25 @@
     tools:context=".SPMainActivity">
 
 
+    <ProgressBar
+        android:id="@+id/pb_sp_main"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -42,23 +54,13 @@
                 app:srcCompat="@drawable/search_icon" />
 
             <ImageView
-                android:id="@+id/createEventBt2"
+                android:id="@+id/arrow_sp_cmnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="610dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ProgressBar
-                android:id="@+id/pb_sp_main"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -68,7 +70,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/createEventBt1"
+                android:id="@+id/arrow_sp_tuiton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="540dp"
@@ -129,7 +131,7 @@
                 app:srcCompat="@drawable/btn_3" />
 
             <ImageView
-                android:id="@+id/userCreateBt2"
+                android:id="@+id/arrow_sp_attendance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="335dp"
@@ -197,7 +199,7 @@
 
 
             <ImageView
-                android:id="@+id/userCreateBt1"
+                android:id="@+id/arrow_sp_hw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="270dp"
@@ -228,7 +230,7 @@
                 app:layout_constraintVertical_bias="0.565" />
 
             <ImageView
-                android:id="@+id/classCreateBt2"
+                android:id="@+id/arrow_sp_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="405dp"
@@ -254,7 +256,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/createEventBt3"
+                android:id="@+id/arrow_sp_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="470dp"
@@ -292,6 +294,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout6"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         app:layout_constraintEnd_toEndOf="parent"

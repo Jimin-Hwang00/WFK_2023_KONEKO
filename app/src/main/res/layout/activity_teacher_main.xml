@@ -42,7 +42,7 @@
                 app:srcCompat="@drawable/search_icon" />
 
             <ImageView
-                android:id="@+id/createEventBt2"
+                android:id="@+id/arrow_t_cmnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="610dp"
@@ -68,7 +68,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView90"
+                android:id="@+id/arrow_t_youtube"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="540dp"
@@ -129,7 +129,7 @@
                 app:srcCompat="@drawable/btn_3" />
 
             <ImageView
-                android:id="@+id/userCreateBt2"
+                android:id="@+id/arrow_t_attendance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="335dp"
@@ -197,7 +197,7 @@
 
 
             <ImageView
-                android:id="@+id/userCreateBt1"
+                android:id="@+id/arrow_t_hw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="270dp"
@@ -228,7 +228,7 @@
                 app:layout_constraintVertical_bias="0.565" />
 
             <ImageView
-                android:id="@+id/classCreateBt2"
+                android:id="@+id/arrow_t_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="405dp"
@@ -254,7 +254,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/createEventBt3"
+                android:id="@+id/arrow_t_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="470dp"

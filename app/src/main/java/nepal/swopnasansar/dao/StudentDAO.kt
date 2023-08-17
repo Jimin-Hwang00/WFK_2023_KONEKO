@@ -51,6 +51,8 @@ class StudentDAO {
             if (documentSnapshot.exists()) {
                 student = documentSnapshot.toObject(Student::class.java)
             }
+
+            Log.d(TAG, "student : ${student}")
         } catch (e: Exception) {
             student = null
             Log.e(TAG, "Error getting student name", e)
