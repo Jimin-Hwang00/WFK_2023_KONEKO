@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
                 changeActivityToUserMain()
             } else {
                 val intent = Intent(this@MainActivity, CheckRoleActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                 startActivity(intent)
             }
         }, 3000)
@@ -45,35 +44,32 @@ class MainActivity : AppCompatActivity() {
             when (role) {
                 getString(R.string.administrator) -> {
                     val intent = Intent(this, AdminMainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     startActivity(intent)
                 }
                 getString(R.string.accountant) -> {
                     val intent = Intent(this, AccountantMainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     startActivity(intent)
                 }
                 getString(R.string.teacher) -> {
                     val intent = Intent(this, TeacherMainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     startActivity(intent)
                 }
                 getString(R.string.student) -> {
                     val intent = Intent(this, SPMainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     startActivity(intent)
                 }
                 else -> {
                     val intent = Intent(this, CheckRoleActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     startActivity(intent)
                 }
             }
         } else {
             val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }
 
+    override fun onBackPressed() {
+        // 뒤로 가기 버튼 동작 없음
+    }
 }

@@ -37,4 +37,9 @@ class CheckRoleActivity: AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onBackPressed() {
+        // 뒤로 가기 버튼 동작 없음
+    }
+
 }

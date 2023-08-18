@@ -35,7 +35,6 @@ class AdminMainActivity : AppCompatActivity() {
 
         if (uid == null) {
             val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         } else {
             Log.d("AdminMainActivity", "uid : ${uid!!}")
@@ -103,5 +102,9 @@ class AdminMainActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
+    }
+
+    override fun onBackPressed() {
+        // 뒤로 가기 버튼 동작 없음
     }
 }

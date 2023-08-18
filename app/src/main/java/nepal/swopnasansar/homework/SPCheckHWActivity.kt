@@ -43,7 +43,7 @@ class SPCheckHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
 
@@ -90,7 +90,7 @@ class SPCheckHWActivity : AppCompatActivity() {
                 classDao.getClassByStudentKey(uid!!)
             }
 
-            if (classItem != null) {
+            if (classItem != null && classItem.size == 1) {
                 homeworks = withContext(Dispatchers.IO) {
                     homeworkDao.getHWbyClassKey(classItem[0].class_key)
                 }

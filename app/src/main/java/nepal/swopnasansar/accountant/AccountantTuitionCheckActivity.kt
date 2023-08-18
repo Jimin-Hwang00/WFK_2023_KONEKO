@@ -35,6 +35,7 @@ class AccountantTuitionCheckActivity : AppCompatActivity() {
 
         binding.btnEditTuition.setOnClickListener {
             val intent = Intent(this, AccountantTuitionInputActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
 

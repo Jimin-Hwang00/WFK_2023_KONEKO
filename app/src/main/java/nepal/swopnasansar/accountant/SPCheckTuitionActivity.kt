@@ -34,6 +34,7 @@ class SPCheckTuitionActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this@SPCheckTuitionActivity, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
     }
@@ -51,8 +52,7 @@ class SPCheckTuitionActivity : AppCompatActivity() {
     override fun onResume() {
         lifecycleScope.launch(Dispatchers.IO) {
             student = withContext(Dispatchers.IO) {
-                // @TODO key 값 수정
-                studentDao.getStudentByKey("0G5hP16nunujNarssHwE")
+                studentDao.getStudentByKey(uid!!)
             }
 
             withContext(Main) {

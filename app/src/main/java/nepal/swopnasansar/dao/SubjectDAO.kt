@@ -35,7 +35,7 @@ class SubjectDAO {
         var subjects: ArrayList<Subject>? = ArrayList()
 
         try {
-            subjectRef.whereEqualTo("teacher", key).get()
+            subjectRef.whereEqualTo("teacher_key", key).get()
                 .addOnSuccessListener { document ->
                     for (doc in document) {
                         val subject = doc.toObject(Subject::class.java)

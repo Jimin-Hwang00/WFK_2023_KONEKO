@@ -259,19 +259,15 @@ class LoginActivity: AppCompatActivity() {
     fun changePage() {
         if (role.equals(getString(R.string.administrator))) {
             val intent = Intent(this@LoginActivity, AdminMainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         } else if (role.equals(getString(R.string.teacher))) {
             val intent = Intent(this@LoginActivity, TeacherMainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         } else if (role.equals(getString(R.string.accountant))) {
             val intent = Intent(this@LoginActivity, AccountantMainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         } else if (role.equals(getString(R.string.student))) {
             val intent = Intent(this@LoginActivity, SPMainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         }
     }
