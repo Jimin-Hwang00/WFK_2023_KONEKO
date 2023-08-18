@@ -22,7 +22,17 @@ class CheckRoleActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowCheckRoleAd.setOnClickListener {
+            intent.putExtra("role", getString(R.string.administrator))
+            startActivity(intent)
+        }
+
         binding.tvCheckRoleAccountant.setOnClickListener {
+            intent.putExtra("role", getString(R.string.accountant))
+            startActivity(intent)
+        }
+
+        binding.arrowCheckRoleAc.setOnClickListener {
             intent.putExtra("role", getString(R.string.accountant))
             startActivity(intent)
         }
@@ -32,7 +42,17 @@ class CheckRoleActivity: AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowCheckRoleT.setOnClickListener {
+            intent.putExtra("role", getString(R.string.teacher))
+            startActivity(intent)
+        }
+
         binding.tvCheckRoleSp.setOnClickListener {
+            intent.putExtra("role", getString(R.string.student))
+            startActivity(intent)
+        }
+
+        binding.arrowCheckRoleSp.setOnClickListener {
             intent.putExtra("role", getString(R.string.student))
             startActivity(intent)
         }
@@ -41,5 +61,4 @@ class CheckRoleActivity: AppCompatActivity() {
     override fun onBackPressed() {
         // 뒤로 가기 버튼 동작 없음
     }
-
 }
