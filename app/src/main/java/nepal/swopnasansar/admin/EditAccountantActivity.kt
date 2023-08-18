@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -49,8 +50,8 @@ class EditAccountantActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val db = Firebase.firestore
-        val accountantList = ArrayList<AccountantDto>()
-        var checkedList = ArrayList<AccountantDto>()
+        val accountantList = ArrayList<TempDto>()
+        var checkedList = ArrayList<TempDto>()
         var checkedPos = ArrayList<Int>()
 
         adapter = AccountantAdapter(this, accountantList)
@@ -99,24 +100,40 @@ class EditAccountantActivity : AppCompatActivity() {
                                 if(tempList.size == 0 && teacherList.size == 0 && accountList.size == 0 && studentList.size == 0){
                                     // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
                                     if(isEmailValid(email)){
-                                        db.collection("temp").document(email)
-                                            .set(TempDto(email, name, "accountant"))
-                                            .addOnSuccessListener {
-                                                Toast.makeText(
-                                                    this@EditAccountantActivity,
-                                                    "Save completed",
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                    .show()
-                                                startActivity(intent)
+                                        Firebase.auth.fetchSignInMethodsForEmail(email)
+                                            .addOnCompleteListener { task ->
+                                                if (task.isSuccessful) {
+                                                    val signInMethods = task.result?.signInMethods
+                                                    if (signInMethods.isNullOrEmpty()) {
+                                                        // 해당 이메일로 등록된 사용자가 없음
+                                                        db.collection("temp").document(email)
+                                                            .set(TempDto(email, name, "accountant"))
+                                                            .addOnSuccessListener {
+                                                                Toast.makeText(
+                                                                    this@EditAccountantActivity,
+                                                                    "Save completed",
+                                                                    Toast.LENGTH_SHORT
+                                                                )
+                                                                    .show()
+                                                                startActivity(intent)
+                                                            }
+                                                            .addOnFailureListener { exception ->
+                                                                println("Error creating document: $exception")
+                                                            }
+                                                        binding.nameEt.setText("")
+                                                        binding.emailEt.setText("")
+                                                        adapter.onUpdateList()
+                                                        adapter.notifyDataSetChanged()
+
+                                                        Log.d(TAG, "해당 이메일로 등록된 사용자가 없습니다.")
+                                                    } else {
+                                                        // 해당 이메일로 이미 사용자가 등록됨
+                                                        Log.d(TAG, "해당 이메일로 이미 사용자가 등록되었습니다.")
+                                                    }
+                                                } else {
+                                                    Log.e(TAG, "사용자 조회 실패:", task.exception)
+                                                }
                                             }
-                                            .addOnFailureListener { exception ->
-                                                println("Error creating document: $exception")
-                                            }
-                                        binding.nameEt.setText("")
-                                        binding.emailEt.setText("")
-                                        adapter.onUpdateList()
-                                        adapter.notifyDataSetChanged()
                                     }else{
                                         runOnUiThread {
                                             Toast.makeText(
@@ -154,7 +171,7 @@ class EditAccountantActivity : AppCompatActivity() {
                     checkedList.add(accountantList[position])
                     checkedPos.add(position)
                     for (item in checkedList) {
-                        Log.d(TAG, "checkedList item: ${item.accountant_name}")
+                        Log.d(TAG, "checkedList item: ${item.email}")
                     }
                 }else{
                     // flag 값이 0인 경우, 해당 객체를 checkedList에서 제거
@@ -162,7 +179,7 @@ class EditAccountantActivity : AppCompatActivity() {
                     checkedList.remove(targetObject)
                     checkedPos.remove(position)
                     for (item in checkedList) {
-                        Log.d(TAG, "checkedList item: ${item.accountant_name}")
+                        Log.d(TAG, "checkedList item: ${item.email}")
                     }
                 }
             }
@@ -176,30 +193,30 @@ class EditAccountantActivity : AppCompatActivity() {
                 setNegativeButton("No", null)
                 setCancelable(false)
                 for (item in accountantList) {
-                    Log.d(TAG, "adapter accountant item: ${item.accountant_key}, ${item.accountant_name}")
+                    Log.d(TAG, "adapter accountant item: ${item.email}, ${item.email}")
                 }
                 setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
-                        val tempCheckedList = ArrayList<AccountantDto>() // 임시 리스트 생성
+                        val tempCheckedList = ArrayList<TempDto>() // 임시 리스트 생성
                         for (i in checkedPos.indices) {
                             val pos = checkedPos[i]
                             if (pos >= 0 && pos < accountantList.size) { // 유효한 위치인지 확인
                                 val ac = accountantList[pos]
-                                Log.d(TAG, "${ac.accountant_key}")
-                                db.collection("accountant").document(ac.accountant_key).delete()
+                                Log.d(TAG, "${ac.email}")
+                                db.collection("temp").document(ac.email).delete()
                                     .addOnSuccessListener {
                                         adapter.onUpdateList()
                                         adapter.notifyDataSetChanged()
                                         Toast.makeText(this@EditAccountantActivity, "delete success!!", Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener { e ->
-                                        Log.e("DeleteError", "Delete failed for accountant key: ${ac.accountant_key}, Error: ${e.message}")
+                                        Log.e("DeleteError", "Delete failed for accountant key: ${ac.email}, Error: ${e.message}")
                                         Toast.makeText(this@EditAccountantActivity, "delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 tempCheckedList.add(ac) // 삭제할 데이터를 임시 리스트에 추가
                             }
                         }
-                        accountantList.removeIf { ac -> tempCheckedList.any { it.accountant_key == ac.accountant_key } } // 삭제할 데이터를 실제 리스트에서 제거
+                        accountantList.removeIf { ac -> tempCheckedList.any { it.email == ac.email } } // 삭제할 데이터를 실제 리스트에서 제거
                         adapter.onUpdateList()
                         adapter.notifyDataSetChanged()
                         checkedPos.clear()
@@ -211,7 +228,7 @@ class EditAccountantActivity : AppCompatActivity() {
         }
     }
     fun isEmailValid(email: String): Boolean {
-        val emailRegex = "^[A-Za-z0-9+_.-]+@(.+)\$".toRegex()
+        val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})\$".toRegex()
         return email.matches(emailRegex)
     }
     override fun onResume() {

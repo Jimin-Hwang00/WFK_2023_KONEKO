@@ -7,58 +7,75 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import nepal.swopnasansar.data.AccountantDto
+import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvClassListDto
+import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.data.TeacherDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ListTeacherAndAccountBinding
 
-class AccountantAdapter(private val activity: Activity, val accountantList : ArrayList<AccountantDto>)
+class AccountantAdapter(private val activity: Activity, val accountantList : ArrayList<TempDto>)
     : RecyclerView.Adapter<AccountantAdapter.AccountantViewHolder>() {
     val TAG = "AccountantAdapter"
     var firestore : FirebaseFirestore? = null
+    var TempList = ArrayList<TempDto>() // 빈 ArrayList로 초기화
 
     init {
         firestore = FirebaseFirestore.getInstance()
-        firestore?.collection("accountant")?.get()?.addOnSuccessListener { result ->
-            val tempList = ArrayList<AccountantDto>() // 새로운 리스트를 만듦
-            for (snapshot in result) {
-                tempList.add(snapshot.toObject(AccountantDto::class.java))
-            }
-            // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
-            accountantList.clear()
-            accountantList.addAll(tempList)
 
-            for(i in accountantList){
-                Log.d(TAG, "init ${i.accountant_key}, ${i.accountant_name}")
-            }
+        CoroutineScope(Dispatchers.IO).launch {
+            firestore = FirebaseFirestore.getInstance()
 
-            if(activity is AccountantListActivity){
-                (activity as? AccountantListActivity)?.hideProgressBar()
+            TempList.clear()
+            val accountantQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("role", "accountant")?.get()?.await()
+            TempList.addAll(accountantQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+
+            // 데이터 처리 및 어댑터 갱신
+            withContext(Dispatchers.Main) {
+                accountantList.clear()
+                accountantList.addAll(TempList)
+
+                if(activity is AccountantListActivity){
+                    (activity as? AccountantListActivity)?.hideProgressBar()
+                }
+                if(activity is EditAccountantActivity){
+                    (activity as? EditAccountantActivity)?.hideProgressBar()
+                }
+                notifyDataSetChanged()
             }
-            if(activity is EditAccountantActivity){
-                (activity as? EditAccountantActivity)?.hideProgressBar()
-            }
-            notifyDataSetChanged()
         }
     }
 
     fun onUpdateList(){
         firestore = FirebaseFirestore.getInstance()
-        firestore?.collection("accountant")?.get()?.addOnSuccessListener { result ->
-            val tempList = ArrayList<AccountantDto>() // 새로운 리스트를 만듦
-            for (snapshot in result) {
-                tempList.add(snapshot.toObject(AccountantDto::class.java))
-            }
-            // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
-            accountantList.clear()
-            accountantList.addAll(tempList)
 
-            if(activity is AccountantListActivity){
-                (activity as? AccountantListActivity)?.hideProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "class어댑터 초기화")
+            firestore = FirebaseFirestore.getInstance()
+
+            TempList.clear()
+            val accountantQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("role", "accountant")?.get()?.await()
+            TempList.addAll(accountantQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+
+            // 데이터 처리 및 어댑터 갱신
+            withContext(Dispatchers.Main) {
+                accountantList.clear()
+                accountantList.addAll(TempList)
+
+                if(activity is AccountantListActivity){
+                    (activity as? AccountantListActivity)?.hideProgressBar()
+                }
+                if(activity is EditAccountantActivity){
+                    (activity as? EditAccountantActivity)?.hideProgressBar()
+                }
+                notifyDataSetChanged()
             }
-            if(activity is EditAccountantActivity){
-                (activity as? EditAccountantActivity)?.hideProgressBar()
-            }
-            notifyDataSetChanged()
         }
     }
 
@@ -93,7 +110,7 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
     override fun onBindViewHolder(holder: AccountantAdapter.AccountantViewHolder, position: Int)  {
         val accountantsToRemove = mutableListOf<AccountantDto>()
 
-        holder.name.text = accountantList[position].accountant_name
+        holder.name.text = accountantList[position].name
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
         holder.deleteCheckbox.isChecked = false
 

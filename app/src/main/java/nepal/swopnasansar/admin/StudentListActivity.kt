@@ -9,6 +9,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.StudentDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ActivityEditStudentBinding
 import nepal.swopnasansar.databinding.ActivityStudentListBinding
 
@@ -22,7 +23,7 @@ class StudentListActivity : AppCompatActivity() {
         binding = ActivityStudentListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val studentList = ArrayList<StudentDto>()
+        val studentList = ArrayList<TempDto>()
 
         adapter = StudentAdapter(this,studentList)
         binding.rvStudentList.adapter = adapter

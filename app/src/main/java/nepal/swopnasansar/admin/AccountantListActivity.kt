@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.data.AccountantDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ActivityAccountantListBinding
 
 class AccountantListActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class AccountantListActivity : AppCompatActivity() {
         binding = ActivityAccountantListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val accountantList = ArrayList<AccountantDto>()
+        val accountantList = ArrayList<TempDto>()
         adapter = AccountantAdapter(this,accountantList)
         binding.rvAccountantList.adapter = adapter
 

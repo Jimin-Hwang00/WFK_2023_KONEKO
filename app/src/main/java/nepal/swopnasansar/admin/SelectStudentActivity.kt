@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.data.TeacherDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ActivitySelectStudentBinding
 import nepal.swopnasansar.databinding.ActivityStudentListBinding
 
@@ -24,8 +25,8 @@ class SelectStudentActivity : AppCompatActivity() {
         binding = ActivitySelectStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val studentList = ArrayList<StudentDto>()
-        var checkedList = ArrayList<StudentDto>()
+        val studentList = ArrayList<TempDto>()
+        var checkedList = ArrayList<TempDto>()
         var checkedPos = ArrayList<Int>()
         var studentListText : String = ""
 
@@ -43,7 +44,7 @@ class SelectStudentActivity : AppCompatActivity() {
                     checkedList.add(studentList[position])
                     checkedPos.add(position)
                     for (item in checkedList) {
-                        Log.d(TAG, "checkedList item: ${item.stn_name}")
+                        Log.d(TAG, "checkedList item: ${item.email}")
                     }
                 }else{
                     // flag 값이 0인 경우, 해당 객체를 checkedList에서 제거
@@ -51,7 +52,7 @@ class SelectStudentActivity : AppCompatActivity() {
                     checkedList.remove(targetObject)
                     checkedPos.remove(position)
                     for (item in checkedList) {
-                        Log.d(TAG, "checkedList item: ${item.stn_name}")
+                        Log.d(TAG, "checkedList item: ${item.email}")
                     }
                 }
             }
@@ -66,8 +67,8 @@ class SelectStudentActivity : AppCompatActivity() {
             var num = 0
             for( stn in checkedList){
                 if(num < checkedList.size){
-                    studentListText += "${num + 1} : ${stn.stn_name}   "
-                    studentKeyList.add(stn.stn_key)
+                    studentListText += "${num + 1} : ${stn.email}   "
+                    studentKeyList.add(stn.email)
                 }
                 num++
             }

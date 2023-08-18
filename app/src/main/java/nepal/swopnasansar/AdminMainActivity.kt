@@ -66,12 +66,12 @@ class AdminMainActivity : AppCompatActivity() {
         }
 
         binding.tvAdminCreateClasses.setOnClickListener{
-            val intent = Intent(this, CreateClassActivity::class.java)
+            val intent = Intent(this, ClassListActivity::class.java)
             startActivity(intent)
         }
 
         binding.arrowAdminCreateClasses.setOnClickListener {
-            val intent = Intent(this, CreateClassActivity::class.java)
+            val intent = Intent(this, ClassListActivity::class.java)
             startActivity(intent)
         }
 

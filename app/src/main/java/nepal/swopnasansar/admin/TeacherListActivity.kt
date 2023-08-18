@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.data.TeacherDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ActivityStudentListBinding
 import nepal.swopnasansar.databinding.ActivityTeacherListBinding
 
@@ -21,7 +22,7 @@ class TeacherListActivity : AppCompatActivity() {
         binding = ActivityTeacherListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val teacherList = ArrayList<TeacherDto>()
+        val teacherList = ArrayList<TempDto>()
 
         adapter = TeacherAdapter(this,teacherList)
         binding.rvTeacherList.adapter = adapter

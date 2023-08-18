@@ -7,54 +7,71 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.data.TeacherDto
+import nepal.swopnasansar.data.TempDto
 import nepal.swopnasansar.databinding.ListTeacherAndAccountBinding
 
-class TeacherAdapter (private val activity: Activity, val teacherList : ArrayList<TeacherDto>)
+class TeacherAdapter (private val activity: Activity, val teacherList : ArrayList<TempDto>)
     : RecyclerView.Adapter<TeacherAdapter.TeacherViewHolder>() {
     val TAG = "TeacherAdapter"
     var firestore : FirebaseFirestore? = null
+    var TempList = ArrayList<TempDto>() // 빈 ArrayList로 초기화
 
     init {
         firestore = FirebaseFirestore.getInstance()
-        firestore?.collection("teacher")?.get()?.addOnSuccessListener { result ->
-            val tempList = ArrayList<TeacherDto>() // 새로운 리스트를 만듦
-            for (snapshot in result) {
-                tempList.add(snapshot.toObject(TeacherDto::class.java))
-            }
-            // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
-            teacherList.clear()
-            teacherList.addAll(tempList)
 
-            if(activity is TeacherListActivity){
-                (activity as? TeacherListActivity)?.hideProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            firestore = FirebaseFirestore.getInstance()
+
+            TempList.clear()
+            val accountantQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("role", "teacher")?.get()?.await()
+            TempList.addAll(accountantQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+
+            // 데이터 처리 및 어댑터 갱신
+            withContext(Dispatchers.Main) {
+                teacherList.clear()
+                teacherList.addAll(TempList)
+
+                if(activity is TeacherListActivity){
+                    (activity as? TeacherListActivity)?.hideProgressBar()
+                }
+                if(activity is EditTeacherActivity){
+                    (activity as? EditTeacherActivity)?.hideProgressBar()
+                }
+                notifyDataSetChanged()
             }
-            if(activity is EditTeacherActivity){
-                (activity as? EditTeacherActivity)?.hideProgressBar()
-            }
-            notifyDataSetChanged()
         }
     }
 
     fun onUpdateList(){
         firestore = FirebaseFirestore.getInstance()
-        firestore?.collection("teacher")?.get()?.addOnSuccessListener { result ->
-            val tempList = ArrayList<TeacherDto>() // 새로운 리스트를 만듦
-            for (snapshot in result) {
-                tempList.add(snapshot.toObject(TeacherDto::class.java))
-            }
-            // 기존의 adminCalList를 지우고 정렬된 요소들을 추가
-            teacherList.clear()
-            teacherList.addAll(tempList)
 
-            if(activity is TeacherListActivity){
-                (activity as? TeacherListActivity)?.hideProgressBar()
+        CoroutineScope(Dispatchers.IO).launch {
+            firestore = FirebaseFirestore.getInstance()
+
+            TempList.clear()
+            val accountantQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("role", "teacher")?.get()?.await()
+            TempList.addAll(accountantQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+
+            // 데이터 처리 및 어댑터 갱신
+            withContext(Dispatchers.Main) {
+                teacherList.clear()
+                teacherList.addAll(TempList)
+
+                if(activity is TeacherListActivity){
+                    (activity as? TeacherListActivity)?.hideProgressBar()
+                }
+                if(activity is EditTeacherActivity){
+                    (activity as? EditTeacherActivity)?.hideProgressBar()
+                }
+                notifyDataSetChanged()
             }
-            if(activity is EditTeacherActivity){
-                (activity as? EditTeacherActivity)?.hideProgressBar()
-            }
-            notifyDataSetChanged()
         }
     }
 
@@ -89,7 +106,7 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
     override fun onBindViewHolder(holder: TeacherAdapter.TeacherViewHolder, position: Int)  {
         val teachersToRemove = mutableListOf<TeacherDto>()
 
-        holder.name.text = teacherList[position].teacher_name
+        holder.name.text = teacherList[position].name
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
         holder.deleteCheckbox.isChecked = false
 
