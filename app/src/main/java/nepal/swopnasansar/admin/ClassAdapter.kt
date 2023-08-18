@@ -38,14 +38,11 @@ class ClassAdapter(private val activity: Activity, val rvClassList : ArrayList<R
             subjectTempList.addAll(subjectQuerySnapshot?.toObjects(SubjectDto::class.java) ?: emptyList())
 
             // 선생님 정보 가져오기
-            for (teacherInfo in subjectTempList) {
-                val teacherQuerySnapshot = firestore?.collection("teacher")?.whereEqualTo("teacher_key", teacherInfo.teacher_key)?.get()?.await()
+            for (subject in subjectTempList) {
+                val teacherQuerySnapshot = firestore?.collection("teacher")?.whereEqualTo("teacher_key", subject.teacher_key)?.get()?.await()
                 teacherTempList.addAll(teacherQuerySnapshot?.toObjects(TeacherDto::class.java) ?: emptyList())
-            }
 
-            // 클래스 정보 가져오기
-            for (classInfo in subjectTempList) {
-                val classQuerySnapshot = firestore?.collection("class")?.whereEqualTo("class_key", classInfo.class_key)?.get()?.await()
+                val classQuerySnapshot = firestore?.collection("class")?.whereEqualTo("class_key", subject.class_key)?.get()?.await()
                 classTempList.addAll(classQuerySnapshot?.toObjects(ClassDto::class.java) ?: emptyList())
             }
 

@@ -2,6 +2,7 @@ package nepal.swopnasansar.notice
 
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,16 +11,20 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.data.NoticeDto
 import nepal.swopnasansar.data.RvEntireNoticeDto
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.databinding.ActivityTeacherEntireNoticeBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class TeacherEntireNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityTeacherEntireNoticeBinding
     lateinit var adapter : TeacherEntireNoticeAdapter
     var progressBarVisible = true
     val TAG = "TeacherEntireNoticeActivity"
+    private val authDao = AuthDAO()
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,14 @@ class TeacherEntireNoticeActivity : AppCompatActivity() {
         var checkedPosition: Int = -1
         var checkedClass = RvEntireNoticeDto("", "", "", ArrayList(), ArrayList())
         var studentNameList : ArrayList<String> = ArrayList()
+
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }
 
         adapter = TeacherEntireNoticeAdapter(entireNoticeList, this)
         binding.rvEntireNotice.adapter = adapter
@@ -77,13 +90,13 @@ class TeacherEntireNoticeActivity : AppCompatActivity() {
                         // 문서를 추가하고 자동으로 생성된 키 값을 받아옵니다.
                         db.collection("notice").add(
                             NoticeDto("", "", "", ArrayList()
-                            , ArrayList(), "", "", "")
+                            , ArrayList(), "", "")
                         )
                             .addOnSuccessListener { documentReference ->
                                 val documentId = documentReference.id
                                 // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
                                 db.collection("notice").document(documentId).set(
-                                    NoticeDto(documentId, content, title, checkedClass.studentKeyList, studentNameList, checkedClass.subject_key, "",""
+                                    NoticeDto(documentId, content, title, checkedClass.studentKeyList, studentNameList, checkedClass.subject_key, uid.toString()
                                     )
                                 )
                                     .addOnSuccessListener {

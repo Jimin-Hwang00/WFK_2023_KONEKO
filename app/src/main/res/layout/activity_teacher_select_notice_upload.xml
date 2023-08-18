@@ -68,7 +68,7 @@
         android:layout_marginEnd="88dp"
         android:ems="10"
         android:inputType="text"
-        android:text="title"
+        android:hint="title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

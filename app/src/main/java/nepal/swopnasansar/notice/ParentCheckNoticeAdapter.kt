@@ -1,6 +1,7 @@
 package nepal.swopnasansar.notice
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -15,10 +17,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.data.NoticeDto
 import nepal.swopnasansar.data.RvParentNoticeDto
 import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.databinding.ListParentNoticeBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class ParentCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvParentNoticeDto>, val activity: AppCompatActivity)
     : RecyclerView.Adapter<ParentCheckNoticeAdapter.ParentViewHolder>() {
@@ -29,7 +33,8 @@ class ParentCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvParentNotice
     var subjectTempList = ArrayList<SubjectDto>()
     var subject : String = ""
     var selectedPosition = -1
-    val uid = "test_key"
+    private val authDao = AuthDAO()
+    val uid = authDao.getUid()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -47,25 +52,24 @@ class ParentCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvParentNotice
             withContext(Dispatchers.Main) {
                 rvCheckNoticeList.clear()
 
-                //아이디 값과 학생 키값 확인 후, 해당 공지만 읽기 가능
-                if(uid.equals("test_key")) {
-                    for (notice in noticeTempList) {
-                        for(subjectName in subjectTempList){
-                            if(subjectName.subject_key.equals(notice.subject_key)){
-                                subject = subjectName.subject_name
-                            }
+                for (notice in noticeTempList) {
+                    for(subjectName in subjectTempList){
+                        if(subjectName.subject_key.equals(notice.subject_key)){
+                            subject = subjectName.subject_name
                         }
-                        for (stn_key in notice.receiver_key) {
-                            //학부모의 자식으로 저장된 학생 키값 비교하기(로그인 기능 후 추가)
-                            if(stn_key.equals("0G5hP16nunujNarssHwE")){
-                                rvCheckNoticeList.add(
-                                    RvParentNoticeDto(notice.title, notice.content,
-                                        notice.notice_key, stn_key, subject)
-                                )
-                            }
+                    }
+
+                    for (stn_key in notice.receiver_key) {
+                        //학부모의 자식으로 저장된 학생 키값 비교하기(로그인 기능 후 추가)
+                        if(stn_key.equals(uid)){
+                            rvCheckNoticeList.add(
+                                RvParentNoticeDto(notice.title, notice.content,
+                                    notice.notice_key, stn_key, subject)
+                            )
                         }
                     }
                 }
+
                 (activity as? ParentCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
@@ -88,26 +92,24 @@ class ParentCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvParentNotice
             withContext(Dispatchers.Main) {
                 rvCheckNoticeList.clear()
 
-                //아이디 값과 학생 키값 확인 후, 해당 공지만 읽기 가능
-                if(uid.equals("test_key")) {
-                    for (notice in noticeTempList) {
-                        for(subjectName in subjectTempList){
-                            if(subjectName.subject_key.equals(notice.subject_key)){
-                                subject = subjectName.subject_name
-                                Log.d(TAG, "${subject}")
-                            }
+                for (notice in noticeTempList) {
+                    for(subjectName in subjectTempList){
+                        if(subjectName.subject_key.equals(notice.subject_key)){
+                            subject = subjectName.subject_name
                         }
-                        for (stn_key in notice.receiver_key) {
-                            //학부모의 자식으로 저장된 학생 키값 비교하기(로그인 기능 후 추가)
-                            if(stn_key.equals("0G5hP16nunujNarssHwE")){
-                                rvCheckNoticeList.add(
-                                    RvParentNoticeDto(notice.title, notice.content,
-                                        notice.notice_key, stn_key, subject)
-                                )
-                            }
+                    }
+
+                    for (stn_key in notice.receiver_key) {
+                        //학부모의 자식으로 저장된 학생 키값 비교하기(로그인 기능 후 추가)
+                        if(stn_key.equals(uid)){
+                            rvCheckNoticeList.add(
+                                RvParentNoticeDto(notice.title, notice.content,
+                                    notice.notice_key, stn_key, subject)
+                            )
                         }
                     }
                 }
+
                 (activity as? ParentCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }

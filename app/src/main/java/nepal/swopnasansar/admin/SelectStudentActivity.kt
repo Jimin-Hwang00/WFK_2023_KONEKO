@@ -16,7 +16,7 @@ import nepal.swopnasansar.databinding.ActivityStudentListBinding
 
 class SelectStudentActivity : AppCompatActivity() {
     lateinit var binding : ActivitySelectStudentBinding
-    lateinit var adapter : StudentAdapter
+    lateinit var adapter : SelectedStudentAdapter
     var progressBarVisible = true
     val TAG = "SelectStudentActivity"
 
@@ -25,19 +25,19 @@ class SelectStudentActivity : AppCompatActivity() {
         binding = ActivitySelectStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val studentList = ArrayList<TempDto>()
-        var checkedList = ArrayList<TempDto>()
+        val studentList = ArrayList<StudentDto>()
+        var checkedList = ArrayList<StudentDto>()
         var checkedPos = ArrayList<Int>()
         var studentListText : String = ""
 
-        adapter = StudentAdapter(this,studentList)
+        adapter = SelectedStudentAdapter(this,studentList)
         binding.rvStudentList.adapter = adapter
 
         binding.rvStudentList.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
 
-        val onCheckBoxClickListener = object : StudentAdapter.onCheckBoxClickListener {
+        val onCheckBoxClickListener = object : SelectedStudentAdapter.onCheckBoxClickListener {
             override fun onClickCheckBox(flag: Int, position: Int) {
                 Log.d(TAG, "${flag}값과 현재 position : ${position}")
                 if(flag == 1){
@@ -67,8 +67,8 @@ class SelectStudentActivity : AppCompatActivity() {
             var num = 0
             for( stn in checkedList){
                 if(num < checkedList.size){
-                    studentListText += "${num + 1} : ${stn.email}   "
-                    studentKeyList.add(stn.email)
+                    studentListText += "${num + 1} : ${stn.stn_name}   "
+                    studentKeyList.add(stn.stn_key)
                 }
                 num++
             }

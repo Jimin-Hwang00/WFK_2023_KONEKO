@@ -1,18 +1,24 @@
 package nepal.swopnasansar.notice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import nepal.swopnasansar.R
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.data.RvParentNoticeDto
 import nepal.swopnasansar.databinding.ActivityParentCheckNoticeBinding
+import nepal.swopnasansar.login.CheckRoleActivity
 
 class ParentCheckNoticeActivity : AppCompatActivity() {
     lateinit var binding : ActivityParentCheckNoticeBinding
     lateinit var adapter : ParentCheckNoticeAdapter
+    private val authDao = AuthDAO()
+    val uid = authDao.getUid()
     var progressBarVisible = true
     val TAG = "ParentCheckNoticeActivity"
 
@@ -23,6 +29,14 @@ class ParentCheckNoticeActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
         val checkNoticeList = ArrayList<RvParentNoticeDto>()
+
+        if (uid == null) {
+            Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
+
+            val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }
 
         adapter = ParentCheckNoticeAdapter(checkNoticeList, this)
         binding.rvParentNoticeList.adapter = adapter

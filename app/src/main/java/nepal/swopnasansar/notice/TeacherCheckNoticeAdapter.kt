@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.data.NoticeDto
 import nepal.swopnasansar.data.RvCheckNoticeDto
 import nepal.swopnasansar.databinding.ListCheckNoticeBinding
@@ -25,6 +26,8 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
     var noticeTempList = ArrayList<NoticeDto>() // 빈 ArrayList로 초기화
     private val holderList = mutableListOf<TeacherViewHolder>()
     var selectedPosition = -1
+    private val authDao = AuthDAO()
+    val uid = authDao.getUid()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -38,10 +41,12 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
             withContext(Dispatchers.Main) {
                 rvCheckNoticeList.clear()
                 for (i in 0 until noticeTempList.size) {
-                    rvCheckNoticeList.add(
-                        RvCheckNoticeDto(noticeTempList.get(i).title, noticeTempList.get(i).content,
-                            noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
-                    )
+                    if(noticeTempList.get(i).author_key.equals(uid)){
+                        rvCheckNoticeList.add(
+                            RvCheckNoticeDto(noticeTempList.get(i).title, noticeTempList.get(i).content,
+                                noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
+                        )
+                    }
                 }
                 (activity as? TeacherCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
@@ -61,10 +66,12 @@ class TeacherCheckNoticeAdapter (val rvCheckNoticeList : ArrayList<RvCheckNotice
             withContext(Dispatchers.Main) {
                 rvCheckNoticeList.clear()
                 for (i in 0 until noticeTempList.size) {
-                    rvCheckNoticeList.add(
-                        RvCheckNoticeDto(noticeTempList.get(i).title, noticeTempList.get(i).content,
-                            noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
-                    )
+                    if(noticeTempList.get(i).author_key.equals(uid)){
+                        rvCheckNoticeList.add(
+                            RvCheckNoticeDto(noticeTempList.get(i).title, noticeTempList.get(i).content,
+                                noticeTempList.get(i).receiver_name, noticeTempList.get(i).notice_key)
+                        )
+                    }
                 }
                 (activity as? TeacherCheckNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()

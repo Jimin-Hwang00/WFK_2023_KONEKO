@@ -2,6 +2,7 @@ package nepal.swopnasansar.attendance
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -9,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.data.AttendanceDto
 import nepal.swopnasansar.data.RvParentAttDto
 import nepal.swopnasansar.data.StnAttDto
@@ -16,14 +18,15 @@ import nepal.swopnasansar.databinding.ListParentAttBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class ParentAttendanceAdapter (val rvCheckNoticeList : ArrayList<RvParentAttDto>)
+class ParentAttendanceAdapter (val rvCheckNoticeList : ArrayList<RvParentAttDto>, val activity : AppCompatActivity)
     : RecyclerView.Adapter<ParentAttendanceAdapter.ParentAttViewHolder>() {
     val TAG = "ParentAttendanceAdapter"
     var firestore: FirebaseFirestore? = null
     var attTempList = ArrayList<AttendanceDto>() // 빈 ArrayList로 초기화
     var studentAttList = ArrayList<StnAttDto>()
     var dateList = ArrayList<String>()
-    val uid = "test_key"
+    private val authDao = AuthDAO()
+    val uid = authDao.getUid()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -37,10 +40,9 @@ class ParentAttendanceAdapter (val rvCheckNoticeList : ArrayList<RvParentAttDto>
 
             //아이디 값만 확인후, 이미 존재하는 키값을 활용해 출석 db에서 가져오기
             // 우선 부모와 일치하는 학생 키 값을 활용해 해당 학생의 att 정보만 불러오기
-            if (uid.equals("test_key")) {
                 for(att in attTempList){
                     for(stn in att.stn_list){
-                        if(stn.stn_key.equals("Tu1obEVJEmE8GHwa6Jav")){
+                        if(stn.stn_key.equals(uid)){
                             studentAttList.add(stn)
                             dateList.add(att.date)
                         }
@@ -70,9 +72,8 @@ class ParentAttendanceAdapter (val rvCheckNoticeList : ArrayList<RvParentAttDto>
                         val date2 = format.parse(o2.date)
                         date1?.compareTo(date2) ?: 0
                     })
-
+                    (activity as? ParentAttendanceActivity)?.hideProgressBar()
                     notifyDataSetChanged()
-                }
             }
         }
     }
@@ -88,33 +89,40 @@ class ParentAttendanceAdapter (val rvCheckNoticeList : ArrayList<RvParentAttDto>
 
             //아이디 값만 확인후, 이미 존재하는 키값을 활용해 출석 db에서 가져오기
             // 우선 부모와 일치하는 학생 키 값을 활용해 해당 학생의 att 정보만 불러오기
-            if (uid.equals("test_key")) {
-                for(att in attTempList){
-                    for(stn in att.stn_list){
-                        if(stn.stn_key.equals("Tu1obEVJEmE8GHwa6Jav")){
-                            studentAttList.add(stn)
-                            dateList.add(att.date)
-                        }
+            for(att in attTempList){
+                for(stn in att.stn_list){
+                    if(stn.stn_key.equals(uid)){
+                        studentAttList.add(stn)
+                        dateList.add(att.date)
                     }
                 }
-                // 데이터 처리 및 어댑터 갱신
-                withContext(Dispatchers.Main) {
-                    var i : Int
-                    var check : String = ""
-                    rvCheckNoticeList.clear()
+            }
+            // 데이터 처리 및 어댑터 갱신
+            withContext(Dispatchers.Main) {
+                var i : Int
+                var check : String = ""
+                rvCheckNoticeList.clear()
 
-                    i = 0
-                    for(stn in studentAttList){
-                        if(stn.check){
-                            check = "O"
-                        }else{
-                            check = "X"
-                        }
-                        rvCheckNoticeList.add(RvParentAttDto(dateList[i], check, stn.stn_name, stn.stn_key))
-                        i++
+                i = 0
+                for(stn in studentAttList){
+                    if(stn.check){
+                        check = "O"
+                    }else{
+                        check = "X"
                     }
-                    notifyDataSetChanged()
+                    rvCheckNoticeList.add(RvParentAttDto(dateList[i], check, stn.stn_name, stn.stn_key))
+                    i++
                 }
+
+                // date 값을 비교하여 정렬
+                rvCheckNoticeList.sortWith(Comparator { o1, o2 ->
+                    val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    val date1 = format.parse(o1.date)
+                    val date2 = format.parse(o2.date)
+                    date1?.compareTo(date2) ?: 0
+                })
+                (activity as? ParentAttendanceActivity)?.hideProgressBar()
+                notifyDataSetChanged()
             }
         }
     }
