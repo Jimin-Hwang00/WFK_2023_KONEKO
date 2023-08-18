@@ -66,20 +66,11 @@ class StudentDAO {
     }
 
     suspend fun updateStudentByKey(student: Student): Boolean {
-        var result = false
-
         try {
-            studentRef.document(student.stn_key).set(student)
-                .addOnSuccessListener {
-                    Log.d(TAG, "update student success")
-                    result = true
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, "update student fail")
-                }
-                .await()
+            studentRef.document(student.stn_key).set(student).await()
 
-            return result
+            Log.d(TAG, "update student success")
+            return true
         } catch (e: Exception) {
             Log.e(TAG, "Error updating students", e)
             return false

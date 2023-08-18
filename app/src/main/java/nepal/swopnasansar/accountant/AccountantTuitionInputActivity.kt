@@ -37,9 +37,11 @@ class AccountantTuitionInputActivity : AppCompatActivity() {
 
         binding.btnTuitionSubmit.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                binding.pbAccountantTuitionInput.visibility = View.VISIBLE
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                withContext(Main) {
+                    binding.pbAccountantTuitionInput.visibility = View.VISIBLE
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }
 
                 for (idx in inputTuitionListAdapter.changedIdx) {
                     val result = withContext(Dispatchers.IO) {
@@ -74,6 +76,8 @@ class AccountantTuitionInputActivity : AppCompatActivity() {
 
             withContext(Main) {
                 binding.pbAccountantTuitionInput.visibility = View.INVISIBLE
+
+                students?.sortBy { it.stn_name }
 
                 inputTuitionListAdapter.students = students
                 inputTuitionListAdapter.notifyDataSetChanged()

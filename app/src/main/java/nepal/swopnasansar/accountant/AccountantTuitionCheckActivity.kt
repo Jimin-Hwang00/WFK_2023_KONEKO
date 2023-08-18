@@ -53,11 +53,7 @@ class AccountantTuitionCheckActivity : AppCompatActivity() {
                 if (students == null) {
                     Toast.makeText(this@AccountantTuitionCheckActivity, "Fail to get students info. Try again.", Toast.LENGTH_SHORT).show()
                 } else {
-                    students!!.forEach {
-                        Log.d(TAG, "student ; ${it}")
-                    }
-
-                    Log.d(TAG, students!!.size.toString())
+                    result?.sortBy { it.stn_name }
 
                     students = result
                     inputTuitionListAdapter.students = students
