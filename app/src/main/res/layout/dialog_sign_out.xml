@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    android:background="@drawable/dialog_shape">
+
+    <Button
+        android:id="@+id/btn_sign_out"
+        android:layout_width="110dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_2"
+        android:text="sign out"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ev_sign_out_pw" />
+
+    <Button
+        android:id="@+id/btn_sign_out_cancel"
+        android:layout_width="110dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_2"
+        android:text="cancel"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/btn_sign_out"
+        app:layout_constraintTop_toBottomOf="@+id/ev_sign_out_pw" />
+
+    <EditText
+        android:id="@+id/ev_sign_out_email"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:ems="13"
+        android:hint="email"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ev_sign_out_pw"
+        android:layout_width="275dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ev_sign_out_email" />
+</androidx.constraintlayout.widget.ConstraintLayout>

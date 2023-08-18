@@ -55,4 +55,14 @@ class AccountantDAO {
             false
         }
     }
+
+    suspend fun removeAccountantByKey(key: String): Boolean {
+        return try {
+            accountantRef.document(key).delete().await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to remove accountant : ${key}")
+            false
+        }
+    }
 }

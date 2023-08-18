@@ -4,9 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.auth.EmailAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -120,8 +123,57 @@ class SPMainActivity : AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_signout, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.item_sign_out -> {
+                val dialog = SignoutDialog(this)
+                dialog.setOnClickListener(object: SignoutDialog.ButtonClickListener {
+                    override fun onClicked(email: String, pw: String) {
+                        val user = authDao.getUser()
+
+                        if (user != null) {
+                            val credential = EmailAuthProvider.getCredential(email, pw)
+                            user.reauthenticate(credential)
+                                .addOnSuccessListener {
+                                    user.delete()
+
+                                    lifecycleScope.launch {
+                                        val deleteDBResult = withContext(Dispatchers.IO) {
+                                            studentDao.removeStudentByKey(uid!!)
+                                        }
+
+                                        if (deleteDBResult) {
+                                            Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
+                                            val intent = Intent(this@SPMainActivity, CheckRoleActivity::class.java)
+                                            startActivity(intent)
+                                        }
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this@SPMainActivity, "Fail to delete your account. Try again.", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this@SPMainActivity, "Authentication has failed.", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                    }
+                })
+                dialog.showDialog()
+
+                true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onBackPressed() {

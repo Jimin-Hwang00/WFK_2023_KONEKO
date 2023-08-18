@@ -79,8 +79,8 @@
 
             <ImageView
                 android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="525dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,8 +120,8 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="315dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +145,8 @@
 
             <ImageView
                 android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="665dp"
                 android:src="@drawable/btn_6"
@@ -173,8 +173,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="250dp"
                 android:src="@drawable/btn_4"
@@ -239,8 +239,8 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="385dp"
                 android:src="@drawable/btn_1"
@@ -265,8 +265,8 @@
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="455dp"
                 android:src="@drawable/btn_2"

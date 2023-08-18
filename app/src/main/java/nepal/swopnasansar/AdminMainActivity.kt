@@ -99,7 +99,7 @@ class AdminMainActivity : AppCompatActivity() {
             authDao.logout()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
     }

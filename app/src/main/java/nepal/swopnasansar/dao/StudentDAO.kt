@@ -90,4 +90,14 @@ class StudentDAO {
             false
         }
     }
+
+    suspend fun removeStudentByKey(key: String): Boolean {
+        return try {
+            studentRef.document(key).delete().await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to remove student : ${key}")
+            false
+        }
+    }
 }
