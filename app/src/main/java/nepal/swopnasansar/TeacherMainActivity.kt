@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.EmailAuthProvider
 import kotlinx.coroutines.Dispatchers
@@ -119,11 +120,7 @@ class TeacherMainActivity : AppCompatActivity() {
         }
 
         binding.tvTLogout.setOnClickListener {
-            authDao.logout()
-
-            val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
+            askForLogOut()
         }
     }
 
@@ -173,6 +170,27 @@ class TeacherMainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun askForLogOut() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle("Log out")
+            setMessage("Would you like to log out?")
+            setPositiveButton("YES") { dialog, which ->
+                authDao.logout()
+
+                val intent = Intent(this@TeacherMainActivity, CheckRoleActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+            setNegativeButton("NO") { dialog, which ->
+                dialog.dismiss()
+            }
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     override fun onBackPressed() {
