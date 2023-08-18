@@ -4,7 +4,9 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import nepal.swopnasansar.dto.Accountant
 import nepal.swopnasansar.dto.Teacher
+import nepal.swopnasansar.dto.Temp
 
 class TeacherDAO {
     private val TAG = "TeacherDAO"
@@ -59,5 +61,19 @@ class TeacherDAO {
         }
 
         return teacher
+    }
+
+    suspend fun createTeacherByUid(uid: String, temp: Temp): Boolean {
+        return try {
+            val teacher = Teacher(uid, temp.name, temp.email)
+            teacherRef.document(uid).set(teacher).await()
+
+            Log.e(TAG, "Success to create teacher by uid")
+
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to create teacher by uid", e)
+            false
+        }
     }
 }

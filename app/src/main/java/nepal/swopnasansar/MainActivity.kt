@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import nepal.swopnasansar.databinding.ActivityMainBinding
 import nepal.swopnasansar.login.CheckRoleActivity
@@ -20,9 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
+    override fun onResume() {
         Handler(Looper.getMainLooper()).postDelayed(Runnable {
             if (auth.currentUser != null) {
+                Log.d("MainActivity", "auth.currentUser : ${auth.currentUser}")
                 changeActivityToUserMain()
             } else {
                 val intent = Intent(this@MainActivity, CheckRoleActivity::class.java)
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }, 3000)
+        super.onResume()
     }
 
     fun changeActivityToUserMain() {

@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
+import kotlin.concurrent.timerTask
 
 class AuthDAO {
     private val TAG = "AuthDAO"
@@ -48,5 +49,29 @@ class AuthDAO {
 
     fun getUid(): String? {
         return getUser()?.uid
+    }
+
+    suspend fun sendEmailForVerification(): Boolean {
+        return try {
+            val user = getUser()
+
+            if (user != null) {
+                user.sendEmailVerification().await()
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
+    suspend fun registerUser(email: String, pw: String): Boolean {
+        return try {
+            auth.createUserWithEmailAndPassword(email, pw).await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to create user.", e)
+            false
+        }
     }
 }

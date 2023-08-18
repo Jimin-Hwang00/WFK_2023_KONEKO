@@ -38,6 +38,7 @@ class AdminMainActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
         } else {
+            Log.d("AdminMainActivity", "uid : ${uid!!}")
             lifecycleScope.launch {
                 binding.pbAdminMain.visibility = View.VISIBLE
 
