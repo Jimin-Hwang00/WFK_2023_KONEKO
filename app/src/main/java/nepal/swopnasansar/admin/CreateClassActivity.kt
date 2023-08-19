@@ -84,13 +84,12 @@ class CreateClassActivity : AppCompatActivity() {
                                     db.collection("class").document(documentId).set(
                                         ClassDto(documentId, className,
                                         studentKeyList, teacherInfo.teacher_key)
-                                    )
-                                        .addOnSuccessListener {
-                                            Log.d(TAG, "save completed")
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            println("Error creating document: $exception")
-                                        }
+                                    ).addOnSuccessListener {
+                                        Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
+                                        Log.d(TAG, "save completed")
+                                    }.addOnFailureListener { exception ->
+                                        println("Error creating document: $exception")
+                                    }
                                 }
                                 .addOnFailureListener { exception ->
                                     println("Error creating document: $exception")
