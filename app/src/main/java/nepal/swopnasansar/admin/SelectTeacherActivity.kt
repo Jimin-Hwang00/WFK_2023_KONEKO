@@ -46,6 +46,11 @@ class SelectTeacherActivity : AppCompatActivity() {
                     checkedPosition = position
                     checkedTeacher = teacherList[position]
                 }
+                if (flag == 0) { // 체크박스가 해제된 경우
+                    if (checkedTeacher == teacherList[position]) {
+                        checkedTeacher = TeacherDto("", "", "")
+                    }
+                }
             }
         }
         adapter.setOnCheckBoxClickListener(onCheckBoxClickListener)
