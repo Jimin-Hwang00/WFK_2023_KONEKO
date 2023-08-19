@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
@@ -13,6 +14,7 @@ import kotlinx.coroutines.withContext
 import nepal.swopnasansar.dao.AdminDAO
 import nepal.swopnasansar.dao.AuthDAO
 import nepal.swopnasansar.dao.CommentDAO
+import nepal.swopnasansar.dao.StudentDAO
 import nepal.swopnasansar.dto.Administrator
 import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.databinding.ActivitySendingCmntToAdminBinding
@@ -31,6 +33,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
     private val authDao = AuthDAO()
     private val adminDAO = AdminDAO()
     private val commentDAO = CommentDAO()
+    private val studentDao = StudentDAO()
 
     val uid = authDao.getUid()
 
@@ -55,20 +58,31 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
             if (binding.evCmntToAdminTitle.text.isBlank()) {
                 Toast.makeText(this@SendingCmntToAdminActivity, "Please write down the title", Toast.LENGTH_SHORT).show()
             } else {
-                lifecycleScope.launch(Dispatchers.IO) {
-                    var uploadResult =  withContext(Dispatchers.IO) {
-                        //@TODO author_name 어떻게 할지 고민
-                        val comment = Comment("", binding.evCmntToAdminTitle.text.toString(), binding.evSendCmntToAdminContent.text.toString(), date, uid!!, "author_name", admins!![0].admin_key, admins!![0].admin_name, false)
-                        commentDAO.uploadComment(comment)
+                lifecycleScope.launch {
+                    binding.pbSendingCmntToAdmin.visibility = View.VISIBLE
+
+                    lateinit var userName: String
+                    val student = withContext(Dispatchers.IO) {
+                        studentDao.getStudentByKey(uid!!)
                     }
 
-                    withContext(Main) {
+                    if (student != null) {
+                        userName = student.stn_name
+
+                        val uploadResult =  withContext(Dispatchers.IO) {
+                            val comment = Comment("", binding.evCmntToAdminTitle.text.toString(), binding.evSendCmntToAdminContent.text.toString(), date, uid!!, userName, admins!![0].admin_key, admins!![0].admin_name, false)
+                            commentDAO.uploadComment(comment)
+                        }
+
                         if (!uploadResult) {
                             Toast.makeText(this@SendingCmntToAdminActivity, "Failed to upload comment. Try Again", Toast.LENGTH_SHORT).show()
                         } else {
                             val intent = Intent(this@SendingCmntToAdminActivity, SentCmntListActivity::class.java)
                             startActivity(intent)
                         }
+                    } else {
+                        Toast.makeText(this@SendingCmntToAdminActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
+                        binding.pbSendingCmntToAdmin.visibility = View.INVISIBLE
                     }
                 }
 

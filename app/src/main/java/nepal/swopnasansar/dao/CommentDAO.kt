@@ -88,9 +88,16 @@ class CommentDAO {
         }
     }
 
-    fun updateReadStatusToTrue(commentKey: String) {
+    suspend fun updateReadStatusToTrue(commentKey: String): Boolean {
         val docRef = commentRef.document(commentKey)
-        docRef.update("read", true)
+
+        return try {
+            docRef.update("read", true).await()
+            return true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to update read status: ${commentKey}", e)
+            return false
+        }
     }
 
     suspend fun countUnReadComments(receiverKey: String): Int {
