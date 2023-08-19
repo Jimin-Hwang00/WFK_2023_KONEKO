@@ -13,6 +13,26 @@ class SubjectDAO {
     val db = Firebase.firestore
     val subjectRef = db.collection("subject")
 
+    suspend fun createSubject(subject: Subject): String? {
+        return try {
+            val documentRef = subjectRef.add(subject).await()
+            documentRef.id
+        } catch (exception: Exception) {
+            Log.e(TAG, exception.toString())
+            null
+        }
+    }
+
+    suspend fun updateSubject(subjectKey: String, updateFields: Map<String, Any>): Boolean {
+        return try {
+            subjectRef.document(subjectKey).update(updateFields).await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
+            false
+        }
+    }
+
     suspend fun getAllSubejct(): ArrayList<Subject>? {
         var subjects: ArrayList<Subject>? = ArrayList()
 
@@ -103,23 +123,27 @@ class SubjectDAO {
     }
 
     suspend fun removeYoutube(key: String, youtube: Youtube): Boolean {
-        var result = true
-
-        try {
+        return try {
             subjectRef.document(key)
                 .update("youTube", FieldValue.arrayRemove(youtube))
-                .addOnSuccessListener {
-                    result = true
-                }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Fail to add link.", e)
-                }
                 .await()
 
+            true
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to add link.", e)
+            Log.e(TAG, "Fail to remove link.", e)
+            false
         }
+    }
 
-        return result
+    suspend fun removeSubject(key: String): Boolean {
+        return try {
+            subjectRef.document(key)
+                .delete()
+                .await()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Fail to remove subject.", e)
+            false
+        }
     }
 }

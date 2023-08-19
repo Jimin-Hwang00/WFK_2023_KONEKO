@@ -25,10 +25,10 @@
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="640dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="657dp"
             android:src="@drawable/btn_6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,10 +62,10 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_marginStart="41dp"
-            android:layout_marginTop="317dp"
+            android:layout_marginTop="305dp"
             android:src="@drawable/btn_4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -82,20 +82,44 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="400dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="376dp"
             android:src="@drawable/btn_1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="448dp"
+            android:src="@drawable/write"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_admin_create_subjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Create Subjects"
+            android:textColor="#3F51B5"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView13"
+            app:layout_constraintTop_toTopOf="@+id/imageView13" />
 
         <TextView
             android:id="@+id/tv_admin_create_classes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
             android:text="Create Classes"
             android:textColor="#3F51B5"
@@ -108,7 +132,17 @@
             android:id="@+id/arrow_admin_create_classes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="426dp"
+            android:layout_marginTop="470dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/arrow_admin_create_subjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,10 +150,10 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="556dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginTop="587dp"
             android:src="@drawable/btn_2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
             android:text="Edit Calendar"
             android:textColor="#3F51B5"
@@ -142,7 +176,7 @@
             android:id="@+id/arrow_admin_edit_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="578dp"
+            android:layout_marginTop="605dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +186,7 @@
             android:id="@+id/tv_admin_cmnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="19dp"
             android:text="Comment"
             android:textColor="#3F51B5"
@@ -166,7 +200,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="42dp"
-            android:layout_marginTop="483dp"
+            android:layout_marginTop="517dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/search_icon" />
@@ -175,7 +209,7 @@
             android:id="@+id/arrow_admin_cmnt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="505dp"
+            android:layout_marginTop="540dp"
             android:layout_marginEnd="40dp"
             android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="parent"
