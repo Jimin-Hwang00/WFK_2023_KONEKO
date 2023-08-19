@@ -53,6 +53,8 @@ class SentCmntListActivity : AppCompatActivity() {
 
                 sentCommentListAdapter.selectedIdx = position
                 sentCommentListAdapter.notifyDataSetChanged()
+
+                binding.btnDeleteCmnt.visibility = View.VISIBLE
             }
         })
 

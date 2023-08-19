@@ -46,23 +46,23 @@ class CmntListAdapter(var itemList: ArrayList<Comment>, var context: Context): R
         Log.d(TAG, context.toString())
 
         if (context is ReceivedCmntListAcitivity) {
-            if (itemList[position].read) {
+            if (selectedIdx == position) {
+                holder.itemView.setBackgroundColor(Color.LTGRAY)
+            } else if (itemList[position].read) {
                 holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))
-                Log.d(TAG, itemList[position].comment_key + ", read : " + itemList[position].read)
             } else {
                 holder.itemView.setBackgroundColor(Color.WHITE)
-                Log.d(TAG, itemList[position].comment_key + ", read : " + itemList[position].read)
+            }
+        } else {
+            if (selectedIdx == position) {
+                holder.itemView.setBackgroundColor(Color.LTGRAY)
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))
             }
         }
 
         holder.itemView.setOnClickListener { view ->
             clickListener?.onItemClick(position)
-        }
-
-        if (selectedIdx == position) {
-            holder.itemView.setBackgroundColor(Color.LTGRAY)
-        } else if (selectedIdx != position && itemList[position].read){
-            holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))
         }
     }
 

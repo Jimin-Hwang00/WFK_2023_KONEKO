@@ -24,10 +24,10 @@ class ReceivedCmntListAcitivity : AppCompatActivity() {
 
     var receivedComments: ArrayList<Comment>? = ArrayList()
 
-    private val dao = CommentDAO()
-    private val auth = AuthDAO()
+    private val commentDao = CommentDAO()
+    private val authDao = AuthDAO()
 
-    val uid = auth.getUid()
+    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +48,18 @@ class ReceivedCmntListAcitivity : AppCompatActivity() {
 
         receivedCommentListAdapter.setOnItemClickListener(object: CmntListAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                dao.updateReadStatusToTrue(receivedCommentListAdapter.itemList[position].comment_key)
+                if (!receivedCommentListAdapter.itemList[position].read) {
+                    lifecycleScope.launch {
+                        val updateResult = withContext(Dispatchers.IO) {
+                            commentDao.updateReadStatusToTrue(receivedCommentListAdapter.itemList[position].comment_key)
+                        }
 
-                receivedCommentListAdapter.itemList[position].read = true
-                receivedCommentListAdapter.notifyDataSetChanged()
+                        if (updateResult) {
+                            receivedCommentListAdapter.itemList[position].read = true
+                            receivedCommentListAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
 
                 binding.tvCmntContent.text = receivedCommentListAdapter.itemList[position].content
 
@@ -69,8 +77,7 @@ class ReceivedCmntListAcitivity : AppCompatActivity() {
             binding.pbCmntList.visibility = View.VISIBLE
 
             val comments = withContext(Dispatchers.IO) {
-                // @TODO key 값 변경 (로그인한 uid로)
-                dao.getCommentByReceiverKey(uid!!)
+                commentDao.getCommentByReceiverKey(uid!!)
             }
 
             binding.pbCmntList.visibility = View.INVISIBLE
