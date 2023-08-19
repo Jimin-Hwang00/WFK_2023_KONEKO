@@ -34,7 +34,7 @@ class HomeworkDAO {
     suspend fun submitHW(homeworkKey: String, submittedHW: SubmittedHW): Boolean {
         return try {
             val updateResult = homeworkRef.document(homeworkKey).update("submitted_hw", FieldValue.arrayUnion(submittedHW)).await()
-            updateResult != null
+            true
         } catch (exception: Exception) {
             Log.e(tag, exception.toString())
             false

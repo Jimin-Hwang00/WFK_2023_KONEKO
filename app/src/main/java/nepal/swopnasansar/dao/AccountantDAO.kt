@@ -53,8 +53,8 @@ class AccountantDAO {
 
     suspend fun removeAccountantByKey(key: String): Boolean {
         return try {
-            val deleteResult = accountantRef.document(key).delete().await()
-            deleteResult != null // 삭제에 성공한 경우에만 true 반환
+            accountantRef.document(key).delete().await()
+            true
         } catch (e: Exception) {
             Log.e(TAG, "Fail to remove accountant : $key")
             false // 삭제에 실패한 경우 false 반환

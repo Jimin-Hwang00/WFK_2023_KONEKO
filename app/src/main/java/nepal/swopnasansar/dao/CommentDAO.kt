@@ -113,7 +113,7 @@ class CommentDAO {
     suspend fun removeCommentByKey(key: String): Boolean {
         return try {
             val deleteResult = commentRef.document(key).delete().await()
-            deleteResult != null // 삭제에 성공한 경우에만 true 반환
+            true
         } catch (e: Exception) {
             Log.d(TAG, "fail to remove comment: $key")
             false // 삭제에 실패한 경우 false 반환
