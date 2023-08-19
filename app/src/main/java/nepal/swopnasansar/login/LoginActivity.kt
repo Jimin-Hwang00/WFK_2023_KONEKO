@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -47,6 +48,7 @@ class LoginActivity: AppCompatActivity() {
 
     fun loginProcess(email: String, pw: String) {
         lifecycleScope.launch {
+            binding.pbLogin.visibility = View.VISIBLE
             val roleCheckResult = withContext(Dispatchers.IO) {
                 checkRole(role, email)
             }
@@ -69,6 +71,7 @@ class LoginActivity: AppCompatActivity() {
                 } else {
                     Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT)
                         .show()
+                    binding.pbLogin.visibility = View.GONE
                 }
             } else {    // 해당 role에 일치하는 이메일이 없을 경우
                 val temp = withContext(Dispatchers.IO) {
@@ -111,8 +114,10 @@ class LoginActivity: AppCompatActivity() {
 
                                             if (!recreateTempResult) {
                                                 Toast.makeText(this@LoginActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
+                                                binding.pbLogin.visibility = View.GONE
                                             } else {
                                                 Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
+                                                binding.pbLogin.visibility = View.GONE
                                             }
 
                                             authDao.logout()
@@ -125,8 +130,10 @@ class LoginActivity: AppCompatActivity() {
                                         if (!recreateTempResult) {
                                             Toast.makeText(this@LoginActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
                                             Log.d("LoginActivity", "fail to recreate temp.")
+                                            binding.pbLogin.visibility = View.GONE
                                         } else {
                                             Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
+                                            binding.pbLogin.visibility = View.GONE
                                         }
 
                                         authDao.logout()
@@ -134,6 +141,7 @@ class LoginActivity: AppCompatActivity() {
                                 } else {
                                     Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
                                     authDao.logout()
+                                    binding.pbLogin.visibility = View.GONE
                                 }
                             } else {                                // 이메일 인증이 안 된 경우
                                 val sendEmailResult = withContext(Dispatchers.IO) {
@@ -141,11 +149,13 @@ class LoginActivity: AppCompatActivity() {
                                 }
 
                                 if (sendEmailResult) {
+                                    binding.pbLogin.visibility = View.GONE
                                     makeDialogforSendingVerificationEmail()
                                     authDao.logout()
                                 } else {
                                     Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
                                     authDao.logout()
+                                    binding.pbLogin.visibility = View.GONE
                                 }
                             }
                         } else {        // auth에 등록되지 않은 사용자인 경우
@@ -160,24 +170,31 @@ class LoginActivity: AppCompatActivity() {
                                     }
 
                                     if (sendEmailResult) {
+                                        binding.pbLogin.visibility = View.GONE
                                         makeDialogforSendingVerificationEmail()
                                     } else {
                                         Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
+                                        binding.pbLogin.visibility = View.GONE
                                     }
                                 } else {
                                     Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
+                                    binding.pbLogin.visibility = View.GONE
                                 }
                             } else {
                                 Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT).show()
+                                binding.pbLogin.visibility = View.GONE
                             }
                         }
                     } else if (temp.size == 0){
                         Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT).show()
+                        binding.pbLogin.visibility = View.GONE
                     } else {
                         Toast.makeText(this@LoginActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
+                        binding.pbLogin.visibility = View.GONE
                     }
                 } else {                // temp에 해당 계정이 없는 경우
                     Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT).show()
+                    binding.pbLogin.visibility = View.GONE
                 }
             }
         }
@@ -209,6 +226,7 @@ class LoginActivity: AppCompatActivity() {
     }
 
     fun askResetPWByDialog(email: String) {
+        binding.pbLogin.visibility = View.GONE
         val alertDialogBuilder = AlertDialog.Builder(this)
         alertDialogBuilder.apply {
             setTitle(getString(R.string.set_new_password_title))
