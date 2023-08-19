@@ -187,6 +187,7 @@ class SendingCmntActivity : AppCompatActivity() {
 
                 if (teachers != null) {
                     for (teacher in teachers) {
+                        Log.d(TAG, "get target - teacher name : ${teacher.teacher_name}")
                         val subjects: ArrayList<Subject>? = withContext(Dispatchers.IO) {
                             subjectDao.getSubjectByTeacherKey(teacher.teacher_key)
                         }
@@ -195,19 +196,17 @@ class SendingCmntActivity : AppCompatActivity() {
                             if (subjects.size >= 2) {
                                 var subjectName = ""
                                 subjects.forEach { subject ->
-                                    subjectName.plus(", ${subject.subject_name}")
+                                    subjectName = subjectName.plus(", ${subject.subject_name}")
                                 }
+                                subjectName = subjectName.substring(2)
 
                                 val target = CmntTargetItem(subjectName, teacher.teacher_name, teacher.teacher_key, false)
-                                Log.d(TAG, target.toString())
                                 targets.add(target)
                             } else if (subjects.size == 1){
                                 val target = CmntTargetItem(subjects[0].subject_name, teacher.teacher_name, teacher.teacher_key, false)
-                                Log.d(TAG, target.toString())
                                 targets.add(target)
                             } else {
                                 val target = CmntTargetItem("", teacher.teacher_name, teacher.teacher_key, false)
-                                Log.d(TAG, target.toString())
                                 targets.add(target)
                             }
                         } else {
