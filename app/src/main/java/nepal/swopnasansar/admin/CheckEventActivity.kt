@@ -102,9 +102,9 @@ class CheckEventActivity : AppCompatActivity() {
                 AlertDialog.Builder(this@CheckEventActivity).run {
                     setTitle("Delete")
                     setMessage("Delete it?")
-                    setNegativeButton("취소", null)
+                    setNegativeButton("No", null)
                     setCancelable(false)
-                    setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                    setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
                             db.collection("schedule").document(adminCalList[position].schedule_key)
                                 .delete()

@@ -46,9 +46,9 @@ class ClassListActivity : AppCompatActivity() {
                 AlertDialog.Builder(this@ClassListActivity).run {
                     setTitle("Delete Class")
                     setMessage("Delete it?")
-                    setNegativeButton("취소", null)
+                    setNegativeButton("No", null)
                     setCancelable(false)
-                    setPositiveButton("확인", object: DialogInterface.OnClickListener {
+                    setPositiveButton("Yes", object: DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
                             db.collection("class").document(classList[position].class_key).delete()
                                 .addOnSuccessListener {

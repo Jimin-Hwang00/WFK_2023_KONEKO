@@ -187,9 +187,9 @@ class EditTeacherActivity : AppCompatActivity() {
             AlertDialog.Builder(this@EditTeacherActivity).run {
                 setTitle("delete Teacher(s)")
                 setMessage("Are you sure to delete?")
-                setNegativeButton("취소", null)
+                setNegativeButton("No", null)
                 setCancelable(false)
-                setPositiveButton("확인", object : DialogInterface.OnClickListener {
+                setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         for(t in checkedList){
                             db.collection("temp").document(t.email).delete()
