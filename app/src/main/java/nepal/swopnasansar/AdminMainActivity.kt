@@ -76,6 +76,16 @@ class AdminMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.tvAdminCreateSubjects.setOnClickListener {
+            val intent = Intent(this, SubjectListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowAdminCreateSubjects.setOnClickListener {
+            val intent = Intent(this, SubjectListActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvAdminCmnt.setOnClickListener{
             val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
             startActivity(intent)

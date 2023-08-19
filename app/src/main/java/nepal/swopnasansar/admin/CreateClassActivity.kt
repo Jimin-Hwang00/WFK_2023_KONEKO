@@ -40,7 +40,6 @@ class CreateClassActivity : AppCompatActivity() {
         binding.classEt.setText(pref.getString("classEt", null))
         binding.selectedTeacher.setText(pref.getString("selectedTeacher", null))
         binding.selectedStudentListText.setText(pref.getString("selectedStudentListText", null))
-        binding.subjectEt.setText(pref.getString("subjectEt", null))
 
         binding.studentSelectBt.setOnClickListener{
             val intent = Intent(this@CreateClassActivity, SelectStudentActivity::class.java)
@@ -48,7 +47,6 @@ class CreateClassActivity : AppCompatActivity() {
             editor.putString("classEt", binding.classEt.text.toString())
             editor.putString("selectedTeacher", binding.selectedTeacher.text.toString())
             editor.putString("selectedStudentListText", binding.selectedStudentListText.text.toString())
-            editor.putString("subjectEt", binding.subjectEt.text.toString())
             editor.commit()
 
             startActivityForResult(intent, REQ_STUDENT)
@@ -59,14 +57,12 @@ class CreateClassActivity : AppCompatActivity() {
             editor.putString("classEt", binding.classEt.text.toString())
             editor.putString("selectedTeacher", binding.selectedTeacher.text.toString())
             editor.putString("selectedStudentListText", binding.selectedStudentListText.text.toString())
-            editor.putString("subjectEt", binding.subjectEt.text.toString())
             editor.commit()
 
             startActivityForResult(intent, REQ_TEACHER)
         }
         binding.addClassBt.setOnClickListener{
             val className = binding.classEt.text.toString()
-            val subjectName = binding.subjectEt.text.toString()
 
             if(className.equals("") or binding.selectedTeacher.text.toString().equals("")
                 or binding.selectedStudentListText.text.toString().equals("")){
@@ -91,37 +87,6 @@ class CreateClassActivity : AppCompatActivity() {
                                     )
                                         .addOnSuccessListener {
                                             Log.d(TAG, "save completed")
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            println("Error creating document: $exception")
-                                        }
-                                }
-                                .addOnFailureListener { exception ->
-                                    println("Error creating document: $exception")
-                                }
-
-                            // 문서를 추가하고 자동으로 생성된 키 값을 받아옵니다.
-                            db.collection("subject").add(SubjectDto("", "", "", "", ArrayList()))
-                                .addOnSuccessListener { documentReference ->
-                                    val documentId = documentReference.id
-                                    // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                    db.collection("subject").document(documentId).set(
-                                        SubjectDto(documentId,
-                                        subjectName, teacherInfo.teacher_key, classKey, ArrayList())
-                                    )
-                                        .addOnSuccessListener {
-                                            Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
-
-                                            binding.classEt.setText("")
-                                            binding.selectedTeacher.setText("")
-                                            binding.selectedStudentListText.setText("")
-                                            binding.subjectEt.setText("")
-
-                                            editor.putString("classEt", binding.classEt.text.toString())
-                                            editor.putString("selectedTeacher", binding.selectedTeacher.text.toString())
-                                            editor.putString("selectedStudentListText", binding.selectedStudentListText.text.toString())
-                                            editor.putString("subjectEt", binding.subjectEt.text.toString())
-                                            editor.commit()
                                         }
                                         .addOnFailureListener { exception ->
                                             println("Error creating document: $exception")

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/recyclerview_border"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_subject_rv_teacher"
+        android:layout_width="120dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:ellipsize="end"
+        android:paddingTop="7dp"
+        android:text="t_name"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_subject_rv_class"
+        android:layout_width="70dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:paddingTop="7dp"
+        android:text="class"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_subject_name"
+        android:layout_width="100dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:paddingTop="7dp"
+        android:text="sub"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
