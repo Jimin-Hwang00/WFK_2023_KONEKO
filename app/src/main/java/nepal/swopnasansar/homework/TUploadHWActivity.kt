@@ -130,6 +130,7 @@ class TUploadHWActivity : AppCompatActivity() {
                 .setPositiveButton("YES") { _, _ ->
                     imageUri = Uri.EMPTY
                     binding.ivUploadHwImage.visibility = View.GONE
+                    binding.tvImageConstruction.visibility = View.GONE
                 }
                 .setNegativeButton("NO") { _, _ ->
                     null
@@ -217,6 +218,7 @@ class TUploadHWActivity : AppCompatActivity() {
                     .into(binding.ivUploadHwImage)
 
                 binding.ivUploadHwImage.visibility = View.VISIBLE
+                binding.tvImageConstruction.visibility = View.VISIBLE
             }
         }
     }

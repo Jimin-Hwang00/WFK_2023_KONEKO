@@ -143,14 +143,14 @@
                     android:layout_width="310dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="18dp"
-                    android:gravity="top|left"
+                    android:layout_marginTop="31dp"
 
+                    android:gravity="top|left"
                     android:hint="Type here..."
                     android:textSize="15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_upload_hw_image" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_image_construction" />
 
                 <Button
                     android:id="@+id/btn_t_upload_hw"
@@ -163,6 +163,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ev_upload_hw_content" />
+
+                <TextView
+                    android:id="@+id/tv_image_construction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="67dp"
+                    android:layout_marginTop="10dp"
+                    android:text="You can delete the photo by long-pressing it."
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_upload_hw_image" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
