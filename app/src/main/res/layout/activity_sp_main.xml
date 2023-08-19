@@ -8,16 +8,6 @@
     tools:context=".SPMainActivity">
 
 
-    <ProgressBar
-        android:id="@+id/pb_sp_main"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout8"
         android:layout_width="match_parent"
@@ -48,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="595dp"
+                android:layout_marginTop="587dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/search_icon" />
@@ -57,7 +47,7 @@
                 android:id="@+id/arrow_sp_cmnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="610dp"
+                android:layout_marginTop="605dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +63,7 @@
                 android:id="@+id/arrow_sp_tuiton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="540dp"
+                android:layout_marginTop="535dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +74,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="525dp"
+                android:layout_marginTop="516dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/btn_5" />
@@ -125,7 +115,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="315dp"
+                android:layout_marginTop="301dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/btn_3" />
@@ -134,7 +124,7 @@
                 android:id="@+id/arrow_sp_attendance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="335dp"
+                android:layout_marginTop="320dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +140,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="665dp"
+                android:layout_marginTop="657dp"
                 android:src="@drawable/btn_6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -178,7 +168,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="247dp"
+                android:layout_marginTop="230dp"
                 android:src="@drawable/btn_4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +192,7 @@
                 android:id="@+id/arrow_sp_hw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="270dp"
+                android:layout_marginTop="255dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -233,7 +223,7 @@
                 android:id="@+id/arrow_sp_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="405dp"
+                android:layout_marginTop="392dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -244,7 +234,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="385dp"
+                android:layout_marginTop="372dp"
                 android:src="@drawable/btn_1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -259,7 +249,7 @@
                 android:id="@+id/arrow_sp_calendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="470dp"
+                android:layout_marginTop="460dp"
                 android:layout_marginEnd="40dp"
                 android:src="@drawable/arrow"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -270,7 +260,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="455dp"
+                android:layout_marginTop="444dp"
                 android:src="@drawable/btn_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -305,7 +295,7 @@
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
-            android:layout_height="240dp"
+            android:layout_height="220dp"
             android:layout_marginBottom="46dp"
             android:scaleType="fitXY"
             android:src="@drawable/top_background"
@@ -376,5 +366,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_sp_main"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
