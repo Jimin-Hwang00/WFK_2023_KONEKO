@@ -27,31 +27,51 @@
             android:exported="false" />
         <activity
             android:name=".notice.TeacherSelectNoticeUploadActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".notice.TeacherSelectNoticeActivity" />
+        </activity>
         <activity
             android:name=".notice.TeacherSelectNoticeAdapter"
             android:exported="false" />
         <activity
             android:name=".notice.TeacherSelectNoticeActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".notice.TeacherNoticeMainActivity" />
+        </activity>
         <activity
             android:name=".notice.TeacherEntireNoticeAdapter"
             android:exported="false" />
         <activity
             android:name=".notice.TeacherEntireNoticeActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".notice.TeacherNoticeMainActivity" />
+        </activity>
         <activity
             android:name=".notice.TeacherCheckNoticeAdapter"
             android:exported="false" />
         <activity
             android:name=".notice.TeacherCheckNoticeActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".notice.TeacherNoticeMainActivity" />
+        </activity>
         <activity
             android:name=".notice.ParentCheckNoticeAdapter"
             android:exported="false" />
         <activity
             android:name=".notice.ParentCheckNoticeActivity"
-            android:exported="false" />
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SPMainActivity" />
+        </activity>
         <activity
             android:name=".attendance.ParentAttendanceActivity"
             android:exported="false" />
