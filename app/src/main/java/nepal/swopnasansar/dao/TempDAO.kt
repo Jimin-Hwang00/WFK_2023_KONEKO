@@ -40,9 +40,8 @@ class TempDAO {
 
     suspend fun removeTempData(email: String): Boolean {
         return try {
-            tempRef.document(email).delete().await()
-            Log.d(TAG, "success to remove temp data : ${email}")
-            true
+            val removeResult = tempRef.document(email).delete().await()
+            removeResult != null
         } catch (e: Exception) {
             Log.e(TAG, "Fail to remove temp data : ${email}", e)
             false
@@ -51,9 +50,8 @@ class TempDAO {
 
     suspend fun recreateTemp(temp: Temp): Boolean {
         return try {
-            tempRef.document(temp.email).set(temp).await()
-            Log.d(TAG, "success to recreate temp data : ${temp.email}")
-            true
+            val recreateResult = tempRef.document(temp.email).set(temp).await()
+            recreateResult != null
         } catch (e: Exception) {
             Log.e(TAG, "Fail to recreate temp data : ${temp.email}", e)
             false

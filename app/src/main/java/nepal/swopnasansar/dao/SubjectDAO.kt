@@ -25,11 +25,11 @@ class SubjectDAO {
 
     suspend fun updateSubject(subjectKey: String, updateFields: Map<String, Any>): Boolean {
         return try {
-            subjectRef.document(subjectKey).update(updateFields).await()
-            true
+            val updateResult = subjectRef.document(subjectKey).update(updateFields).await()
+            updateResult != null // 업데이트에 성공한 경우에만 true 반환
         } catch (e: Exception) {
             Log.e(TAG, e.toString())
-            false
+            false // 업데이트에 실패한 경우 false 반환
         }
     }
 

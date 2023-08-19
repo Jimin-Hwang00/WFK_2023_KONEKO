@@ -92,11 +92,11 @@ class CommentDAO {
         val docRef = commentRef.document(commentKey)
 
         return try {
-            docRef.update("read", true).await()
-            return true
+            val updateResult = docRef.update("read", true).await()
+            updateResult != null // 업데이트에 성공한 경우에만 true 반환
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to update read status: ${commentKey}", e)
-            return false
+            Log.e(TAG, "Fail to update read status: $commentKey", e)
+            false // 업데이트에 실패한 경우 false 반환
         }
     }
 
@@ -109,13 +109,14 @@ class CommentDAO {
 
         return querySnapshot.size()
     }
+
     suspend fun removeCommentByKey(key: String): Boolean {
         return try {
-            commentRef.document(key).delete().await()
-            true
+            val deleteResult = commentRef.document(key).delete().await()
+            deleteResult != null // 삭제에 성공한 경우에만 true 반환
         } catch (e: Exception) {
-            Log.d(TAG, "fail to remove comment: ${key}")
-            false
+            Log.d(TAG, "fail to remove comment: $key")
+            false // 삭제에 실패한 경우 false 반환
         }
     }
 }

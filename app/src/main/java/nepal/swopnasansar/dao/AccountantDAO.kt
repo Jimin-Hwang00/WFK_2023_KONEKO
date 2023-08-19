@@ -16,18 +16,13 @@ class AccountantDAO {
     private val accountantRef = db.collection("accountant")
 
     suspend fun checkAccountByEmail(email: String): Boolean {
-        try {
+        return try {
             val querySnapshot = accountantRef.whereEqualTo("email", email).get().await()
-
-            if (!querySnapshot.isEmpty) {
-                Log.d(TAG, "account exits")
-                return true
-            }
+            !querySnapshot.isEmpty
         } catch (e: Exception) {
             Log.e(TAG, "check account error", e)
+            return false
         }
-
-        return false
     }
 
     suspend fun getAccountantByKey(key: String): Accountant? {
@@ -58,11 +53,11 @@ class AccountantDAO {
 
     suspend fun removeAccountantByKey(key: String): Boolean {
         return try {
-            accountantRef.document(key).delete().await()
-            true
+            val deleteResult = accountantRef.document(key).delete().await()
+            deleteResult != null // 삭제에 성공한 경우에만 true 반환
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to remove accountant : ${key}")
-            false
+            Log.e(TAG, "Fail to remove accountant : $key")
+            false // 삭제에 실패한 경우 false 반환
         }
     }
 }

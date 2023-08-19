@@ -14,17 +14,13 @@ class TeacherDAO {
     val teacherRef = db.collection("teacher")
 
     suspend fun checkAccountByEmail(email: String): Boolean {
-        try {
+        return try {
             val querySnapshot = teacherRef.whereEqualTo("email", email).get().await()
-
-            if (!querySnapshot.isEmpty) {
-                return true
-            }
+            !querySnapshot.isEmpty
         } catch (e: Exception) {
             Log.e(TAG, "check account error", e)
+            return false
         }
-
-        return false
     }
 
     suspend fun getAllTeachers(): ArrayList<Teacher>? {

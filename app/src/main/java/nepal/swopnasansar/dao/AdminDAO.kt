@@ -44,16 +44,12 @@ class AdminDAO {
     }
 
     suspend fun checkAccountByEmail(email: String): Boolean {
-        try {
+        return try {
             val querySnapshot = adminRef.whereEqualTo("email", email).get().await()
-
-            if (!querySnapshot.isEmpty) {
-                return true
-            }
+            !querySnapshot.isEmpty
         } catch (e: Exception) {
             Log.e(TAG, "check account error", e)
+            return false
         }
-
-        return false
     }
 }

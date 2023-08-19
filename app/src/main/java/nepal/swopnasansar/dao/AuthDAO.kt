@@ -74,16 +74,4 @@ class AuthDAO {
             false
         }
     }
-
-    suspend fun removeUser(): Boolean {
-        return try {
-            if (getUser() != null) {
-                getUser()!!.delete()
-            }
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "Fail to remove user : ${getUid()}", e)
-            false
-        }
-    }
 }
