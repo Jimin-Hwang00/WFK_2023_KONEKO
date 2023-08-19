@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.accountant.SPCheckTuitionActivity
 import nepal.swopnasansar.admin.CheckEventActivity
+import nepal.swopnasansar.admin.UserCheckEventActivity
 import nepal.swopnasansar.attendance.ParentAttendanceActivity
 import nepal.swopnasansar.comment.SPCmntMainActivity
 import nepal.swopnasansar.dao.AuthDAO
@@ -91,12 +92,12 @@ class SPMainActivity : AppCompatActivity() {
         }
 
         binding.tvSPCalendar.setOnClickListener {
-            val intent = Intent(this, CheckEventActivity::class.java)
+            val intent = Intent(this, UserCheckEventActivity::class.java)
             startActivity(intent)
         }
 
         binding.arrowSpCalendar.setOnClickListener {
-            val intent = Intent(this, CheckEventActivity::class.java)
+            val intent = Intent(this, UserCheckEventActivity::class.java)
             startActivity(intent)
         }
 

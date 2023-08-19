@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.admin.CheckEventActivity
+import nepal.swopnasansar.admin.UserCheckEventActivity
 import nepal.swopnasansar.attendance.TeacherAttendanceActivity
 import nepal.swopnasansar.comment.TeacherCmntMainActivity
 import nepal.swopnasansar.dao.AuthDAO
@@ -90,12 +91,12 @@ class TeacherMainActivity : AppCompatActivity() {
         }
 
         binding.tvTCalendar.setOnClickListener {
-            val intent = Intent(this, CheckEventActivity::class.java)
+            val intent = Intent(this, UserCheckEventActivity::class.java)
             startActivity(intent)
         }
 
         binding.arrowTCalendar.setOnClickListener {
-            val intent = Intent(this, CheckEventActivity::class.java)
+            val intent = Intent(this, UserCheckEventActivity::class.java)
             startActivity(intent)
         }
 
