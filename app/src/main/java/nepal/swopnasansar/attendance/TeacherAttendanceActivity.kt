@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,12 @@ class TeacherAttendanceActivity : AppCompatActivity() {
         val pref : SharedPreferences = getSharedPreferences("save_state", 0)
         val editor : SharedPreferences.Editor = pref.edit()
         var attKey = pref.getString("attKey", null)?.toString() ?: ""
+        var pastUid = pref.getString("uid", null)
         var todayDate = getTodayDate()
+
+        if(!uid.equals(pastUid)){
+            attKey = ""
+        }
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
@@ -100,6 +106,7 @@ class TeacherAttendanceActivity : AppCompatActivity() {
 
                         editor.putString("attKey", documentId)
                         editor.putString("date", attCheckList[0].date)
+                        editor.putString("uid", uid)
                         editor.commit()
                         // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
                         db.collection("attendance").document(documentId).set(
