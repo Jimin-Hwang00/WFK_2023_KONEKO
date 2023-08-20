@@ -53,7 +53,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="136dp"
         android:text="Tuition"
         android:textColor="#3F51B5"
@@ -66,7 +66,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="130dp"
         android:text="Payment\nStatus"
         android:textAlignment="center"
@@ -89,13 +89,13 @@
         android:id="@+id/btn_tuition_submit"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginTop="19dp"
         android:background="@drawable/button_2"
         android:text="submit"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_input_tuition" />
 
     <ProgressBar
         android:id="@+id/pb_accountant_tuition_input"
