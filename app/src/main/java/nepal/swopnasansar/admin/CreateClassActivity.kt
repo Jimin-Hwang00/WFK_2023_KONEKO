@@ -8,10 +8,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import nepal.swopnasansar.data.AdminCalDto
 import nepal.swopnasansar.data.ClassDto
+import nepal.swopnasansar.data.RvClassListDto
 import nepal.swopnasansar.data.StudentDto
 import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.data.TeacherDto
@@ -36,6 +43,7 @@ class CreateClassActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val pref : SharedPreferences = getSharedPreferences("save_state", 0)
         val editor : SharedPreferences.Editor = pref.edit()
+        val classNameList = ArrayList<ClassDto>()
 
         binding.classEt.setText(pref.getString("classEt", null))
         binding.selectedTeacher.setText(pref.getString("selectedTeacher", null))
@@ -75,25 +83,56 @@ class CreateClassActivity : AppCompatActivity() {
                     setCancelable(false)
                     setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
-                            // 문서를 추가하고 자동으로 생성된 키 값을 받아옵니다.
-                            db.collection("class").add(ClassDto("", "", ArrayList(), ""))
-                                .addOnSuccessListener { documentReference ->
-                                    val documentId = documentReference.id
-                                    classKey = documentId
-                                    // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                    db.collection("class").document(documentId).set(
-                                        ClassDto(documentId, className,
-                                        studentKeyList, teacherInfo.teacher_key)
-                                    ).addOnSuccessListener {
-                                        Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
-                                        Log.d(TAG, "save completed")
-                                    }.addOnFailureListener { exception ->
-                                        println("Error creating document: $exception")
+                            CoroutineScope(Dispatchers.IO).launch {
+                                Log.d(TAG, "${className}")
+                                // 클래스 이미 존재하는 이름 확인
+                                classNameList.clear()
+                                    val classQuerySnapshot = db?.collection("class")
+                                        ?.whereEqualTo("class_name", className)?.get()?.await()
+                                classNameList.addAll(
+                                    classQuerySnapshot?.toObjects(
+                                            ClassDto::class.java
+                                        ) ?: emptyList()
+                                    )
+
+                                withContext(Dispatchers.Main) {
+                                    Log.d(TAG, "${classNameList.size}")
+                                    if(classNameList.size == 0){
+                                        // 문서를 추가하고 자동으로 생성된 키 값을 받아옵니다.
+                                        db.collection("class").add(ClassDto("", "", ArrayList(), ""))
+                                            .addOnSuccessListener { documentReference ->
+                                                val documentId = documentReference.id
+                                                classKey = documentId
+                                                // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
+                                                db.collection("class").document(documentId).set(
+                                                    ClassDto(documentId, className,
+                                                        studentKeyList, teacherInfo.teacher_key)
+                                                ).addOnSuccessListener {
+                                                    Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
+                                                    Log.d(TAG, "save completed")
+                                                }.addOnFailureListener { exception ->
+                                                    println("Error creating document: $exception")
+                                                }
+                                            }
+                                            .addOnFailureListener { exception ->
+                                                println("Error creating document: $exception")
+                                            }
+                                    }else{
+                                        Toast.makeText(this@CreateClassActivity, "Class already exists.", Toast.LENGTH_SHORT).show()
                                     }
                                 }
-                                .addOnFailureListener { exception ->
-                                    println("Error creating document: $exception")
+                                if(classNameList.size == 0){
+                                    binding.classEt.setText("")
+                                    binding.selectedTeacher.setText("")
+                                    binding.selectedStudentListText.setText("")
+
+                                    editor.putString("classEt", binding.classEt.text.toString())
+                                    editor.putString("selectedTeacher", binding.selectedTeacher.text.toString())
+                                    editor.putString("selectedStudentListText", binding.selectedStudentListText.text.toString())
+                                    editor.commit()
+                                    classNameList.clear()
                                 }
+                            }
                         }
                     })
                     show()

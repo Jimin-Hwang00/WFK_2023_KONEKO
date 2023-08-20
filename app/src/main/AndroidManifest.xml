@@ -17,9 +17,6 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
-            android:name=".admin.SubjectListActivity"
-            android:exported="false" />
-        <activity
             android:name=".admin.SelectClassActivity"
             android:exported="false" />
         <activity

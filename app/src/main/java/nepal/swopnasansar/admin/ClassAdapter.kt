@@ -36,11 +36,20 @@ class ClassAdapter(private val activity: Activity, val rvClassList : ArrayList<R
             val classQuerySnapshot = firestore?.collection("class")?.get()?.await()
             classTempList.addAll(classQuerySnapshot?.toObjects(ClassDto::class.java) ?: emptyList())
 
+            for(c in classTempList){
+                Log.d(TAG, "${c.class_name}")
+            }
+
             // 선생님 정보 가져오기
             teacherTempList.clear()
             for (c in classTempList) {
+                Log.d(TAG, "선생키.. 가져완거 : ${c.teacher_key}")
                 val teacherQuerySnapshot = firestore?.collection("teacher")?.whereEqualTo("teacher_key", c.teacher_key)?.get()?.await()
                 teacherTempList.addAll(teacherQuerySnapshot?.toObjects(TeacherDto::class.java) ?: emptyList())
+            }
+
+            for(t in teacherTempList){
+                Log.d(TAG, "${t.teacher_name}")
             }
 
             // 데이터 처리 및 어댑터 갱신
