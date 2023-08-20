@@ -65,15 +65,15 @@
 
     <EditText
         android:id="@+id/eventEt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="325dp"
+        android:layout_width="279dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="332dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Write your schedule"
+        android:inputType="text"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.864"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
