@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.dto.Accountant
+import nepal.swopnasansar.dto.Class
 import nepal.swopnasansar.dto.Student
 import nepal.swopnasansar.dto.Temp
 
@@ -43,22 +44,19 @@ class StudentDAO {
     }
 
     suspend fun getStudentByKey(studentKey: String): Student? {
-        var student: Student? = null
-
-        try {
+        return try {
             val documentSnapshot = studentRef.document(studentKey).get().await()
 
             if (documentSnapshot.exists()) {
-                student = documentSnapshot.toObject(Student::class.java)
+                return documentSnapshot.toObject(Student::class.java)
+            } else {
+                return Student()
             }
-
-            Log.d(TAG, "student : ${student}")
         } catch (e: Exception) {
-            student = null
             Log.e(TAG, "Error getting student name", e)
-        }
 
-        return student
+            return null
+        }
     }
 
     suspend fun updateStudentByKey(student: Student): Boolean {

@@ -6,6 +6,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.dto.Accountant
 import nepal.swopnasansar.dto.Administrator
+import nepal.swopnasansar.dto.Teacher
 
 class AdminDAO {
     private val TAG = "AdminDAO"
@@ -13,12 +14,15 @@ class AdminDAO {
     val adminRef = db.collection("administrator")
 
     suspend fun getAdminByKey(key: String): Administrator? {
-        val querySnapshot = adminRef.document(key).get().await()
+        return try {
+            val querySnapshot = adminRef.document(key).get().await()
 
-        if (querySnapshot.exists()) {
-            val result = querySnapshot.toObject(Administrator::class.java)
-            return result
-        } else {
+            if (querySnapshot.exists()) {
+                return querySnapshot.toObject(Administrator::class.java)
+            } else {
+                return Administrator()
+            }
+        } catch (e: Exception) {
             Log.d(TAG, "query doesn't exist")
             return null
         }

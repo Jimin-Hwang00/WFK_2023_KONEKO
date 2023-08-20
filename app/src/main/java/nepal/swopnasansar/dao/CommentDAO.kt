@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import nepal.swopnasansar.dto.Class
 import nepal.swopnasansar.dto.Comment
 import nepal.swopnasansar.dto.Homework
 
@@ -12,24 +13,6 @@ class CommentDAO {
 
     val db = Firebase.firestore
     val commentRef = db.collection("comment")
-
-    fun getCommentByCommentKey(commentKey: String): Comment? {
-        var comment: Comment? = Comment()
-
-        commentRef.document(commentKey)
-            .get()
-            .addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    comment = documentSnapshot.toObject(Comment::class.java)
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, exception.toString())
-                comment = null      // Comment 가져오기 실패 시 null 반환
-            }
-
-        return comment
-    }
 
     suspend fun getCommentByReceiverKey(receiverKey: String): ArrayList<Comment>? {
         var comments: ArrayList<Comment>? = ArrayList()

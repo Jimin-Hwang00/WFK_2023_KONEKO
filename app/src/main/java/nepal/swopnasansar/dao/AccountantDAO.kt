@@ -7,6 +7,7 @@ import kotlinx.coroutines.tasks.await
 import nepal.swopnasansar.R
 import nepal.swopnasansar.dto.Accountant
 import nepal.swopnasansar.dto.Class
+import nepal.swopnasansar.dto.Teacher
 import nepal.swopnasansar.dto.Temp
 
 class AccountantDAO {
@@ -25,14 +26,17 @@ class AccountantDAO {
         }
     }
 
-    suspend fun getAccountantByKey(key: String): Accountant? {
-        val querySnapshot = accountantRef.document(key).get().await()
+    suspend fun getAccountantByKey(key: String): Accountant? {return try {
+            val querySnapshot = accountantRef.document(key).get().await()
 
-        if (querySnapshot.exists()) {
-            val result = querySnapshot.toObject(Accountant::class.java)
-            return result
-        } else {
-            Log.d(TAG, "query doesn't exist")
+            if (querySnapshot.exists()) {
+                val result = querySnapshot.toObject(Accountant::class.java)
+                return result
+            } else {
+                return Accountant()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting accountant", e)
             return null
         }
     }

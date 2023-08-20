@@ -63,13 +63,15 @@ class ClassDAO {
 
 
     suspend fun getClassByClassKey(key: String): Class? {
-        val querySnapshot = classRef.document(key).get().await()
+        return try {
+            val querySnapshot = classRef.document(key).get().await()
 
-        if (querySnapshot.exists()) {
-            val result = querySnapshot.toObject(Class::class.java)
-            Log.d(TAG, "get class by class key result : ${result!!.class_key}")
-            return result
-        } else {
+            if (querySnapshot.exists()) {
+                return querySnapshot.toObject(Class::class.java)
+            } else {
+                return Class()
+            }
+        } catch (e: Exception) {
             Log.d(TAG, "querysnapshot doesn't exist")
             return null
         }

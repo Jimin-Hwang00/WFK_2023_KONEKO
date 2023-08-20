@@ -43,20 +43,19 @@ class TeacherDAO {
     }
 
     suspend fun getTeacherByKey(teacherKey: String): Teacher? {
-        var teacher: Teacher? = null
-
-        try {
+        return try {
             val documentSnapshot = teacherRef.document(teacherKey).get().await()
 
             if (documentSnapshot.exists()) {
-                teacher = documentSnapshot.toObject(Teacher::class.java)
+                return documentSnapshot.toObject(Teacher::class.java)
+            } else {
+                return Teacher()
             }
         } catch (e: Exception) {
-            teacher = null
             Log.e(TAG, "Error getting student name", e)
-        }
 
-        return teacher
+            return null
+        }
     }
 
     suspend fun createTeacherByUid(uid: String, temp: Temp): Boolean {
