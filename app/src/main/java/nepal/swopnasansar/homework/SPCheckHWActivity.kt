@@ -67,6 +67,10 @@ class SPCheckHWActivity : AppCompatActivity() {
                     Glide.with(this@SPCheckHWActivity)
                         .load(homeworks!![homeworkIdx].image)
                         .into(binding.ivCheckHwImage)
+
+                    binding.ivCheckHwImage.visibility = View.VISIBLE
+                } else {
+                    binding.ivCheckHwImage.visibility = View.GONE
                 }
 
                 binding.svSpCheck.visibility = View.VISIBLE

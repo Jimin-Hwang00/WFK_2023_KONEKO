@@ -256,6 +256,7 @@ class TUploadHWActivity : AppCompatActivity() {
                         withContext(Main) {
                             val intent = Intent(this@TUploadHWActivity, TCheckUploadedHWActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     } else {
                         withContext(Main) {
@@ -281,8 +282,8 @@ class TUploadHWActivity : AppCompatActivity() {
                     withContext(Main) {
                         val intent =
                             Intent(this@TUploadHWActivity, TCheckUploadedHWActivity::class.java)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
+                        finish()
                     }
                 } else {
                     Toast.makeText(this@TUploadHWActivity, "Fail to upload homework. Try again.", Toast.LENGTH_SHORT).show()

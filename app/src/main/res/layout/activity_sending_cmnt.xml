@@ -118,12 +118,12 @@
         android:id="@+id/sending_cmnt_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_3"
         android:text="upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ev_sending_cmnt_content" />
 
     <ProgressBar
         android:id="@+id/pb_sending_cmnt"

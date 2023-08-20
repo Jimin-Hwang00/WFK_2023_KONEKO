@@ -273,8 +273,8 @@ class SendingCmntActivity : AppCompatActivity() {
                 if (result) {
                     val intent =
                         Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(
                         this@SendingCmntActivity,

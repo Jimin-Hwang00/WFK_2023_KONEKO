@@ -85,12 +85,12 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
                     withContext(Main) {
                         if (result) {
-                            val intent = Intent(
-                                this@TeacherPostYoutubeLinkActivity,
-                                TeacherCheckYoutbeListActivity::class.java
-                            )
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
+                            Toast.makeText(
+                                applicationContext,
+                                "Success to upload youtube link.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            finish()
                         } else {
                             binding.pbYoutubePost.visibility = View.INVISIBLE
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)

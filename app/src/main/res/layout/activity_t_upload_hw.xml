@@ -71,17 +71,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ProgressBar
-        android:id="@+id/pb_t_upload_hw"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="411dp"
@@ -156,7 +145,7 @@
                     android:id="@+id/btn_t_upload_hw"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/button_3"
                     android:text="upload"
                     android:textSize="20dp"
@@ -179,5 +168,16 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pb_t_upload_hw"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -79,6 +79,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
                         } else {
                             val intent = Intent(this@SendingCmntToAdminActivity, SentCmntListActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     } else {
                         Toast.makeText(this@SendingCmntToAdminActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()

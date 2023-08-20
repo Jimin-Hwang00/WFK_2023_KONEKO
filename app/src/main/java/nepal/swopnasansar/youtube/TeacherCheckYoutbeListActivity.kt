@@ -95,6 +95,7 @@ class TeacherCheckYoutbeListActivity : AppCompatActivity() {
 
                     lifecycleScope.launch(Main) {
                         youtubeLinkAdapter.notifyDataSetChanged()
+                        Toast.makeText(this@TeacherCheckYoutbeListActivity, "Success to delete youtube link.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     lifecycleScope.launch(Main) {
