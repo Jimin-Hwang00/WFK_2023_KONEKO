@@ -86,11 +86,11 @@ class TUploadHWActivity : AppCompatActivity() {
                         intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                         startActivityForResult(intent, imageRequestCode)
                     }
-                    shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE) -> {
+                    shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_IMAGES) -> {
                         showContextPopupPermission()
                     }
                     else -> {
-                        requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1000)
+                        requestPermissions(arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),1000)
                     }
                 }
             } else {

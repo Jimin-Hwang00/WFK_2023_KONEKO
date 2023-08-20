@@ -89,6 +89,7 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
                                 this@TeacherPostYoutubeLinkActivity,
                                 TeacherCheckYoutbeListActivity::class.java
                             )
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                             startActivity(intent)
                         } else {
                             binding.pbYoutubePost.visibility = View.INVISIBLE
