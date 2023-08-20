@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -66,9 +67,13 @@ class TeacherSelectNoticeActivity : AppCompatActivity() {
                 studentNameList.add(stn.student_name)
             }
 
-            intent.putStringArrayListExtra("stnNameList", studentNameList)
-            intent.putStringArrayListExtra("stnKeyList", studentKeyList)
-            startActivity(intent)
+            if(checkedList.size != 0){
+                intent.putStringArrayListExtra("stnNameList", studentNameList)
+                intent.putStringArrayListExtra("stnKeyList", studentKeyList)
+                startActivity(intent)
+            }else{
+                Toast.makeText(this@TeacherSelectNoticeActivity, "At least one student must be selected.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     // 뷰 홀더가 생성되어 화면에 표시된 후에 ProgressBar를 숨기는 메서드
