@@ -39,7 +39,7 @@ class LoginActivity: AppCompatActivity() {
         role = intent.getStringExtra("role").toString()
 
         binding.loginBtn.setOnClickListener {
-            val email = binding.emailEditText.text.toString()
+            val email = binding.emailEditText.text.toString().trim()
             val pw = binding.pwEditText.text.toString()
 
             loginProcess(email, pw)

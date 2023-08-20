@@ -26,7 +26,7 @@ class SignoutDialog(context: Context)
         val cancelBtn = dialog.findViewById<Button>(R.id.btn_sign_out_cancel)
 
         signOutBtn.setOnClickListener {
-            val email = dialog.findViewById<EditText>(R.id.ev_sign_out_email).text.toString()
+            val email = dialog.findViewById<EditText>(R.id.ev_sign_out_email).text.toString().trim()
             val pw = dialog.findViewById<EditText>(R.id.ev_sign_out_pw).text.toString()
 
             onClickListener.onClicked(email, pw)
