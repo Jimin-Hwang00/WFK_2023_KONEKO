@@ -281,6 +281,7 @@ class TUploadHWActivity : AppCompatActivity() {
                     withContext(Main) {
                         val intent =
                             Intent(this@TUploadHWActivity, TCheckUploadedHWActivity::class.java)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
                     }
                 } else {
