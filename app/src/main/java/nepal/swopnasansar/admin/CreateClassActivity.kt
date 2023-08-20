@@ -108,6 +108,9 @@ class CreateClassActivity : AppCompatActivity() {
                                                     ClassDto(documentId, className,
                                                         studentKeyList, teacherInfo.teacher_key)
                                                 ).addOnSuccessListener {
+                                                    binding.classEt.setText("")
+                                                    binding.selectedTeacher.setText("")
+                                                    binding.selectedStudentListText.setText("")
                                                     Toast.makeText(this@CreateClassActivity, "Save completed", Toast.LENGTH_SHORT).show()
                                                     Log.d(TAG, "save completed")
                                                 }.addOnFailureListener { exception ->
@@ -120,17 +123,6 @@ class CreateClassActivity : AppCompatActivity() {
                                     }else{
                                         Toast.makeText(this@CreateClassActivity, "Class already exists.", Toast.LENGTH_SHORT).show()
                                     }
-                                }
-                                if(classNameList.size == 0){
-                                    binding.classEt.setText("")
-                                    binding.selectedTeacher.setText("")
-                                    binding.selectedStudentListText.setText("")
-
-                                    editor.putString("classEt", binding.classEt.text.toString())
-                                    editor.putString("selectedTeacher", binding.selectedTeacher.text.toString())
-                                    editor.putString("selectedStudentListText", binding.selectedStudentListText.text.toString())
-                                    editor.commit()
-                                    classNameList.clear()
                                 }
                             }
                         }
