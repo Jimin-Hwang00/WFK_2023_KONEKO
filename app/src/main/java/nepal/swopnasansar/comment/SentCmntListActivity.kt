@@ -46,6 +46,8 @@ class SentCmntListActivity : AppCompatActivity() {
 
         sentCommentListAdapter.setOnItemClickListener(object: CmntListAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
+                binding.btnDeleteCmnt.visibility = View.VISIBLE
+
                 binding.tvCmntContent.text = sentCommentListAdapter.itemList[position].content
 
                 binding.cmntContentText.visibility = View.VISIBLE
@@ -53,8 +55,6 @@ class SentCmntListActivity : AppCompatActivity() {
 
                 sentCommentListAdapter.selectedIdx = position
                 sentCommentListAdapter.notifyDataSetChanged()
-
-                binding.btnDeleteCmnt.visibility = View.VISIBLE
             }
         })
 

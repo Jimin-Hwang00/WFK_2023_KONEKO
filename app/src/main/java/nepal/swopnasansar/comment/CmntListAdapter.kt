@@ -40,7 +40,6 @@ class CmntListAdapter(var itemList: ArrayList<Comment>, var context: Context): R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title_text.text = itemList[position].title
-        holder.name_text.text = itemList[position].author_name
         holder.date_text.text = itemList[position].date.substring(0, 10)
 
         Log.d(TAG, context.toString())
@@ -53,12 +52,16 @@ class CmntListAdapter(var itemList: ArrayList<Comment>, var context: Context): R
             } else {
                 holder.itemView.setBackgroundColor(Color.WHITE)
             }
+
+            holder.name_text.text = itemList[position].author_name
         } else {
             if (selectedIdx == position) {
                 holder.itemView.setBackgroundColor(Color.LTGRAY)
             } else {
                 holder.itemView.setBackgroundColor(Color.parseColor("#00000000"))
             }
+
+            holder.name_text.text = itemList[position].receiver_name
         }
 
         holder.itemView.setOnClickListener { view ->

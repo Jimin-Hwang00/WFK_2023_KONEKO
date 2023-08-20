@@ -73,19 +73,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_delete_cmnt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:background="@drawable/button_2"
-        android:text="delete"
-        android:textSize="20sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="410dp"
@@ -115,11 +102,21 @@
             <TextView
                 android:id="@+id/tv_cmnt_content"
                 android:layout_width="310dp"
-                android:layout_height="350dp"
+                android:layout_height="230dp"
                 android:layout_marginTop="10dp"
                 android:text="TextView"
                 android:textSize="15dp"
                 android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/btn_delete_cmnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:background="@drawable/button_2"
+                android:text="delete"
+                android:textSize="20sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

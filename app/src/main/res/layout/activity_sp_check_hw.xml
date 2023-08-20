@@ -136,6 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
+                    android:layout_marginTop="20dp"
                     android:minHeight="48dp"
                     android:text="Title"
                     android:textColor="#3F51B5"
@@ -149,6 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
                     android:minHeight="48dp"
                     android:text="title"
                     android:textSize="20sp"
@@ -180,25 +182,24 @@
                     android:text="content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+                <Button
+                    android:id="@+id/btn_submit_hw"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_2"
+                    android:text="Submit"
+                    android:textSize="20dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_check_hw_content" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_submit_hw"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="636dp"
-        android:background="@drawable/button_2"
-        android:text="Submit"
-        android:textSize="20dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/pb_activity_sp_check_hw"

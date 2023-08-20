@@ -86,15 +86,15 @@
     <ScrollView
         android:id="@+id/sv_uploaded_hw"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="300dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_t_uploaded_hw">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -171,23 +171,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
+                <Button
+                    android:id="@+id/btn_delete_uploaded_hw"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/button_2"
+                    android:text="Delete"
+                    android:textSize="15dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_t_uploaded_hw_content" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:id="@+id/btn_delete_uploaded_hw"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_2"
-        android:text="Delete"
-        android:textSize="15dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/pb_t_check_uploaded_hw"
