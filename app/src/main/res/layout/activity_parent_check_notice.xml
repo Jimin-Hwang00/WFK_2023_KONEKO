@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:fontFamily="sans-serif-light"
-        android:text="Tuition"
+        android:text="Notice"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold"
