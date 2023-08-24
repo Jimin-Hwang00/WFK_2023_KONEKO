@@ -193,14 +193,31 @@ class TUploadHWActivity : AppCompatActivity() {
     }
 
     private fun showContextPopupPermission() {
-        AlertDialog.Builder(this).setTitle("Permission")
-            .setMessage("You have to grant permission to access album.")
-            .setPositiveButton("YES") { _, _ ->
-                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
-            }
-            .setNegativeButton("NO") { _, _ ->}
-            .create()
-            .show()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            AlertDialog.Builder(this).setTitle("Permission")
+                .setMessage("You have to grant permission to access album.")
+                .setPositiveButton("YES") { _, _ ->
+                    requestPermissions(
+                        arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
+                        2000
+                    )
+                }
+                .setNegativeButton("NO") { _, _ -> }
+                .create()
+                .show()
+        } else {
+            AlertDialog.Builder(this).setTitle("Permission")
+                .setMessage("You have to grant permission to access album.")
+                .setPositiveButton("YES") { _, _ ->
+                    requestPermissions(
+                        arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                        1000
+                    )
+                }
+                .setNegativeButton("NO") { _, _ -> }
+                .create()
+                .show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -305,7 +322,7 @@ class TUploadHWActivity : AppCompatActivity() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == 1000) {
+        if (requestCode == 1000 || requestCode == 2000) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE)
