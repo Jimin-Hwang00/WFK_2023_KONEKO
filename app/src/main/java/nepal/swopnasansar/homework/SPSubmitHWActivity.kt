@@ -92,6 +92,8 @@ class SPSubmitHWActivity : AppCompatActivity() {
 
     fun submitHomework() {
         binding.pbSpSubmitHw.visibility = View.VISIBLE
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
         val title = binding.evUploadHwTitleSp.text.toString()
         val content = binding.evUploadHwContentSp.text.toString()
@@ -106,6 +108,7 @@ class SPSubmitHWActivity : AppCompatActivity() {
                 if (homework.homework_key.equals("No Document")) {
                     withContext(Main) {
                         Toast.makeText(applicationContext, "This homework has been deleted.", Toast.LENGTH_SHORT).show()
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         finish()
                     }
                 } else {
@@ -115,10 +118,14 @@ class SPSubmitHWActivity : AppCompatActivity() {
 
                     if (result) {
                         withContext(Main) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                            binding.pbSpSubmitHw.visibility = View.INVISIBLE
+                            Toast.makeText(applicationContext, "Upload Success", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                     } else {
                         withContext(Main) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             binding.pbSpSubmitHw.visibility = View.INVISIBLE
                             Toast.makeText(this@SPSubmitHWActivity, "Fail to submit homework. Try again.", Toast.LENGTH_SHORT).show()
                         }
@@ -126,6 +133,7 @@ class SPSubmitHWActivity : AppCompatActivity() {
                 }
             } else {
                 withContext(Main) {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     binding.pbSpSubmitHw.visibility = View.INVISIBLE
                     Toast.makeText(applicationContext, "Fail to submit homework. Try again.", Toast.LENGTH_SHORT).show()
                 }
@@ -151,6 +159,7 @@ class SPSubmitHWActivity : AppCompatActivity() {
                 if (homework.homework_key.equals("No Document")) {
                     withContext(Main) {
                         Toast.makeText(applicationContext, "This homework has been deleted.", Toast.LENGTH_SHORT).show()
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         finish()
                     }
                 } else {
@@ -161,6 +170,9 @@ class SPSubmitHWActivity : AppCompatActivity() {
 
                     if (result) {
                         withContext(Main) {
+                            Toast.makeText(applicationContext, "Edit Success", Toast.LENGTH_SHORT).show()
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                            binding.pbSpSubmitHw.visibility = View.INVISIBLE
                             finish()
                         }
                     } else {

@@ -60,6 +60,8 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
             } else {
                 lifecycleScope.launch {
                     binding.pbSendingCmntToAdmin.visibility = View.VISIBLE
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
                     lateinit var userName: String
                     val student = withContext(Dispatchers.IO) {
@@ -76,7 +78,10 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
 
                         if (!uploadResult) {
                             Toast.makeText(this@SendingCmntToAdminActivity, "Failed to upload comment. Try Again", Toast.LENGTH_SHORT).show()
+                            binding.pbSendingCmntToAdmin.visibility = View.INVISIBLE
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         } else {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             val intent = Intent(this@SendingCmntToAdminActivity, SentCmntListActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -84,6 +89,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this@SendingCmntToAdminActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
                         binding.pbSendingCmntToAdmin.visibility = View.INVISIBLE
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
                 }
 

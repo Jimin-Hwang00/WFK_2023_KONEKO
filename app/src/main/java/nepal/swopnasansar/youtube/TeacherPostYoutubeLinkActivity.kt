@@ -85,11 +85,13 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
                     withContext(Main) {
                         if (result) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             Toast.makeText(
                                 applicationContext,
                                 "Success to upload youtube link.",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            binding.pbYoutubePost.visibility = View.INVISIBLE
                             finish()
                         } else {
                             binding.pbYoutubePost.visibility = View.INVISIBLE

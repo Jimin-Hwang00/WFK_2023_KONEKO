@@ -271,6 +271,7 @@ class SendingCmntActivity : AppCompatActivity() {
 
             withContext(Main) {
                 if (result) {
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     val intent =
                         Intent(this@SendingCmntActivity, SentCmntListActivity::class.java)
                     startActivity(intent)
@@ -283,6 +284,7 @@ class SendingCmntActivity : AppCompatActivity() {
                     ).show()
 
                     binding.pbSendingCmnt.visibility = View.INVISIBLE
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 }
             }
         }

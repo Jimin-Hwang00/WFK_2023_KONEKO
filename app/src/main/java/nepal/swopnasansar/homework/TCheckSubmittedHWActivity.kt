@@ -48,7 +48,6 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, CheckRoleActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
         }
 
@@ -150,6 +149,7 @@ class TCheckSubmittedHWActivity : AppCompatActivity() {
                 }
             } else {
                 withContext(Main) {
+                    binding.pbTCheckSubmittedHw.visibility = View.INVISIBLE
                     Toast.makeText(applicationContext, "Fail to get class info. Try again.", Toast.LENGTH_SHORT).show()
                     finish()
                 }

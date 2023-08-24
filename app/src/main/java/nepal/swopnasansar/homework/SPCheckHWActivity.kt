@@ -123,12 +123,14 @@ class SPCheckHWActivity : AppCompatActivity() {
                 } else {
                     withContext(Main) {
                         Toast.makeText(applicationContext, "Fail to get homework info. Try again.", Toast.LENGTH_SHORT).show()
+                        binding.pbActivitySpCheckHw.visibility = View.INVISIBLE
                         finish()
                     }
                 }
             } else {
                 withContext(Main) {
                     Toast.makeText(applicationContext, "Fail to get class info. Try again.", Toast.LENGTH_SHORT).show()
+                    binding.pbActivitySpCheckHw.visibility = View.INVISIBLE
                     finish()
                 }
             }

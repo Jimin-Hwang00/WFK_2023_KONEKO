@@ -271,6 +271,7 @@ class TUploadHWActivity : AppCompatActivity() {
 
                     if (updateKeyResult && imageUpdateResult) {
                         withContext(Main) {
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                             val intent = Intent(this@TUploadHWActivity, TCheckUploadedHWActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -297,6 +298,7 @@ class TUploadHWActivity : AppCompatActivity() {
 
                 if (updateKeyResult) {
                     withContext(Main) {
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         val intent =
                             Intent(this@TUploadHWActivity, TCheckUploadedHWActivity::class.java)
                         startActivity(intent)
