@@ -91,6 +91,7 @@ class SentCmntListActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         getSentCommnets()
 
         super.onResume()

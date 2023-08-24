@@ -143,6 +143,8 @@ class TUploadHWActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         var targets = ArrayList<HWTargetItem>()
 
         binding.pbTUploadHw.visibility = View.VISIBLE

@@ -105,6 +105,7 @@ class TCheckUploadedHWActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         getUploadedHW()
         super.onResume()
     }

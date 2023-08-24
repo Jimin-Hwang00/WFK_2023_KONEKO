@@ -99,6 +99,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         getAdmin()
         super.onResume()
     }

@@ -124,6 +124,8 @@ class TeacherPostYoutubeLinkActivity : AppCompatActivity() {
 
     // get all subjects and display them to the users
     override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         if (subjects != null) {
             subjects!!.clear()
         }

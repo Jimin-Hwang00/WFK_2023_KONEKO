@@ -90,6 +90,11 @@ class SPSubmitHWActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        super.onResume()
+    }
+
     fun submitHomework() {
         binding.pbSpSubmitHw.visibility = View.VISIBLE
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
