@@ -87,7 +87,6 @@ class CheckEventActivity : AppCompatActivity() {
 
         binding.calendarView.setOnMonthChangedListener { widget, date ->
             val TempList = onMonthChanged(date.year.toString(), date.month.toString(), adminCalList)
-            Log.d(TAG, "setOn 연결 후 :${adminCalList.size}")
             adapter.updateList(TempList)
         }
 
@@ -98,7 +97,7 @@ class CheckEventActivity : AppCompatActivity() {
 
         val onLongClickListener = object : AdminCalAdapter.OnItemLongClickListener {
             override fun onItemLongClick(view: View, position: Int) {
-
+                val intent = Intent(this@CheckEventActivity, CheckEventActivity::class.java)
                 AlertDialog.Builder(this@CheckEventActivity).run {
                     setTitle("Delete")
                     setMessage("Delete it?")
@@ -106,16 +105,21 @@ class CheckEventActivity : AppCompatActivity() {
                     setCancelable(false)
                     setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
-                            db.collection("schedule").document(adminCalList[position].schedule_key)
+                            db.collection("schedule").document(adapter.adminCalList[position].schedule_key)
                                 .delete()
                                 .addOnSuccessListener {
-                                    adminCalList.removeAt(position) // ArrayList에서 항목 삭제
+                                    adapter.adminCalList.removeAt(position)
                                     adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
+
+                                    for(i in adapter.adminCalList){
+                                        Log.d(TAG, "지워지고 나서.. ${i.event}, 현재 position : ${position}")
+                                    }
                                     Toast.makeText(
                                         this@CheckEventActivity,
                                         "delete success!!",
                                         Toast.LENGTH_SHORT
                                     ).show()
+                                    startActivity(intent)
                                 }
                                 .addOnFailureListener { e ->
                                     // 삭제 중에 발생한 오류 처리
@@ -157,7 +161,6 @@ class CheckEventActivity : AppCompatActivity() {
                 TempList.add(event)
             }
         }
-        Log.d(TAG, "${TempList.size}")
         return TempList
     }
 
