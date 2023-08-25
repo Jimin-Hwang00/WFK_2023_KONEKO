@@ -23,8 +23,8 @@ import java.time.Instant
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class SendingCmntToAdminActivity : AppCompatActivity() {
-    private val TAG = "SendingCmntToAdminActivity"
+class SendingCmntToAdFromSPActivity : AppCompatActivity() {
+    private val TAG = "SendingCmntToAdFromSP"
 
     private lateinit var binding: ActivitySendingCmntToAdminBinding
 
@@ -56,7 +56,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
 
         binding.btnUploadCmntToAdmin.setOnClickListener {
             if (binding.evCmntToAdminTitle.text.isBlank()) {
-                Toast.makeText(this@SendingCmntToAdminActivity, "Please write down the title", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SendingCmntToAdFromSPActivity, "Please write down the title", Toast.LENGTH_SHORT).show()
             } else {
                 lifecycleScope.launch {
                     binding.pbSendingCmntToAdmin.visibility = View.VISIBLE
@@ -77,17 +77,17 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
                         }
 
                         if (!uploadResult) {
-                            Toast.makeText(this@SendingCmntToAdminActivity, "Failed to upload comment. Try Again", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SendingCmntToAdFromSPActivity, "Failed to upload comment. Try Again", Toast.LENGTH_SHORT).show()
                             binding.pbSendingCmntToAdmin.visibility = View.INVISIBLE
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         } else {
                             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                            val intent = Intent(this@SendingCmntToAdminActivity, SentCmntListActivity::class.java)
+                            val intent = Intent(this@SendingCmntToAdFromSPActivity, SentCmntListActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                     } else {
-                        Toast.makeText(this@SendingCmntToAdminActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SendingCmntToAdFromSPActivity, "Fail to upload comment. Try again.", Toast.LENGTH_SHORT).show()
                         binding.pbSendingCmntToAdmin.visibility = View.INVISIBLE
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     }
@@ -113,7 +113,7 @@ class SendingCmntToAdminActivity : AppCompatActivity() {
                 admins = adminDAO.getAllAdmin()
 
                 if (admins == null) {
-                    Toast.makeText(this@SendingCmntToAdminActivity, "Failed to get Administrator.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SendingCmntToAdFromSPActivity, "Failed to get Administrator.", Toast.LENGTH_SHORT).show()
                 }
             }
 

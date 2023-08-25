@@ -257,7 +257,7 @@
             android:name=".comment.SendingCmntActivity"
             android:exported="false" />
         <activity
-            android:name=".comment.SendingCmntToAdminActivity"
+            android:name=".comment.SendingCmntToAdFromSPActivity"
             android:exported="false" />
         <activity
             android:name=".comment.SentCmntListActivity"
@@ -267,6 +267,9 @@
             android:exported="false" />
         <activity
             android:name=".comment.TeacherCmntMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntToAdFromTActivity"
             android:exported="false" />
         <activity
             android:name=".admin.SelectTeacherForSubjectActivity"

@@ -38,11 +38,22 @@ class SPCmntMainActivity : AppCompatActivity() {
         }
 
         binding.tvSendCmntToAdmin.setOnClickListener {
-            val intent = Intent(this, SendingCmntToAdminActivity::class.java)
+            val intent = Intent(this, SendingCmntToAdFromSPActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowSendCmntToAdFromSp.setOnClickListener {
+            val intent = Intent(this, SendingCmntToAdFromSPActivity::class.java)
             startActivity(intent)
         }
 
         binding.tvSendCmntToTeacher.setOnClickListener {
+            val intent = Intent(this, SendingCmntActivity::class.java)
+            intent.putExtra("targetRole", getString(R.string.teacher))
+            startActivity(intent)
+        }
+
+        binding.arrowSendCmntToTFromSp.setOnClickListener {
             val intent = Intent(this, SendingCmntActivity::class.java)
             intent.putExtra("targetRole", getString(R.string.teacher))
             startActivity(intent)
@@ -53,7 +64,17 @@ class SPCmntMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowCheckReceivedCmntSp.setOnClickListener {
+            val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvCheckSentCmntSp.setOnClickListener {
+            val intent = Intent(this, SentCmntListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowCheckSentCmntSp.setOnClickListener {
             val intent = Intent(this, SentCmntListActivity::class.java)
             startActivity(intent)
         }

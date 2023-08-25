@@ -41,7 +41,17 @@ class TeacherCmntMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowCheckReceivedCmntT.setOnClickListener {
+            val intent  = Intent(this, ReceivedCmntListAcitivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvSentCmntTeacher.setOnClickListener {
+            val intent = Intent(this, SentCmntListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowCheckSentCmntT.setOnClickListener {
             val intent = Intent(this, SentCmntListActivity::class.java)
             startActivity(intent)
         }
@@ -49,6 +59,22 @@ class TeacherCmntMainActivity : AppCompatActivity() {
         binding.tvSendCmntToSp.setOnClickListener {
             val intent = Intent(this, SendingCmntActivity::class.java)
             intent.putExtra("targetRole", getString(R.string.student))
+            startActivity(intent)
+        }
+
+        binding.arrowSendCmntToSpFromT.setOnClickListener {
+            val intent = Intent(this, SendingCmntActivity::class.java)
+            intent.putExtra("targetRole", getString(R.string.student))
+            startActivity(intent)
+        }
+
+        binding.tvSendCmntToAdFromT.setOnClickListener {
+            val intent = Intent(this, SendingCmntToAdFromTActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowSendCmntToAdFromT.setOnClickListener {
+            val intent = Intent(this, SendingCmntToAdFromTActivity::class.java)
             startActivity(intent)
         }
     }

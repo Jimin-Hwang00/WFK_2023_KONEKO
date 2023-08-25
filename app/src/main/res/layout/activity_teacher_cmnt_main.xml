@@ -76,7 +76,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
         <ImageView
-            android:id="@+id/userCreateBt6"
+            android:id="@+id/arrow_check_received_cmnt_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="555dp"
@@ -85,18 +85,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <ImageView
             android:id="@+id/imageView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="375dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="434dp"
             android:src="@drawable/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -115,10 +109,44 @@
             app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
         <ImageView
-            android:id="@+id/userCreateBt4"
+            android:id="@+id/arrow_check_sent_cmnt_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="380dp"
+            android:layout_marginTop="439dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/arrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="317dp"
+            android:src="@drawable/name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_send_cmnt_to_ad_from_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="To Administrator"
+            android:textColor="#3F51B5"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView18"
+            app:layout_constraintStart_toEndOf="@+id/imageView18"
+            app:layout_constraintTop_toTopOf="@+id/imageView18" />
+
+        <ImageView
+            android:id="@+id/arrow_send_cmnt_to_ad_from_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="321dp"
             android:layout_marginEnd="50dp"
             android:src="@drawable/arrow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -142,8 +170,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView5"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="@+id/imageView5"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -156,7 +183,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/userCreateBt3"
+            android:id="@+id/arrow_send_cmnt_to_sp_from_t"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="210dp"
