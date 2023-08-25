@@ -10,6 +10,7 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
+        android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="Subject"
@@ -21,10 +22,14 @@
 
     <TextView
         android:id="@+id/tv_sending_cmnt_item_name"
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="15dp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:ellipsize="end"
         android:text="Name"
         android:textSize="15dp"
         android:textStyle="bold"

@@ -34,7 +34,7 @@
             app:srcCompat="@drawable/name" />
 
         <ImageView
-            android:id="@+id/userCreateBt5"
+            android:id="@+id/arrow_check_sent_cmnt_sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="605dp"
@@ -115,7 +115,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView10" />
 
         <ImageView
-            android:id="@+id/userCreateBt6"
+            android:id="@+id/arrow_check_received_cmnt_sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="465dp"
@@ -155,7 +155,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/userCreateBt3"
+            android:id="@+id/arrow_send_cmnt_to_ad_from_sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="185dp"
@@ -194,7 +194,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
         <ImageView
-            android:id="@+id/userCreateBt4"
+            android:id="@+id/arrow_send_cmnt_to_t_from_sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="315dp"

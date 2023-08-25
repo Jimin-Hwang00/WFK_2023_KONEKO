@@ -66,6 +66,8 @@
         android:layout_width="390dp"
         android:layout_height="100dp"
         android:layout_marginTop="180dp"
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -100,6 +102,8 @@
         android:layout_width="410dp"
         android:layout_height="300dp"
         android:layout_marginTop="16dp"
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv_submit_hw_list">
 
