@@ -27,10 +27,14 @@
 
     <TextView
         android:id="@+id/eventViewTv"
-        android:layout_width="346dp"
-        android:layout_height="49dp"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="4dp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="event"

@@ -59,7 +59,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.1.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     // CalenderView
-    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+    implementation 'com.github.prolificinteractive:material-calendarview:1.6.1'
 
     implementation 'com.google.firebase:firebase-storage-ktx:20.2.1'
 

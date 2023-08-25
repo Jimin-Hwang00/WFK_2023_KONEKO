@@ -41,6 +41,7 @@ import nepal.swopnasansar.data.RvClassListDto
 import nepal.swopnasansar.data.SubjectDto
 import nepal.swopnasansar.data.TeacherDto
 import nepal.swopnasansar.databinding.ActivityCheckEventBinding
+import java.util.Calendar
 import java.util.Collections
 import java.util.Date
 import java.util.GregorianCalendar
@@ -61,7 +62,7 @@ class CheckEventActivity : AppCompatActivity() {
         val adminCalList = ArrayList<AdminCalDto>()
 
         binding.calendarView.setSelectedDate(CalendarDay.today())
-        binding.calendarView.addDecorator(TodayDecorator())
+        binding.calendarView.addDecorators(TodayDecorator(), SaturdayDecorator())
 
         adapter = AdminCalAdapter(adminCalList, this)
         binding.rvEvent.adapter = adapter
@@ -194,6 +195,20 @@ class CheckEventActivity : AppCompatActivity() {
 
         override fun decorate(view: DayViewFacade?) {
             view?.addSpan(DotSpan(8F, Color.parseColor("#FF0000")))
+        }
+    }
+
+    class SaturdayDecorator: DayViewDecorator {
+
+        private val calendar = Calendar.getInstance()
+
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            day?.copyTo(calendar)
+            val saturday = calendar.get(Calendar.DAY_OF_WEEK)
+            return saturday == Calendar.SATURDAY
+        }
+        override fun decorate(view: DayViewFacade?) {
+            view?.addSpan(object: ForegroundColorSpan(Color.RED){})
         }
     }
 }

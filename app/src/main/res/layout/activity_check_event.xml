@@ -70,7 +70,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:mcv_selectionColor="#DED2FF"
-        app:mcv_showOtherDates="all" >
+        app:mcv_showOtherDates="defaults" >
     </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
     <ImageView
