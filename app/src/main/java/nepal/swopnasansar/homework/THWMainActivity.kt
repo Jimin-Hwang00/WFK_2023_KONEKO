@@ -18,12 +18,27 @@ class THWMainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.arrowUploadHw.setOnClickListener {
+            val intent = Intent(this@THWMainActivity, TUploadHWActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvMyUploadedHw.setOnClickListener {
             val intent = Intent(this@THWMainActivity, TCheckUploadedHWActivity::class.java)
             startActivity(intent)
         }
 
+        binding.arrowUploadedHw.setOnClickListener {
+            val intent = Intent(this@THWMainActivity, TCheckUploadedHWActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.tvCheckHw.setOnClickListener {
+            val intent = Intent(this@THWMainActivity, TCheckSubmittedHWActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.arrowCheckStudentsHw.setOnClickListener {
             val intent = Intent(this@THWMainActivity, TCheckSubmittedHWActivity::class.java)
             startActivity(intent)
         }

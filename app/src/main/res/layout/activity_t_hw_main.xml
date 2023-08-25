@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEBFC"
-    tools:context=".homework.TeacherHWMainActivity">
+    tools:context=".homework.THWMainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/userCreateBt7"
+            android:id="@+id/arrow_uploaded_hw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="410dp"
@@ -79,6 +79,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/arrow_check_students_hw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="510dp"
@@ -129,7 +130,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/userCreateBt6"
+            android:id="@+id/arrow_upload_hw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="313dp"
