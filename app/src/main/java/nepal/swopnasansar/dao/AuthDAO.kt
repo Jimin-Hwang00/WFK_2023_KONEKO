@@ -59,4 +59,16 @@ class AuthDAO {
             return false
         }
     }
+
+    suspend fun resetPassword(newPw: String): Boolean {
+        val user = getUser()
+
+        return try {
+            user?.updatePassword(newPw)?.await()
+            true
+        } catch (exception: Exception) {
+            Log.e(TAG, "Fail to reset password.", exception)
+            false
+        }
+    }
 }
