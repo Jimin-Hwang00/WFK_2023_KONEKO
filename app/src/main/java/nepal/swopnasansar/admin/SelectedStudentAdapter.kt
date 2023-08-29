@@ -70,6 +70,7 @@ class SelectedStudentAdapter (private val activity: Activity, val studentList : 
         cbListener: onCheckBoxClickListener?
     ) : RecyclerView.ViewHolder(itemBinding.root) {
         val name = itemBinding.studentName
+        val email = itemBinding.studentEmail
         val deleteCheckbox = itemBinding.deleteCheckBox
 
         init {
@@ -116,6 +117,7 @@ class SelectedStudentAdapter (private val activity: Activity, val studentList : 
         }
         if(activity is SelectStudentActivity){
             holder.deleteCheckbox.visibility = View.VISIBLE
+            holder.email.visibility = View.INVISIBLE
         }
         if(activity is EditStudentActivity){
             holder.deleteCheckbox.visibility = View.VISIBLE

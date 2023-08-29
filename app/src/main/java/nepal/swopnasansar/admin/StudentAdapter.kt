@@ -87,6 +87,7 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
         cbListener: onCheckBoxClickListener?
     ) : RecyclerView.ViewHolder(itemBinding.root) {
         val name = itemBinding.studentName
+        val email = itemBinding.studentEmail
         val deleteCheckbox = itemBinding.deleteCheckBox
 
         init {
@@ -111,9 +112,9 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
     }
 
     override fun onBindViewHolder(holder: StudentAdapter.StudentViewHolder, position: Int)  {
-        val studentsToRemove = mutableListOf<StudentDto>()
 
         holder.name.text = studentList[position].name
+        holder.email.text = studentList[position].email
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
         holder.deleteCheckbox.isChecked = false
 

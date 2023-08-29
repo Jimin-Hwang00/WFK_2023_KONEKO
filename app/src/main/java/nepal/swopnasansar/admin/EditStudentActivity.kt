@@ -21,6 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.AccountantDto
 import nepal.swopnasansar.data.AdminCalDto
@@ -62,66 +63,42 @@ class EditStudentActivity : AppCompatActivity() {
 
         binding.addStnBt.setOnClickListener {
             firestore = FirebaseFirestore.getInstance()
-            var students : String = ""
+            var student : String = ""
 
             for(stn in checkedList){
-                students += "${stn.name} "
+                student += "${stn.name}"
             }
 
-            if(checkedList.size != 0) {
+            if(checkedList.size == 1) {
                 AlertDialog.Builder(this@EditStudentActivity).run {
                     val intent = Intent(this@EditStudentActivity, EditStudentActivity::class.java)
                     setTitle("Accept Student(s)")
-                    setMessage("Are you sure to accept student(s) \"${students}\"?")
+                    setMessage("Are you sure to accept student(s) \"${student}\"?")
                     setNegativeButton("No", null)
                     setCancelable(false)
                     setPositiveButton("Yes", object : DialogInterface.OnClickListener {
                         override fun onClick(p0: DialogInterface?, p1: Int) {
                             CoroutineScope(Dispatchers.IO).launch {
                                 for(stn in checkedList){
-                                    try {
-                                        //auth 등록
-                                        val authResult = auth.createUserWithEmailAndPassword(stn.email, stn.email.substringBefore("@")).await()
-                                        val user: FirebaseUser? = authResult.user
-                                        var uid = user?.uid ?: ""
-                                        println("User UID: $uid")
+                                    //auth 등록
+                                    Log.d(TAG, "auth 등록완료")
+                                    val authResult = auth.createUserWithEmailAndPassword(stn.email, stn.email.substringBefore("@")).await()
+                                    val user: FirebaseUser? = authResult.user
+                                    var uid = user?.uid ?: ""
+                                    println("User UID: $uid")
 
-                                        if(!uid.equals("")){
-                                            // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                            db.collection("student").document(uid)
-                                                .set(StudentDto(uid, stn.name, stn.email, "", false))
-                                                .addOnSuccessListener {
-                                                    Toast.makeText(
-                                                        this@EditStudentActivity,
-                                                        "Accept completed",
-                                                        Toast.LENGTH_SHORT
-                                                    )
-                                                        .show()
-                                                    startActivity(intent)
-                                                }
-                                                .addOnFailureListener { exception ->
-                                                    println("Error creating document: $exception")
-                                                }
-                                            adapter.onUpdateList()
-                                            adapter.notifyDataSetChanged()
-                                        }
-
-                                    } catch (e: FirebaseAuthUserCollisionException) {
-                                        // 이미 등록된 사용자인 경우 처리
-                                        Toast.makeText(this@EditStudentActivity,
-                                            "The email address is already registered.", Toast.LENGTH_LONG).show()
-                                        println("Registration Error: ${e.message}")
-                                    } catch (e: FirebaseAuthInvalidCredentialsException) {
-                                        // 유효하지 않은 이메일 값인 경우 처리
-                                        Toast.makeText(this@EditStudentActivity,
-                                            "The email address is invalid.", Toast.LENGTH_LONG).show()
-                                        println("Registration Error: ${e.message}")
-                                    } catch (e: Exception) {
-                                        // 기타 등록 오류 처리
-                                        Toast.makeText(this@EditStudentActivity,
-                                            "Please try again.", Toast.LENGTH_LONG).show()
-                                        println("Registration Error: ${e.message}")
+                                    if(!uid.equals("")){
+                                        // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
+                                        db.collection("student").document(uid)
+                                            .set(StudentDto(uid, stn.name, stn.email, "", false))
+                                            .addOnSuccessListener {
+                                                Log.d(TAG, "accept Teacher${stn.email}")
+                                            }
+                                            .addOnFailureListener { exception ->
+                                                println("Error creating document: $exception")
+                                            }
                                     }
+
 
                                     //temp에서 삭제
                                     db.collection("temp").document(stn.email).delete()
@@ -132,23 +109,32 @@ class EditStudentActivity : AppCompatActivity() {
                                         .addOnFailureListener { e ->
                                             // 삭제 중에 발생한 오류 처리
                                             Toast.makeText(this@EditStudentActivity, "delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                                        }.await()
+                                        }
                                 }
                                 for(pos in checkedPos){
                                     studentList.removeAt(pos)
                                     adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
                                 }
-                                adapter.onUpdateList()
-                                adapter.notifyDataSetChanged()
-                                checkedList.clear()
-                                checkedPos.clear()
+                                withContext(Dispatchers.Main) {
+                                    adapter.onUpdateList()
+                                    adapter.notifyDataSetChanged()
+                                }
                             }
+                            Toast.makeText(
+                                this@EditStudentActivity,
+                                "Accept completed",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+
+                            checkedList.clear()
+                            checkedPos.clear()
                         }
                     })
                     show()
                 }
             } else{
-                Toast.makeText(this@EditStudentActivity, "Please check the student(s)", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@EditStudentActivity, "Please check one person at a time", Toast.LENGTH_LONG).show()
             }
         }
 

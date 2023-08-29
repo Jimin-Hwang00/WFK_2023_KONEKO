@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import nepal.swopnasansar.R
 import nepal.swopnasansar.data.AccountantDto
 import nepal.swopnasansar.data.ClassDto
@@ -64,103 +65,78 @@ class EditAccountantActivity : AppCompatActivity() {
 
         binding.addAccountantBt.setOnClickListener {
             firestore = FirebaseFirestore.getInstance()
-            val name = binding.nameEt.text.toString()
-            val email = binding.emailEt.text.toString()
-            val tempList = ArrayList<TempDto>()
-            val teacherList = ArrayList<TeacherDto>()
-            val accountList = ArrayList<AccountantDto>()
-            val studentList = ArrayList<StudentDto>()
+            var accountant : String = ""
 
-            AlertDialog.Builder(this@EditAccountantActivity).run {
-                val intent = Intent(this@EditAccountantActivity, EditAccountantActivity::class.java)
-                setTitle("Add Accountant")
-                setMessage("Are you sure to add Accountant \"${name}\"?")
-                setNegativeButton("No", null)
-                setCancelable(false)
-                setPositiveButton("Yes", object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        //이미 존재하는 이메일 확인
-                        CoroutineScope(Dispatchers.IO).launch {
-                            try {
-                                tempList.clear()
+            for(ac in checkedList){
+                accountant += "${ac.name}"
+            }
 
-                                val tempQuerySnapshot = firestore?.collection("temp")?.whereEqualTo("email", email)?.get()?.await()
-                                tempList.addAll(tempQuerySnapshot?.toObjects(TempDto::class.java) ?: emptyList())
+            if(checkedList.size == 1) {
+                AlertDialog.Builder(this@EditAccountantActivity).run {
+                    val intent = Intent(this@EditAccountantActivity, EditAccountantActivity::class.java)
+                    setTitle("Accept Accountant(s)")
+                    setMessage("Are you sure to accept Accountant(s) \"${accountant}\"?")
+                    setNegativeButton("No", null)
+                    setCancelable(false)
+                    setPositiveButton("Yes", object : DialogInterface.OnClickListener {
+                        override fun onClick(p0: DialogInterface?, p1: Int) {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                for(ac in checkedList){
+                                    //auth 등록
+                                    Log.d(TAG, "auth 등록완료")
+                                    val authResult = auth.createUserWithEmailAndPassword(ac.email, ac.email.substringBefore("@")).await()
+                                    val user: FirebaseUser? = authResult.user
+                                    var uid = user?.uid ?: ""
+                                    println("User UID: $uid")
 
-                                val teacherQuerySnapshot = firestore?.collection("teacher")?.whereEqualTo("email", email)?.get()?.await()
-                                teacherList.addAll(teacherQuerySnapshot?.toObjects(TeacherDto::class.java) ?: emptyList())
-
-                                val studentQuerySnapshot = firestore?.collection("student")?.whereEqualTo("email", email)?.get()?.await()
-                                studentList.addAll(studentQuerySnapshot?.toObjects(StudentDto::class.java) ?: emptyList())
-
-                                val accountantQuerySnapshot = firestore?.collection("accountant")?.whereEqualTo("email", email)?.get()?.await()
-                                accountList.addAll(accountantQuerySnapshot?.toObjects(AccountantDto::class.java) ?: emptyList())
-
-                                //겹치는 이메일이 없을 경우 사용
-                                if(tempList.size == 0 && teacherList.size == 0 && accountList.size == 0 && studentList.size == 0){
-                                    // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
-                                    if(isEmailValid(email)){
-                                        Firebase.auth.fetchSignInMethodsForEmail(email)
-                                            .addOnCompleteListener { task ->
-                                                if (task.isSuccessful) {
-                                                    val signInMethods = task.result?.signInMethods
-                                                    if (signInMethods.isNullOrEmpty()) {
-                                                        // 해당 이메일로 등록된 사용자가 없음
-                                                        db.collection("temp").document(email)
-                                                            .set(TempDto(email, name, "accountant"))
-                                                            .addOnSuccessListener {
-                                                                Toast.makeText(
-                                                                    this@EditAccountantActivity,
-                                                                    "Save completed",
-                                                                    Toast.LENGTH_SHORT
-                                                                )
-                                                                    .show()
-                                                                startActivity(intent)
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                println("Error creating document: $exception")
-                                                            }
-                                                        binding.nameEt.setText("")
-                                                        binding.emailEt.setText("")
-                                                        adapter.onUpdateList()
-                                                        adapter.notifyDataSetChanged()
-
-                                                        Log.d(TAG, "해당 이메일로 등록된 사용자가 없습니다.")
-                                                    } else {
-                                                        // 해당 이메일로 이미 사용자가 등록됨
-                                                        Log.d(TAG, "해당 이메일로 이미 사용자가 등록되었습니다.")
-                                                    }
-                                                } else {
-                                                    Log.e(TAG, "사용자 조회 실패:", task.exception)
-                                                }
+                                    if(!uid.equals("")){
+                                        // 문서 ID를 저장한 뒤 문서에 데이터를 업데이트합니다.
+                                        db.collection("accountant").document(uid)
+                                            .set(AccountantDto(uid, ac.name, ac.email))
+                                            .addOnSuccessListener {
+                                                Log.d(TAG, "accept Teacher${ac.email}")
                                             }
-                                    }else{
-                                        runOnUiThread {
-                                            Toast.makeText(
-                                                this@EditAccountantActivity,
-                                                "Invalid email format",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                        }
+                                            .addOnFailureListener { exception ->
+                                                println("Error creating document: $exception")
+                                            }
                                     }
-                                }else{
-                                    runOnUiThread {
-                                        Toast.makeText(
-                                            this@EditAccountantActivity,
-                                            "This email already exists",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-                                }
 
-                            } catch (e: Exception) {
-                                // 오류 처리
-                                println("Error: ${e.message}")
+
+                                    //temp에서 삭제
+                                    db.collection("temp").document(ac.email).delete()
+                                        .addOnSuccessListener {
+                                            adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
+                                            Log.d(TAG, "accept teacher(s)")
+                                        }
+                                        .addOnFailureListener { e ->
+                                            // 삭제 중에 발생한 오류 처리
+                                            Toast.makeText(this@EditAccountantActivity, "delete failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                                for(pos in checkedPos){
+                                    accountantList.removeAt(pos)
+                                    adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
+                                }
+                                withContext(Dispatchers.Main) {
+                                    adapter.onUpdateList()
+                                    adapter.notifyDataSetChanged()
+                                }
                             }
+                            Toast.makeText(
+                                this@EditAccountantActivity,
+                                "Accept completed",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+
+                            checkedList.clear()
+                            checkedPos.clear()
                         }
-                    }
-                })
-                show()
+                    })
+                    show()
+                }
+            } else{
+                Toast.makeText(this@EditAccountantActivity, "Please check one person at a time", Toast.LENGTH_LONG).show()
             }
         }
 

@@ -84,6 +84,7 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
         cbListener: onCheckBoxClickListener?
     ) : RecyclerView.ViewHolder(itemBinding.root) {
         val name = itemBinding.nameTv
+        val email = itemBinding.emailTv
         val deleteCheckbox = itemBinding.deleteCheckBox
 
         init {
@@ -108,9 +109,8 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
     }
 
     override fun onBindViewHolder(holder: AccountantAdapter.AccountantViewHolder, position: Int)  {
-        val accountantsToRemove = mutableListOf<AccountantDto>()
-
         holder.name.text = accountantList[position].name
+        holder.email.text = accountantList[position].email
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
         holder.deleteCheckbox.isChecked = false
 
