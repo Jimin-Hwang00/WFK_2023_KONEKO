@@ -136,23 +136,9 @@ class LoginActivity: AppCompatActivity() {
             setTitle(getString(R.string.set_new_password_title))
             setMessage(getString(R.string.set_new_password_message))
             setPositiveButton("YES") { dialog, which ->
-                lifecycleScope.launch {
-                    val sendEmailResult = withContext(Dispatchers.IO) {
-                        authDao.sendPasswordResetEmail(email)
-                    }
-
-                    if (sendEmailResult) {
-                        withContext(Main) {
-                            Toast.makeText(applicationContext, "An email has been sent to update your password. Please check the email.", Toast.LENGTH_LONG).show()
-                        }
-                    } else {
-                        withContext(Main) {
-                            Toast.makeText(applicationContext, "Fail to send email. Try again.", Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                    changePage()
-                }
+                val intent = Intent(this@LoginActivity, ResetPasswordActivity::class.java)
+                intent.putExtra("role", role)
+                startActivity(intent)
             }
             setNegativeButton("NO") { dialog, which ->
                 dialog.dismiss()
