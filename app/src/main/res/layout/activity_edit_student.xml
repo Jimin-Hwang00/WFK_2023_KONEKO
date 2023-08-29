@@ -46,24 +46,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/emailEt"
-        android:layout_width="305dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="472dp"
-        android:layout_marginEnd="24dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStudentList"
-        android:layout_width="331dp"
-        android:layout_height="197dp"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="160dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,33 +61,6 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <EditText
-        android:id="@+id/nameEt"
-        android:layout_width="306dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="388dp"
-        android:layout_marginEnd="28dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="484dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="EMAIL"
-        android:textSize="17dp"
-        android:textColor="#3F51B5"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/addStnBt"
         android:layout_width="150dp"
@@ -109,7 +68,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginTop="576dp"
         android:background="@drawable/button_3"
-        android:text="add"
+        android:text="Accept"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -127,24 +86,10 @@
         app:layout_constraintStart_toEndOf="@+id/addStnBt"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="400dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="NAME"
-        android:textSize="17dp"
-        android:textColor="#3F51B5"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <View
         android:id="@+id/view2"
         android:layout_width="381dp"
-        android:layout_height="223dp"
+        android:layout_height="420dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_1"
         app:layout_constraintEnd_toEndOf="parent"
