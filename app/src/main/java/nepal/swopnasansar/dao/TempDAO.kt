@@ -12,6 +12,16 @@ class TempDAO {
     private val db = Firebase.firestore
     private val tempRef = db.collection("temp")
 
+    suspend fun checkTempByEmail(email: String): Boolean {
+        return try {
+            val querySnapshot = tempRef.whereEqualTo("email", email).get().await()
+            !querySnapshot.isEmpty
+        } catch (e: Exception) {
+            Log.e(TAG, "check account error", e)
+            return false
+        }
+    }
+
     suspend fun getTempByEmail(email: String, role: String): ArrayList<Temp>? {
         var result: ArrayList<Temp>? = ArrayList()
 
@@ -48,12 +58,12 @@ class TempDAO {
         }
     }
 
-    suspend fun recreateTemp(temp: Temp): Boolean {
+    suspend fun createTemp(temp: Temp): Boolean {
         return try {
             tempRef.document(temp.email).set(temp).await()
             true
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to recreate temp data : ${temp.email}", e)
+            Log.e(TAG, "Fail to create temp data : ${temp.email}", e)
             false
         }
     }

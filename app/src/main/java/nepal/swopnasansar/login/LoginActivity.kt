@@ -44,6 +44,13 @@ class LoginActivity: AppCompatActivity() {
 
             loginProcess(email, pw)
         }
+
+        binding.btnGoToSignUp.setOnClickListener {
+            val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+            intent.putExtra("role", role)
+            Log.d("LoginActivity", "role : ${role}")
+            startActivity(intent)
+        }
     }
 
     fun loginProcess(email: String, pw: String) {
@@ -80,76 +87,8 @@ class LoginActivity: AppCompatActivity() {
 
                 if (temp != null) {       // temp에 해당 계정이 있는 경우
                     if (temp.size == 1) {
-                        if (checkIsItFirstPW(email, pw)) {      // 로그인 성공
-                            val registerResult = withContext(Dispatchers.IO) {
-                                authDao.registerUser(email, pw)
-                            }
-                            if (registerResult) {
-                                val removeTempResult = withContext(Dispatchers.IO) {
-                                    tempDao.removeTempData(temp[0].email)
-                                }
-
-                                if (removeTempResult) {
-                                    val uid = authDao.getUid()
-
-                                    if (uid != null) {
-                                        val createUserDBResult = withContext(Dispatchers.IO) {
-                                            if (role.equals(getString(R.string.accountant))) {
-                                                accountantDao.createAccountantByUid(uid, temp[0])
-                                            } else if (role.equals(getString(R.string.teacher))) {
-                                                teacherDao.createTeacherByUid(uid, temp[0])
-                                            } else {
-                                                studentDao.createStudentByUid(uid, temp[0])
-                                            }
-                                        }
-
-                                        if (createUserDBResult) {
-                                            saveRoleForAutoLogin(role)          // 자동 로그인을 위한 role 저장
-                                            askResetPWByDialog(email)
-                                        } else {
-                                            val recreateTempResult = withContext(Dispatchers.IO) {
-                                                tempDao.recreateTemp(temp[0])
-                                            }
-
-                                            if (!recreateTempResult) {
-                                                Toast.makeText(this@LoginActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
-                                                binding.pbLogin.visibility = View.GONE
-                                            } else {
-                                                Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
-                                                binding.pbLogin.visibility = View.GONE
-                                            }
-
-                                            authDao.logout()
-                                        }
-                                    } else {
-                                        val recreateTempResult = withContext(Dispatchers.IO) {
-                                            tempDao.recreateTemp(temp[0])
-                                        }
-
-                                        if (!recreateTempResult) {
-                                            Toast.makeText(this@LoginActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
-                                            Log.d("LoginActivity", "fail to recreate temp.")
-                                            binding.pbLogin.visibility = View.GONE
-                                        } else {
-                                            Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
-                                            binding.pbLogin.visibility = View.GONE
-                                        }
-
-                                        authDao.logout()
-                                    }
-                                } else {
-                                    Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
-                                    authDao.logout()
-                                    binding.pbLogin.visibility = View.GONE
-                                }
-                            } else {
-                                Toast.makeText(this@LoginActivity, "An error has occurred. Please log in again.", Toast.LENGTH_SHORT).show()
-                                binding.pbLogin.visibility = View.GONE
-                            }
-                        } else {
-                            Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT).show()
-                            binding.pbLogin.visibility = View.GONE
-                        }
+                        Toast.makeText(this@LoginActivity, "The administrator has not accepted yet.", Toast.LENGTH_SHORT).show()
+                        binding.pbLogin.visibility = View.GONE
                     } else if (temp.size == 0){
                         Toast.makeText(this@LoginActivity, "Fail to login.", Toast.LENGTH_SHORT).show()
                         binding.pbLogin.visibility = View.GONE
