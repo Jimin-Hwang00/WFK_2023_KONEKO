@@ -63,10 +63,8 @@ class UserCheckEventActivity : AppCompatActivity() {
         val adminCalList = ArrayList<AdminCalDto>()
 
         binding.calendarView.setSelectedDate(CalendarDay.today())
-        binding.calendarView.addDecorators(
-            CheckEventActivity.TodayDecorator(),
-            CheckEventActivity.SaturdayDecorator()
-        )
+        binding.calendarView.addDecorators(TodayDecorator(), SaturdayDecorator())
+
 
         adapter = AdminCalAdapter(adminCalList, this)
         binding.rvEvent.adapter = adapter
@@ -77,7 +75,7 @@ class UserCheckEventActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 val tempList = onMonthChanged(
                     binding.calendarView.currentDate.year.toString(),
-                    binding.calendarView.currentDate.month.toString(),
+                    (binding.calendarView.currentDate.month + 1).toString(),
                     adminCalList
                 )
 
@@ -91,8 +89,7 @@ class UserCheckEventActivity : AppCompatActivity() {
         }
 
         binding.calendarView.setOnMonthChangedListener { widget, date ->
-            val TempList = onMonthChanged(date.year.toString(), date.month.toString(), adminCalList)
-
+            val TempList = onMonthChanged(date.year.toString(), (date.month + 1).toString(), adminCalList)
             adapter.updateList(TempList)
         }
 
@@ -112,7 +109,7 @@ class UserCheckEventActivity : AppCompatActivity() {
                 val eventYear = eventParts[0].toInt()
                 val eventMonth = eventParts[1].toInt()
                 val eventDay = eventParts[2].toInt()
-                calendarDays.add(CalendarDay.from(eventYear, eventMonth, eventDay))
+                calendarDays.add(CalendarDay.from(eventYear, (eventMonth - 1), eventDay))
             }
             val eventYearMonth = event.date.substringBeforeLast("-")
             if(eventYearMonth == pageYearMonth){
@@ -120,7 +117,6 @@ class UserCheckEventActivity : AppCompatActivity() {
                 TempList.add(event)
             }
         }
-        Log.d(TAG, "${TempList.size}")
         return TempList
     }
 
@@ -156,6 +152,7 @@ class UserCheckEventActivity : AppCompatActivity() {
             view?.addSpan(DotSpan(8F, Color.parseColor("#FF0000")))
         }
     }
+
     class SaturdayDecorator: DayViewDecorator {
 
         private val calendar = Calendar.getInstance()

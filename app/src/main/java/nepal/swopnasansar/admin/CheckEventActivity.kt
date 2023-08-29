@@ -64,6 +64,7 @@ class CheckEventActivity : AppCompatActivity() {
         binding.calendarView.setSelectedDate(CalendarDay.today())
         binding.calendarView.addDecorators(TodayDecorator(), SaturdayDecorator())
 
+
         adapter = AdminCalAdapter(adminCalList, this)
         binding.rvEvent.adapter = adapter
 
@@ -73,7 +74,7 @@ class CheckEventActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 val tempList = onMonthChanged(
                     binding.calendarView.currentDate.year.toString(),
-                    binding.calendarView.currentDate.month.toString(),
+                    (binding.calendarView.currentDate.month + 1).toString(),
                     adminCalList
                 )
 
@@ -87,7 +88,7 @@ class CheckEventActivity : AppCompatActivity() {
         }
 
         binding.calendarView.setOnMonthChangedListener { widget, date ->
-            val TempList = onMonthChanged(date.year.toString(), date.month.toString(), adminCalList)
+            val TempList = onMonthChanged(date.year.toString(), (date.month + 1).toString(), adminCalList)
             adapter.updateList(TempList)
         }
 
@@ -154,7 +155,7 @@ class CheckEventActivity : AppCompatActivity() {
                 val eventYear = eventParts[0].toInt()
                 val eventMonth = eventParts[1].toInt()
                 val eventDay = eventParts[2].toInt()
-                calendarDays.add(CalendarDay.from(eventYear, eventMonth, eventDay))
+                calendarDays.add(CalendarDay.from(eventYear, (eventMonth - 1), eventDay))
             }
             val eventYearMonth = event.date.substringBeforeLast("-")
             if(eventYearMonth == pageYearMonth){
