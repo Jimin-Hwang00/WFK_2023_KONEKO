@@ -10,12 +10,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.accountant.SPCheckTuitionActivity
-import nepal.swopnasansar.admin.CheckEventActivity
 import nepal.swopnasansar.admin.UserCheckEventActivity
 import nepal.swopnasansar.attendance.ParentAttendanceActivity
 import nepal.swopnasansar.comment.SPCmntMainActivity
@@ -39,6 +45,8 @@ class SPMainActivity : AppCompatActivity() {
         binding = ActivitySpMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.d("SPMainActivity", "uid : ${uid}")
+
         if (uid == null) {
             val intent = Intent(this, CheckRoleActivity::class.java)
             startActivity(intent)
@@ -47,7 +55,7 @@ class SPMainActivity : AppCompatActivity() {
                 binding.pbSpMain.visibility = View.VISIBLE
 
                 val student = withContext(Dispatchers.IO) {
-                    studentDao.getStudentByKey(uid!!)
+                    studentDao.getStudentByKey(uid)
                 }
 
                 if (student != null) {
@@ -134,35 +142,70 @@ class SPMainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.item_sign_out -> {
-                val dialog = SignoutDialog(this)
-                dialog.setOnClickListener(object: SignoutDialog.ButtonClickListener {
+                val dialog = SignOutDialog(this)
+                dialog.setOnClickListener(object: SignOutDialog.ButtonClickListener {
                     override fun onClicked(email: String, pw: String) {
-                        val user = authDao.getUser()
+                        if (email.isNotBlank() || pw.isNotBlank())  {
+                            val user = authDao.getUser()
 
-                        if (user != null) {
-                            val credential = EmailAuthProvider.getCredential(email, pw)
-                            user.reauthenticate(credential)
-                                .addOnSuccessListener {
-                                    user.delete()
-
+                            if (user != null) {
+                                try {
                                     lifecycleScope.launch {
-                                        val deleteDBResult = withContext(Dispatchers.IO) {
-                                            studentDao.removeStudentByKey(uid!!)
-                                        }
+                                        binding.pbSpMain.visibility = View.VISIBLE
 
-                                        if (deleteDBResult) {
-                                            Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
-                                            val intent = Intent(this@SPMainActivity, CheckRoleActivity::class.java)
-                                            startActivity(intent)
-                                        }
+                                        val credential = EmailAuthProvider.getCredential(email, pw)
+                                        user.reauthenticate(credential)
+                                            .addOnSuccessListener {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    val deleteDBResult = withContext(Dispatchers.IO) {
+                                                        studentDao.removeStudentByKey(uid!!)
+                                                    }
+
+                                                    withContext(Main) {
+                                                        if (deleteDBResult) {
+                                                            user.delete()
+                                                                .addOnSuccessListener {
+                                                                    Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
+                                                                    binding.pbSpMain.visibility = View.GONE
+                                                                    val intent = Intent(this@SPMainActivity, CheckRoleActivity::class.java)
+                                                                    startActivity(intent)
+                                                                }
+                                                                .addOnFailureListener {
+                                                                    Toast.makeText(this@SPMainActivity, "An error has occurred. Please contact administrator", Toast.LENGTH_LONG).show()
+                                                                    binding.pbSpMain.visibility = View.GONE
+                                                                }
+                                                        } else {
+                                                            Toast.makeText(this@SPMainActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
+                                                            binding.pbSpMain.visibility = View.GONE
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(this@SPMainActivity, "Email or password is incorrect. Please check again.", Toast.LENGTH_LONG).show()
+                                                binding.pbSpMain.visibility = View.GONE
+                                            }
+
+
                                     }
+                                } catch (e: FirebaseAuthInvalidCredentialsException) {
+                                    Toast.makeText(this@SPMainActivity, "Email or password is incorrect. Please check again.", Toast.LENGTH_LONG).show()
+                                    binding.pbSpMain.visibility = View.GONE
+                                } catch (e: FirebaseNetworkException) {
+                                    Toast.makeText(this@SPMainActivity, "Network issue has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbSpMain.visibility = View.GONE
+                                } catch (e: FirebaseException) {
+                                    Toast.makeText(this@SPMainActivity, "A DB service error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbSpMain.visibility = View.GONE
+                                } catch (e: FirebaseAuthInvalidUserException) {
+                                    Toast.makeText(this@SPMainActivity, "User does not exist.", Toast.LENGTH_LONG).show()
+                                    binding.pbSpMain.visibility = View.GONE
+                                } catch (e: Exception) {
+                                    Toast.makeText(this@SPMainActivity, "An error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbSpMain.visibility = View.GONE
                                 }
-                                .addOnFailureListener {
-                                    Toast.makeText(this@SPMainActivity, "Fail to delete your account. Try again.", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this@SPMainActivity, "Authentication has failed.", Toast.LENGTH_SHORT).show()
-                                }
+                            }
                         }
                     }
                 })
@@ -172,6 +215,62 @@ class SPMainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    suspend private fun signOutProcess(email: String, pw: String) {
+        val user = authDao.getUser()
+
+        if (user != null) {
+            try {
+                lifecycleScope.launch {
+                    binding.pbSpMain.visibility = View.VISIBLE
+
+                    val deleteDBResult = withContext(Dispatchers.IO) {
+                        studentDao.removeStudentByKey(uid!!)
+                    }
+
+                    if (deleteDBResult) {
+                        val credential = EmailAuthProvider.getCredential(email, pw)
+                        user.reauthenticate(credential)
+                            .addOnSuccessListener {
+                                user.delete()
+                                    .addOnSuccessListener {
+                                        Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
+                                        binding.pbSpMain.visibility = View.GONE
+                                        val intent = Intent(this@SPMainActivity, CheckRoleActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(this@SPMainActivity, "An error has occurred. Please contact administrator", Toast.LENGTH_SHORT).show()
+                                        binding.pbSpMain.visibility = View.GONE
+                                    }
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this@SPMainActivity, "Fail to delete your account. Try again.", Toast.LENGTH_SHORT).show()
+                                binding.pbSpMain.visibility = View.GONE
+                            }
+                    } else {
+                        Toast.makeText(this@SPMainActivity, "Fail to delete your account. Try again.", Toast.LENGTH_SHORT).show()
+                        binding.pbSpMain.visibility = View.GONE
+                    }
+                }
+            } catch (e: FirebaseAuthInvalidCredentialsException) {
+                Toast.makeText(this@SPMainActivity, "Email or password is incorrect. Please check again", Toast.LENGTH_LONG).show()
+                binding.pbSpMain.visibility = View.GONE
+            } catch (e: FirebaseNetworkException) {
+                Toast.makeText(this@SPMainActivity, "Network issue has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                binding.pbSpMain.visibility = View.GONE
+            } catch (e: FirebaseException) {
+                Toast.makeText(this@SPMainActivity, "A DB service error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                binding.pbSpMain.visibility = View.GONE
+            } catch (e: FirebaseAuthInvalidUserException) {
+                Toast.makeText(this@SPMainActivity, "User does not exist.", Toast.LENGTH_LONG).show()
+                binding.pbSpMain.visibility = View.GONE
+            } catch (e: Exception) {
+                Toast.makeText(this@SPMainActivity, "An error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                binding.pbSpMain.visibility = View.GONE
+            }
+        }
     }
 
     fun askForLogOut() {

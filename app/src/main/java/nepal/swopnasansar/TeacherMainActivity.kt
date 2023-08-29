@@ -3,18 +3,21 @@ package nepal.swopnasansar
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nepal.swopnasansar.admin.CheckEventActivity
 import nepal.swopnasansar.admin.UserCheckEventActivity
 import nepal.swopnasansar.attendance.TeacherAttendanceActivity
 import nepal.swopnasansar.comment.TeacherCmntMainActivity
@@ -133,35 +136,70 @@ class TeacherMainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.item_sign_out -> {
-                val dialog = SignoutDialog(this)
-                dialog.setOnClickListener(object: SignoutDialog.ButtonClickListener {
+                val dialog = SignOutDialog(this)
+                dialog.setOnClickListener(object: SignOutDialog.ButtonClickListener {
                     override fun onClicked(email: String, pw: String) {
-                        val user = authDao.getUser()
+                        if (email.isNotBlank() || pw.isNotBlank())  {
+                            val user = authDao.getUser()
 
-                        if (user != null) {
-                            val credential = EmailAuthProvider.getCredential(email, pw)
-                            user.reauthenticate(credential)
-                                .addOnSuccessListener {
-                                    user.delete()
-
+                            if (user != null) {
+                                try {
                                     lifecycleScope.launch {
-                                        val deleteDBResult = withContext(Dispatchers.IO) {
-                                            teacherDao.removeTeacherByKey(uid!!)
-                                        }
+                                        binding.pbTeacherMain.visibility = View.VISIBLE
 
-                                        if (deleteDBResult) {
-                                            Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
-                                            val intent = Intent(this@TeacherMainActivity, CheckRoleActivity::class.java)
-                                            startActivity(intent)
-                                        }
+                                        val credential = EmailAuthProvider.getCredential(email, pw)
+                                        user.reauthenticate(credential)
+                                            .addOnSuccessListener {
+                                                CoroutineScope(Dispatchers.IO).launch {
+                                                    val deleteDBResult = withContext(Dispatchers.IO) {
+                                                        teacherDao.removeTeacherByKey(uid!!)
+                                                    }
+
+                                                    withContext(Dispatchers.Main) {
+                                                        if (deleteDBResult) {
+                                                            user.delete()
+                                                                .addOnSuccessListener {
+                                                                    Toast.makeText(applicationContext, "Your account has been deleted.", Toast.LENGTH_LONG).show()
+                                                                    binding.pbTeacherMain.visibility = View.GONE
+                                                                    val intent = Intent(this@TeacherMainActivity, CheckRoleActivity::class.java)
+                                                                    startActivity(intent)
+                                                                }
+                                                                .addOnFailureListener {
+                                                                    Toast.makeText(this@TeacherMainActivity, "An error has occurred. Please contact administrator", Toast.LENGTH_LONG).show()
+                                                                    binding.pbTeacherMain.visibility = View.GONE
+                                                                }
+                                                        } else {
+                                                            Toast.makeText(this@TeacherMainActivity, "An error has occurred. Please contact administrator.", Toast.LENGTH_SHORT).show()
+                                                            binding.pbTeacherMain.visibility = View.GONE
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(this@TeacherMainActivity, "Email or password is incorrect. Please check again.", Toast.LENGTH_LONG).show()
+                                                binding.pbTeacherMain.visibility = View.GONE
+                                            }
+
+
                                     }
+                                } catch (e: FirebaseAuthInvalidCredentialsException) {
+                                    Toast.makeText(this@TeacherMainActivity, "Email or password is incorrect. Please check again.", Toast.LENGTH_LONG).show()
+                                    binding.pbTeacherMain.visibility = View.GONE
+                                } catch (e: FirebaseNetworkException) {
+                                    Toast.makeText(this@TeacherMainActivity, "Network issue has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbTeacherMain.visibility = View.GONE
+                                } catch (e: FirebaseException) {
+                                    Toast.makeText(this@TeacherMainActivity, "A DB service error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbTeacherMain.visibility = View.GONE
+                                } catch (e: FirebaseAuthInvalidUserException) {
+                                    Toast.makeText(this@TeacherMainActivity, "User does not exist.", Toast.LENGTH_LONG).show()
+                                    binding.pbTeacherMain.visibility = View.GONE
+                                } catch (e: Exception) {
+                                    Toast.makeText(this@TeacherMainActivity, "An error has occurred. Please try again later.", Toast.LENGTH_LONG).show()
+                                    binding.pbTeacherMain.visibility = View.GONE
                                 }
-                                .addOnFailureListener {
-                                    Toast.makeText(this@TeacherMainActivity, "Fail to delete your account. Try again.", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(this@TeacherMainActivity, "Authentication has failed.", Toast.LENGTH_SHORT).show()
-                                }
+                            }
                         }
                     }
                 })
