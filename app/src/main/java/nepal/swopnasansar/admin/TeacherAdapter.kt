@@ -22,6 +22,7 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
     val TAG = "TeacherAdapter"
     var firestore : FirebaseFirestore? = null
     var TempList = ArrayList<TempDto>() // 빈 ArrayList로 초기화
+    var checkBoxList = ArrayList<Boolean>()
 
     init {
         firestore = FirebaseFirestore.getInstance()
@@ -37,6 +38,9 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
             withContext(Dispatchers.Main) {
                 teacherList.clear()
                 teacherList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(teacherList.size) { false })
 
                 if(activity is TeacherListActivity){
                     (activity as? TeacherListActivity)?.hideProgressBar()
@@ -63,6 +67,9 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
             withContext(Dispatchers.Main) {
                 teacherList.clear()
                 teacherList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(teacherList.size) { false })
 
                 if(activity is TeacherListActivity){
                     (activity as? TeacherListActivity)?.hideProgressBar()
@@ -109,16 +116,18 @@ class TeacherAdapter (private val activity: Activity, val teacherList : ArrayLis
         holder.name.text = teacherList[position].name
         holder.email.text = teacherList[position].email
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
-        holder.deleteCheckbox.isChecked = false
+        holder.deleteCheckbox.isChecked = checkBoxList[position]
 
         holder.deleteCheckbox.setOnClickListener { v ->
             if (holder.deleteCheckbox.isChecked()) {
                 // 체크가 되어 있음
                 Log.d(TAG, "체크 됨 1")
                 cbListener?.onClickCheckBox(1, position)
+                checkBoxList[position] = true
             } else {
                 // 체크가 되어있지 않음
                 cbListener?.onClickCheckBox(0, position)
+                checkBoxList[position] = false
             }
         }
 

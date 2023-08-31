@@ -23,6 +23,7 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
     val TAG = "StudentAdapter"
     var firestore : FirebaseFirestore? = null
     var TempList = ArrayList<TempDto>() // 빈 ArrayList로 초기화
+    var checkBoxList = ArrayList<Boolean>()
 
     init {
         firestore = FirebaseFirestore.getInstance()
@@ -38,6 +39,9 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
             withContext(Dispatchers.Main) {
                 studentList.clear()
                 studentList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(studentList.size) { false })
 
                 if(activity is StudentListActivity){
                     (activity as? StudentListActivity)?.hideProgressBar()
@@ -67,6 +71,9 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
             withContext(Dispatchers.Main) {
                 studentList.clear()
                 studentList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(studentList.size) { false })
 
                 if(activity is StudentListActivity){
                     (activity as? StudentListActivity)?.hideProgressBar()
@@ -123,9 +130,11 @@ class StudentAdapter(private val activity: Activity, val studentList : ArrayList
                 // 체크가 되어 있음
                 Log.d(TAG, "체크 됨 1")
                 cbListener?.onClickCheckBox(1, position)
+                checkBoxList[position] = true
             } else {
                 // 체크가 되어있지 않음
                 cbListener?.onClickCheckBox(0, position)
+                checkBoxList[position] = false
             }
         }
 

@@ -129,6 +129,7 @@ class EditAccountantActivity : AppCompatActivity() {
                             )
                                 .show()
 
+                            adapter.checkBoxList.clear()
                             checkedList.clear()
                             checkedPos.clear()
                         }

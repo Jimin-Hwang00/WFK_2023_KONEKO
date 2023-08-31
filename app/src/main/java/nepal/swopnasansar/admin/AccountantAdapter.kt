@@ -25,6 +25,7 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
     val TAG = "AccountantAdapter"
     var firestore : FirebaseFirestore? = null
     var TempList = ArrayList<TempDto>() // 빈 ArrayList로 초기화
+    var checkBoxList = ArrayList<Boolean>()
 
     init {
         firestore = FirebaseFirestore.getInstance()
@@ -40,6 +41,9 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
             withContext(Dispatchers.Main) {
                 accountantList.clear()
                 accountantList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(accountantList.size) { false })
 
                 if(activity is AccountantListActivity){
                     (activity as? AccountantListActivity)?.hideProgressBar()
@@ -67,6 +71,9 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
             withContext(Dispatchers.Main) {
                 accountantList.clear()
                 accountantList.addAll(TempList)
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(accountantList.size) { false })
 
                 if(activity is AccountantListActivity){
                     (activity as? AccountantListActivity)?.hideProgressBar()
@@ -119,10 +126,11 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
                 // 체크가 되어 있음
                 Log.d(TAG, "체크 됨 1")
                 cbListener?.onClickCheckBox(1, position)
+                checkBoxList[position] = true
             } else {
                 // 체크가 되어있지 않음
-                Log.d(TAG, "체크 안됨 0")
                 cbListener?.onClickCheckBox(0, position)
+                checkBoxList[position] = false
             }
         }
 
