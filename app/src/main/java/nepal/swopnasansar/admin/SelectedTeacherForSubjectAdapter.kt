@@ -37,6 +37,8 @@ class SelectedTeacherForSubjectAdapter: RecyclerView.Adapter<SelectedTeacherForS
             binding.nameTv.text = item.teacher_name
             checkBox.isChecked = position == mSelectedItem
 
+            binding.emailTv.visibility = View.GONE
+
             checkBox.setOnClickListener {
                 mSelectedItem = position
                 itemClickListner.onClick(it,item)
