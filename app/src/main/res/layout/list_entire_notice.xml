@@ -7,21 +7,22 @@
 
     <TextView
         android:id="@+id/subjectTv"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="148dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="9dp"
         android:layout_marginBottom="16dp"
-        android:text="Subject"
         android:autoSizeMaxTextSize="20sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
+        android:text="Subject"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/deleteCheckBox"
@@ -37,20 +38,21 @@
 
     <TextView
         android:id="@+id/classNameTv"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
+        android:layout_width="81dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
-        android:text="Class"
         android:autoSizeMaxTextSize="20sp"
         android:autoSizeMinTextSize="12sp"
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
+        android:text="Class"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
