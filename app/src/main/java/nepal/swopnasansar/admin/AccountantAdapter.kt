@@ -119,7 +119,7 @@ class AccountantAdapter(private val activity: Activity, val accountantList : Arr
         holder.name.text = accountantList[position].name
         holder.email.text = accountantList[position].email
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
-        holder.deleteCheckbox.isChecked = false
+        holder.deleteCheckbox.isChecked = checkBoxList[position]
 
         holder.deleteCheckbox.setOnClickListener { v ->
             if (holder.deleteCheckbox.isChecked()) {

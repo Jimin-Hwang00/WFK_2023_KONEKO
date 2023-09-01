@@ -70,6 +70,7 @@ class TeacherSelectNoticeActivity : AppCompatActivity() {
             if(checkedList.size != 0){
                 intent.putStringArrayListExtra("stnNameList", studentNameList)
                 intent.putStringArrayListExtra("stnKeyList", studentKeyList)
+                adapter.checkBoxList.clear()
                 startActivity(intent)
             }else{
                 Toast.makeText(this@TeacherSelectNoticeActivity, "At least one student must be selected.", Toast.LENGTH_SHORT).show()

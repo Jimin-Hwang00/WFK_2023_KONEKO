@@ -25,6 +25,7 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
     var studentTempList = ArrayList<StudentDto>() // 빈 ArrayList로 초기화
     var subjectTempList = ArrayList<SubjectDto>() // 빈 ArrayList로 초기화
     var allClassTempList = ArrayList<ClassDto>()
+    var checkBoxList = ArrayList<Boolean>()
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
@@ -78,6 +79,10 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
                 for(stn in rvSelectNoticeList){
                     Log.d(TAG, "${stn.class_name}, ${stn.subject_name}, ${stn.student_name}")
                 }
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(rvSelectNoticeList.size) { false })
+
                 (activity as? TeacherSelectNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
@@ -136,6 +141,10 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
                 for(stn in rvSelectNoticeList){
                     Log.d(TAG, "${stn.class_name}, ${stn.subject_name}, ${stn.student_name}")
                 }
+
+                checkBoxList.clear()
+                checkBoxList.addAll(List(rvSelectNoticeList.size) { false })
+
                 (activity as? TeacherSelectNoticeActivity)?.hideProgressBar()
                 notifyDataSetChanged()
             }
@@ -179,16 +188,18 @@ class TeacherSelectNoticeAdapter (val rvSelectNoticeList : ArrayList<RvSelectNot
         holder.studentName.text = rvSelectNoticeList[position].student_name
 
         // 데이터를 가져올 때, 체크박스의 상태를 초기화 (체크 안되도록 설정)
-        holder.deleteCheckbox.isChecked = false
+        holder.deleteCheckbox.isChecked = checkBoxList[position]
 
         holder.deleteCheckbox.setOnClickListener { v ->
             if (holder.deleteCheckbox.isChecked()) {
                 // 체크가 되어 있음
                 Log.d(TAG, "체크 됨 1")
                 cbListener?.onClickCheckBox(1, position)
+                checkBoxList[position] = true
             } else {
                 // 체크가 되어있지 않음
                 cbListener?.onClickCheckBox(0, position)
+                checkBoxList[position] = false
             }
         }
     }
