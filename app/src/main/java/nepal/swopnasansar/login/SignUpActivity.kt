@@ -73,7 +73,11 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.makeText(this@SignUpActivity, "Pleas write down your email address.", Toast.LENGTH_LONG).show()
                     binding.pbSignUp.visibility = View.GONE
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                } else {
+                } else if (email.substringBefore("@").length < 6) {
+                    Toast.makeText(this@SignUpActivity, "* An email's portion before the \"@\" symbol must consist of at least six characters. ", Toast.LENGTH_LONG).show()
+                    binding.pbSignUp.visibility = View.GONE
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                }else {
                     if (isEmailValid(email)) {      // 이메일 형식이 맞을 때
                         val sameEmailResult = withContext(Dispatchers.IO) {
                             sameEmailExists(email)
