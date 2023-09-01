@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nepal.swopnasansar.admin.*
+import nepal.swopnasansar.comment.AdminCmntMainActivity
 import nepal.swopnasansar.comment.ReceivedCmntListAcitivity
 import nepal.swopnasansar.dao.AdminDAO
 import nepal.swopnasansar.dao.AuthDAO
@@ -87,12 +88,12 @@ class AdminMainActivity : AppCompatActivity() {
         }
 
         binding.tvAdminCmnt.setOnClickListener{
-            val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
+            val intent = Intent(this, AdminCmntMainActivity::class.java)
             startActivity(intent)
         }
 
         binding.arrowAdminCmnt.setOnClickListener {
-            val intent = Intent(this, ReceivedCmntListAcitivity::class.java)
+            val intent = Intent(this, AdminCmntMainActivity::class.java)
             startActivity(intent)
         }
 

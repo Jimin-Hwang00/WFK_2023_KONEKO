@@ -17,6 +17,12 @@
         android:theme="@style/Theme.SwopnaSansar"
         tools:targetApi="31">
         <activity
+            android:name=".comment.AdminCmntMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".comment.SendingCmntToTFromAd"
+            android:exported="false" />
+        <activity
             android:name=".login.ResetPasswordActivity"
             android:exported="false" />
         <activity
@@ -36,7 +42,7 @@
             android:exported="false" />
         <activity
             android:name=".admin.UserCheckEventActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".notice.TeacherSelectNoticeUploadActivity"
             android:exported="false">

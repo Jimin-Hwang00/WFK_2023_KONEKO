@@ -265,7 +265,6 @@ class SendingCmntActivity : AppCompatActivity() {
     private fun uploadingComment(userName: String) {
         lifecycleScope.launch {
             val result = withContext(Dispatchers.IO) {
-                // @TODO
                 val comment = Comment("", binding.evSendingCmntTitle.text.toString(), binding.evSendingCmntContent.text.toString(), date, uid!!, userName, receiverTargets[selectedTargetIndex].key, receiverTargets[selectedTargetIndex].name, false)
                 commentDAO.uploadComment(comment)
             }
