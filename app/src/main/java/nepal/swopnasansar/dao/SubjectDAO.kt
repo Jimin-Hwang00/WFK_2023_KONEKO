@@ -102,24 +102,15 @@ class SubjectDAO {
     }
 
     suspend fun addYoutube(subject:Subject, youtube: Youtube): Boolean {
-        var result = false
-
-        try {
+        return try {
             subjectRef.document(subject.subject_key)
                 .update("youTube", FieldValue.arrayUnion(youtube))
-                .addOnSuccessListener {
-                    result = true
-                }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Fail to add link.", e)
-                }
                 .await()
 
+            true
         } catch (e: Exception) {
-            Log.e(TAG, "Fail to add link.", e)
+            false
         }
-
-        return result
     }
 
     suspend fun removeYoutube(key: String, youtube: Youtube): Boolean {
