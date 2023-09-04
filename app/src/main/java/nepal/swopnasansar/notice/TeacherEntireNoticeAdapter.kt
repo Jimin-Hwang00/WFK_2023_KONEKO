@@ -32,24 +32,22 @@ class TeacherEntireNoticeAdapter (val rvEntireNoticeList : ArrayList<RvEntireNot
             firestore = FirebaseFirestore.getInstance()
             //모든 클래스 담고 학생 리스트 뽑고 그 학생 리스트에 해당하는 클래스들 다시 담고 그다음 과목 담으면 됨.
 
-            //클래스 정보 우선 가져오기
+            // 과목 정보 우선 가져오기
+            subjectTempList.clear()
+            val subjectQuerySnapshot = firestore?.collection("subject")?.get()?.await()
+            subjectTempList.addAll(subjectQuerySnapshot?.toObjects(SubjectDto::class.java) ?: emptyList())
+
+            //클래스 정보 가져오기
             classTempList.clear()
-            val classQuerySnapshot = firestore?.collection("class")?.get()?.await()
-            classTempList.addAll(classQuerySnapshot?.toObjects(ClassDto::class.java) ?: emptyList())
+            for(classInfo in subjectTempList) {
+                val classQuerySnapshot = firestore?.collection("class")?.whereEqualTo("class_key", classInfo.class_key)?.get()?.await()
+                classTempList.addAll(
+                    classQuerySnapshot?.toObjects(ClassDto::class.java) ?: emptyList()
+                )
+            }
 
             for(stn in classTempList){
                 Log.d(TAG, "교실 : ${stn.class_name}")
-            }
-
-            // 과목 정보 가져오기
-            subjectTempList.clear()
-            for(subjectInfo in classTempList){
-                val subjectQuerySnapshot = firestore?.collection("subject")?.whereEqualTo("class_key", subjectInfo.class_key)?.get()?.await()
-                subjectTempList.addAll(subjectQuerySnapshot?.toObjects(SubjectDto::class.java) ?: emptyList())
-            }
-
-            for(stn in subjectTempList){
-                Log.d(TAG, "과목 : ${stn.subject_name}")
             }
 
             // 데이터 처리 및 어댑터 갱신
