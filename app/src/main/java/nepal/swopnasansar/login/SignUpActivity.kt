@@ -1,6 +1,7 @@
 package nepal.swopnasansar.login
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -41,6 +42,13 @@ class SignUpActivity : AppCompatActivity() {
                 R.id.rb_sign_up_student -> role = getString(R.string.student)
                 else -> role = null
             }
+        }
+
+        // 개인정보 처리방침 하이퍼링크
+        binding.tvPrivacyPolicy.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData((Uri.parse("https://www.privacypolicies.com/live/737a9024-d18a-4277-b178-2f9175721bef")))
+            startActivity(intent)
         }
 
         // role check에서 선택한 역할 라디오 버튼에 반영
