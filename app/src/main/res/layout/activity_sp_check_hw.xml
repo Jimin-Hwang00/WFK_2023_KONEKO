@@ -151,10 +151,14 @@
 
                 <TextView
                     android:id="@+id/tv_check_hw_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="280dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
+                    android:autoSizeMaxTextSize="18sp"
+                    android:autoSizeMinTextSize="12sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
                     android:minHeight="48dp"
                     android:text="title"
                     android:textSize="20sp"
