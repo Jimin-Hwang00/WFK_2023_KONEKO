@@ -1,6 +1,8 @@
 package nepal.swopnasansar.comment
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -32,7 +34,7 @@ class SendingCmntToTFromAd : AppCompatActivity() {
     private val subjectDao = SubjectDAO()
     private val adminDao = AdminDAO()
 
-    val uid = authDao.getUid()
+    var uid: String? = null
 
     private var receiverTargets = ArrayList<CmntTargetItem>()
 
@@ -52,6 +54,9 @@ class SendingCmntToTFromAd : AppCompatActivity() {
         setContentView(binding.root)
 
         initRecyclerView()
+
+        val pref: SharedPreferences = getSharedPreferences("save_state", Context.MODE_PRIVATE)
+        uid = pref.getString("uid", null)
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()

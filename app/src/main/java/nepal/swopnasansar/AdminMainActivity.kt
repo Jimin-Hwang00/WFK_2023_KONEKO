@@ -1,6 +1,8 @@
 package nepal.swopnasansar
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,19 +25,21 @@ import nepal.swopnasansar.login.CheckRoleActivity
 class AdminMainActivity : AppCompatActivity() {
     lateinit var binding :ActivityAdminMainBinding
     lateinit var adapter : AdminCalAdapter
-    val TAG = "MainActivity"
+    val TAG = "AdminMainActivity"
 
     private val authDao = AuthDAO()
     private val adminDao = AdminDAO()
-
-    val uid = authDao.getUid()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val pref: SharedPreferences = getSharedPreferences("save_state", Context.MODE_PRIVATE)
+        val uid = pref.getString("uid", null)
+
         if (uid == null) {
+            Log.d(TAG, "uid is null")
             val intent = Intent(this, CheckRoleActivity::class.java)
             startActivity(intent)
         } else {
@@ -123,6 +127,12 @@ class AdminMainActivity : AppCompatActivity() {
                 val intent = Intent(this@AdminMainActivity, CheckRoleActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
+
+                val pref: SharedPreferences = getSharedPreferences("save_state", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = pref.edit()
+
+                editor.putString("uid", null)
+                editor.apply()
             }
             setNegativeButton("NO") { dialog, which ->
                 dialog.dismiss()

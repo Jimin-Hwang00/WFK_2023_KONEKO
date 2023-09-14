@@ -1,6 +1,8 @@
 package nepal.swopnasansar.comment
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -27,12 +29,15 @@ class SentCmntListActivity : AppCompatActivity() {
     private val authDao = AuthDAO()
     private val commentDAO = CommentDAO()
 
-    val uid = authDao.getUid()
+    var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCmntListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val pref: SharedPreferences = getSharedPreferences("save_state", Context.MODE_PRIVATE)
+        uid = pref.getString("uid", authDao.getUid())
 
         if (uid == null) {
             Toast.makeText(applicationContext, "You have to login.", Toast.LENGTH_SHORT).show()

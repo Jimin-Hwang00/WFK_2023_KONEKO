@@ -65,10 +65,14 @@ class LoginActivity: AppCompatActivity() {
                     authDao.login(email, pw)
                 }
 
-                if (loginResult) {       // 해당 role에 일치하는 이메일이 있는 경우
+                if (loginResult) {
                     saveRoleForAutoLogin(role)          // 자동 로그인을 위한 role 저장
 
                     val isItFirstPW = checkIsItFirstPW(email, pw)
+
+                    if (role.equals(getString(R.string.administrator))) {
+                        saveUIDForAdmin()
+                    }
 
                     if (isItFirstPW) {          // 첫 로그인인 경우
                         askResetPWByDialog(email)
@@ -109,6 +113,18 @@ class LoginActivity: AppCompatActivity() {
         val editor: SharedPreferences.Editor = pref.edit()
 
         editor.putString("role", role)
+        editor.apply()
+    }
+
+    fun saveUIDForAdmin() {
+        val uid = authDao.getUid()
+
+        Log.d("LoginActivity", "uid: ${uid}")
+
+        val pref: SharedPreferences = getSharedPreferences("save_state", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = pref.edit()
+
+        editor.putString("uid", uid)
         editor.apply()
     }
 
