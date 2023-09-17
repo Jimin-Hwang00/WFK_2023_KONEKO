@@ -68,7 +68,6 @@ class EditTeacherActivity : AppCompatActivity() {
 
             if(checkedList.size == 1) {
                 AlertDialog.Builder(this@EditTeacherActivity).run {
-                    val intent = Intent(this@EditTeacherActivity, EditTeacherActivity::class.java)
                     setTitle("Accept Teacher(s)")
                     setMessage("Are you sure to accept Teacher(s) \"${teacher}\"?")
                     setNegativeButton("No", null)
@@ -110,6 +109,7 @@ class EditTeacherActivity : AppCompatActivity() {
                                 }
                                 for(pos in checkedPos){
                                     teacherList.removeAt(pos)
+                                    adapter.checkBoxList.clear()
                                     adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
                                 }
                                 withContext(Dispatchers.Main) {
@@ -124,7 +124,6 @@ class EditTeacherActivity : AppCompatActivity() {
                             )
                                 .show()
 
-                            adapter.checkBoxList.clear()
                             checkedList.clear()
                             checkedPos.clear()
                         }

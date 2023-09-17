@@ -115,6 +115,7 @@ class EditAccountantActivity : AppCompatActivity() {
                                 }
                                 for(pos in checkedPos){
                                     accountantList.removeAt(pos)
+                                    adapter.checkBoxList.clear()
                                     adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
                                 }
                                 withContext(Dispatchers.Main) {
@@ -129,7 +130,6 @@ class EditAccountantActivity : AppCompatActivity() {
                             )
                                 .show()
 
-                            adapter.checkBoxList.clear()
                             checkedList.clear()
                             checkedPos.clear()
                         }

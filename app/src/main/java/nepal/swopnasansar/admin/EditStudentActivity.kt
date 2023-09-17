@@ -113,6 +113,7 @@ class EditStudentActivity : AppCompatActivity() {
                                 }
                                 for(pos in checkedPos){
                                     studentList.removeAt(pos)
+                                    adapter.checkBoxList.clear()
                                     adapter.notifyDataSetChanged() // 어댑터에 데이터 변경 알림
                                 }
                                 withContext(Dispatchers.Main) {
@@ -127,7 +128,6 @@ class EditStudentActivity : AppCompatActivity() {
                             )
                                 .show()
 
-                            adapter.checkBoxList.clear()
                             checkedList.clear()
                             checkedPos.clear()
                         }
